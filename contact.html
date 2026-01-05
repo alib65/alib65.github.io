@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact - Ali Balighi</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&display=swap" rel="stylesheet">
+    
+    <style>
+        /* --- GENERAL STYLES --- */
+        body { margin: 0; padding: 0; font-family: 'Cormorant Garamond', serif; background-color: #ffffff; color: #333; text-align: center; font-size: 18px; }
+        
+        /* Navigation */
+        nav { padding: 30px 40px; margin-bottom: 20px; }
+        nav ul { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; justify-content: center; gap: 35px; }
+        nav a { text-decoration: none; color: #555; text-transform: uppercase; letter-spacing: 2px; font-size: 1.1rem; font-weight: 600; transition: color 0.3s; }
+        nav a:hover { color: #000; }
+        nav a.active { color: #d35448; }
+
+        /* Header */
+        header { margin-top: 40px; margin-bottom: 60px; }
+        h1 a { text-decoration: none; color: #222; font-size: 3.5rem; font-weight: 400; text-transform: uppercase; letter-spacing: 4px; }
+        .subtitle { font-style: italic; font-size: 1.4rem; color: #666; margin-top: 15px; letter-spacing: 1px; }
+
+        /* Content Layout */
+        .container { max-width: 600px; margin: 0 auto; padding: 0 20px 80px 20px; }
+        
+        .contact-box {
+            margin-top: 40px;
+            padding: 40px;
+            border: 1px solid #eee;
+            border-radius: 4px;
+        }
+
+        .contact-intro {
+            font-size: 1.3rem;
+            margin-bottom: 30px;
+            font-style: italic;
+            color: #555;
+        }
+
+        .email-link {
+            display: block;
+            font-size: 1.5rem;
+            color: #333;
+            text-decoration: none;
+            margin: 15px 0;
+            transition: color 0.2s;
+            padding: 10px;
+        }
+
+        .email-link:hover {
+            color: #d35448;
+        }
+
+        @media (max-width: 768px) { nav ul { flex-direction: column; gap: 15px; } h1 a { font-size: 2.5rem; } }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <ul>
+            <li><a href="about.html">About</a></li>
+            <li><a href="music.html">Music</a></li>
+            <li><a href="scores.html">Scores</a></li>
+            <li><a href="articles.html">Articles</a></li>
+            <li><a href="https://github.com/alib65" target="_blank">Code</a></li>
+            <li><a href="news.html">News</a></li>
+            <li><a href="https://alibalighi.bandcamp.com/" target="_blank">Bandcamp</a></li>
+            <li><a href="https://www.youtube.com/@AliBalighi" target="_blank">Youtube</a></li>
+            <li><a href="contact.html">Contact</a></li>
+        </ul>
+    </nav>
+
+    <header>
+        <h1><a href="index.html">Ali Balighi</a></h1>
+        <div class="subtitle">Contact</div>
+    </header>
+
+    <div class="container">
+        <div class="contact-box">
+            <p class="contact-intro">For inquiries, please contact:</p>
+            
+            <a href="mailto:ali@alibalighi.com" class="email-link">ali@alibalighi.com</a>
+            <a href="mailto:alibalighi@gmail.com" class="email-link">alibalighi@gmail.com</a>
+        </div>
+    </div>
+
+</body>
+</html>

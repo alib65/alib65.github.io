@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Articles - Ali Balighi</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&display=swap" rel="stylesheet">
+    
+    <style>
+        /* --- GENERAL STYLES --- */
+        body { margin: 0; padding: 0; font-family: 'Cormorant Garamond', serif; background-color: #ffffff; color: #333; text-align: center; font-size: 18px; }
+        
+        /* Navigation */
+        nav { padding: 30px 40px; margin-bottom: 20px; }
+        nav ul { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; justify-content: center; gap: 35px; }
+        nav a { text-decoration: none; color: #555; text-transform: uppercase; letter-spacing: 2px; font-size: 1.1rem; font-weight: 600; transition: color 0.3s; }
+        nav a:hover { color: #000; }
+        nav a.active { color: #d35448; }
+
+        /* Header */
+        header { margin-top: 40px; margin-bottom: 60px; }
+        h1 a { text-decoration: none; color: #222; font-size: 3.5rem; font-weight: 400; text-transform: uppercase; letter-spacing: 4px; }
+        .subtitle { font-style: italic; font-size: 1.4rem; color: #666; margin-top: 15px; letter-spacing: 1px; }
+
+        /* Content Layout */
+        .container { max-width: 900px; margin: 0 auto; padding: 0 20px 80px 20px; text-align: left; }
+        
+        /* Article Items */
+        .article-item { margin-bottom: 60px; padding-bottom: 40px; border-bottom: 1px solid #eee; }
+        .article-item:last-child { border-bottom: none; }
+
+        .article-title { font-size: 1.6rem; font-weight: 600; color: #222; margin-bottom: 10px; line-height: 1.3; }
+        .article-meta { font-size: 1.1rem; color: #d35448; margin-bottom: 15px; font-style: italic; }
+        .article-description { font-size: 1.15rem; line-height: 1.8; color: #444; text-align: justify; }
+
+        @media (max-width: 768px) { nav ul { flex-direction: column; gap: 15px; } h1 a { font-size: 2.5rem; } .container { text-align: center; } .article-description { text-align: left; } }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <ul>
+            <li><a href="about.html">About</a></li>
+            <li><a href="music.html">Music</a></li>
+            <li><a href="scores.html">Scores</a></li>
+            <li><a href="articles.html">Articles</a></li>
+            <li><a href="https://github.com/alib65" target="_blank">Code</a></li>
+            <li><a href="news.html">News</a></li>
+            <li><a href="https://alibalighi.bandcamp.com/" target="_blank">Bandcamp</a></li>
+            <li><a href="https://www.youtube.com/@AliBalighi" target="_blank">Youtube</a></li>
+            <li><a href="contact.html">Contact</a></li>
+        </ul>
+    </nav>
+
+    <header>
+        <h1><a href="index.html">Ali Balighi</a></h1>
+        <div class="subtitle">Research & Publications</div>
+    </header>
+
+    <div class="container">
+
+        <div class="article-item">
+            <div class="article-title">The Role of Artificial Intelligence in Electroacoustic Score Generation: A Review</div>
+            <div class="article-meta">Ali Balighi, Hideki Isoda &bull; Source: practice, Vol. 7, pp. 8</div>
+            <div class="article-description">
+                Electroacoustic music—marked by nonlinear temporal structures, complex timbral materials, and non-standard notational practices—poses persistent challenges for representation, performance, and dissemination. This article offers a critical thematic review of how artificial intelligence (AI) shapes electroacoustic score generation across three primary domains: symbolic, spatial, and gestural. We survey contemporary approaches—symbolic modeling, deep generative methods, gesture mapping, and spatial trajectory prediction—and clarify their musical affordances and limits. We introduce a purpose-first taxonomy and three focused case discussions to deepen analysis without expanding scope. Alongside technical considerations, we foreground authorship, performer agency, interpretability, and aesthetic control, and examine ethical concerns around data bias, cultural specificity, and creative homogenization. We argue that AI’s potential is strongest when systems are designed transparently and inclusively and when practices are collaborative, interdisciplinary, and reflexive. By synthesizing developments with philosophical inquiry, we outline pathways for responsible, imaginative integrations of AI in electroacoustic music.
+            </div>
+        </div>
+
+        <div class="article-item">
+            <div class="article-title">From Programmer to Composer: A Survey of Creative Authorship in the Age of AI</div>
+            <div class="article-meta">Ali Balighi</div>
+            <div class="article-description">
+                This article explores the transformation of musical authorship in the age of artificial intelligence, reframing the composer as a mediator between code, sound, and agency. Drawing from perspectives in composition, programming, philosophy, music theory, and technological design, the paper examines how AI systems redistribute creative labor and challenge traditional models of authorship. Through analytical reflection and case studies, it argues for a posthuman, systemic understanding of composition one grounded in ethical design, cultural responsibility, and technological transparency. Rather than displacing the human composer, AI invites a redefinition of authorship as collaborative, distributed, and evolving.
+            </div>
+        </div>
+
+        <div class="article-item">
+            <div class="article-title">The Art and Science of Multichannel Audio in Electroacoustic Music: A Review</div>
+            <div class="article-meta">Ali Balighi &bull; Journal: Emille, Vol. 22 (2024)</div>
+            <div class="article-description">
+                This article follows the historical and technological evolution of multichannel audio in electroacoustic music, from its origins in the 1950s with pioneers like Pierre Schaeffer to its present role as a central element in music composition and performance. It examines key advancements in spatialization techniques, including surround sound, ambisonics, and site-specific diffusion systems, highlighting their impact on spatial perception, listener envelopment, and auditory aesthetics. The discussion integrates insights into the creative and technical challenges of multichannel composition, emphasizing its capacity to enhance spatial imagery, evoke emotional responses, and redefine performance practices. By exploring emerging technologies such as augmented reality, machine learning, and networked audio systems, the article offers a comprehensive view of multichannel audio's transformative role in shaping contemporary electroacoustic music and its future possibilities.
+            </div>
+        </div>
+
+        <div class="article-item">
+            <div class="article-title">A Song Below Water: Original Composition with Philosophy and Analysis</div>
+            <div class="article-meta">Ali Balighi &bull; 2023</div>
+            <div class="article-description">
+                A Song Below Water is an original composition for piano, alto saxophone, bassoon, timpani, and fixed media written for this thesis. I explain how I composed this piece in the introduction. Moreover, I describe an analysis of this piece and two extra-musical devices used in this composition in other chapters.
+            </div>
+        </div>
+
+    </div>
+
+</body>
+</html>

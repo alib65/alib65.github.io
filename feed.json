@@ -1,0 +1,99 @@
+{
+  "version": "https://jsonfeed.org/version/1.1",
+  "title": "Ali Balighi - News",
+  "home_page_url": "https://alib65.github.io/",
+  "feed_url": "https://alib65.github.io/feed.json",
+  "description": "Latest news, interviews, and press regarding composer Ali Balighi.",
+  "items": [
+    {
+      "id": "https://themoderns.blog/2025/07/13/the-moderns-ep-375/",
+      "url": "https://themoderns.blog/2025/07/13/the-moderns-ep-375/",
+      "title": "The Moderns ep. 375 (Podcast)",
+      "date_published": "2025-07-13T12:00:00Z"
+    },
+    {
+      "id": "https://www.ilvibonese.it/eventi/550187-festival-nature-art-sound-quattro-giorni-di-concerti-performance-e-installazioni-nei-luoghi-meno-conosciuti-della-costa-degli-dei/",
+      "url": "https://www.ilvibonese.it/eventi/550187-festival-nature-art-sound-quattro-giorni-di-concerti-performance-e-installazioni-nei-luoghi-meno-conosciuti-della-costa-degli-dei/",
+      "title": "Festival Nature Art Sound: quattro giorni di concerti, performance e installazioni nei luoghi meno conosciuti della Costa degli Dei",
+      "date_published": "2025-07-11T12:00:00Z"
+    },
+    {
+      "id": "https://calabria7.news/vibo-valentia/nature-art-sound-musica-arte-e-pensiero-alla-riscoperta-dei-luoghi-dimenticati-in-calabria/",
+      "url": "https://calabria7.news/vibo-valentia/nature-art-sound-musica-arte-e-pensiero-alla-riscoperta-dei-luoghi-dimenticati-in-calabria/",
+      "title": "Nature Art Sound: musica, arte e pensiero alla riscoperta dei luoghi dimenticati in Calabria",
+      "date_published": "2025-07-11T12:00:00Z"
+    },
+    {
+      "id": "https://themoderns.blog/2025/07/11/friday-five-jul-11-2025/",
+      "url": "https://themoderns.blog/2025/07/11/friday-five-jul-11-2025/",
+      "title": "Friday Five: Jul. 11, 2025 (Podcast)",
+      "date_published": "2025-07-11T12:00:00Z"
+    },
+    {
+      "id": "https://www.informacalabria.it/il-festival-nature-art-sound-fa-tappa-nella-costa-degli-dei-connubio-tra-arte-e-territorio/#google_vignette",
+      "url": "https://www.informacalabria.it/il-festival-nature-art-sound-fa-tappa-nella-costa-degli-dei-connubio-tra-arte-e-territorio/#google_vignette",
+      "title": "Il Festival Nature Art Sound fa tappa nella Costa degli Dei: connubio tra arte e territorio",
+      "date_published": "2025-07-10T12:00:00Z"
+    },
+    {
+      "id": "http://africanpaper.com/2025/07/02/mikrotonale-perspektiven-ali-balighi-und-soheil-shirangi-beim-symposium-mikrotone-in-salzburg/",
+      "url": "http://africanpaper.com/2025/07/02/mikrotonale-perspektiven-ali-balighi-und-soheil-shirangi-beim-symposium-mikrotone-in-salzburg/",
+      "title": "Mikrotonale Perspektiven: Ali Balighi und Soheil Shirangi beim Symposium Mikrotöne in Salzburg",
+      "date_published": "2025-07-02T12:00:00Z"
+    },
+    {
+      "id": "http://africanpaper.com/2025/06/03/electropoem-series-one-neuer-longplayer-von-ali-balighi/",
+      "url": "http://africanpaper.com/2025/06/03/electropoem-series-one-neuer-longplayer-von-ali-balighi/",
+      "title": "Electropoem Series One: Neuer Longplayer von Ali Balighi",
+      "date_published": "2025-06-03T12:00:00Z"
+    },
+    {
+      "id": "https://metapsychosis.com/in-the-liminal-circuit-explorations-in-sonic-metapsychosis/",
+      "url": "https://metapsychosis.com/in-the-liminal-circuit-explorations-in-sonic-metapsychosis/",
+      "title": "In the Liminal Circuit: Explorations in Sonic Metapsychosis",
+      "date_published": "2025-05-22T12:00:00Z"
+    },
+    {
+      "id": "http://africanpaper.com/2025/04/29/zone-19-ali-balighi-erforscht-das-19-ed-system-auf-neuem-album/",
+      "url": "http://africanpaper.com/2025/04/29/zone-19-ali-balighi-erforscht-das-19-ed-system-auf-neuem-album/",
+      "title": "Zone 19: Ali Balighi erforscht das 19-ED-System auf neuem Album",
+      "date_published": "2025-04-29T12:00:00Z"
+    },
+    {
+      "id": "http://africanpaper.com/2025/02/21/odyssey-in-soundscape-ali-balighi-auf-erkundung-mikrotonaler-systeme/",
+      "url": "http://africanpaper.com/2025/02/21/odyssey-in-soundscape-ali-balighi-auf-erkundung-mikrotonaler-systeme/",
+      "title": "Odyssey in Soundscape: Ali Balighi auf Erkundung mikrotonaler Systeme",
+      "date_published": "2025-02-21T12:00:00Z"
+    },
+    {
+      "id": "http://africanpaper.com/2025/01/24/dastgah-neue-veroffentlichung-von-ali-balighi/",
+      "url": "http://africanpaper.com/2025/01/24/dastgah-neue-veroffentlichung-von-ali-balighi/",
+      "title": "Dastgah: Neue Veröffentlichung von Ali Balighi",
+      "date_published": "2025-01-24T12:00:00Z"
+    },
+    {
+      "id": "http://africanpaper.com/2025/01/18/home-is-far-away-neues-album-von-ali-balighi/",
+      "url": "http://africanpaper.com/2025/01/18/home-is-far-away-neues-album-von-ali-balighi/",
+      "title": "Home Is Far Away: Neues Album von Ali Balighi",
+      "date_published": "2025-01-18T12:00:00Z"
+    },
+    {
+      "id": "https://themoderns.blog/2024/12/27/24-favourites-from-2024/",
+      "url": "https://themoderns.blog/2024/12/27/24-favourites-from-2024/",
+      "title": "Ali Balighi’s Love in Exile Named Among Top 24 Albums of 2024 by The Moderns",
+      "date_published": "2024-12-27T12:00:00Z"
+    },
+    {
+      "id": "https://themoderns.blog/2024/12/13/friday-five-dec-13-2024/",
+      "url": "https://themoderns.blog/2024/12/13/friday-five-dec-13-2024/",
+      "title": "Radif of Iranian Music: Love in Exile selected as Album of the Week",
+      "date_published": "2024-12-13T12:00:00Z"
+    },
+    {
+      "id": "http://africanpaper.com/2024/12/09/resistance-1-neue-compilation-von-noise-a-noise/",
+      "url": "http://africanpaper.com/2024/12/09/resistance-1-neue-compilation-von-noise-a-noise/",
+      "title": "Resistance 1: Neue Compilation von Noise à Noise",
+      "date_published": "2024-12-09T12:00:00Z"
+    }
+  ]
+}
