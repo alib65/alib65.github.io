@@ -31,7 +31,13 @@
 
         .article-title { font-size: 1.6rem; font-weight: 600; color: #222; margin-bottom: 10px; line-height: 1.3; }
         .article-meta { font-size: 1.1rem; color: #d35448; margin-bottom: 15px; font-style: italic; }
-        .article-description { font-size: 1.15rem; line-height: 1.8; color: #444; text-align: justify; }
+        .article-description { font-size: 1.15rem; line-height: 1.8; color: #444; text-align: justify; margin-bottom: 20px; }
+        
+        /* New Styles for Links/DOI */
+        .article-links { font-size: 1.05rem; margin-top: 15px; }
+        .article-links a { text-decoration: none; color: #d35448; font-weight: 600; border-bottom: 1px solid transparent; transition: border-bottom 0.3s; margin-right: 20px; }
+        .article-links a:hover { border-bottom: 1px solid #d35448; }
+        .article-keywords { font-size: 1rem; color: #777; font-style: italic; margin-top: 10px; }
 
         @media (max-width: 768px) { nav ul { flex-direction: column; gap: 15px; } h1 a { font-size: 2.5rem; } .container { text-align: center; } .article-description { text-align: left; } }
     </style>
@@ -43,7 +49,7 @@
             <li><a href="about.html">About</a></li>
             <li><a href="music.html">Music</a></li>
             <li><a href="scores.html">Scores</a></li>
-            <li><a href="articles.html">Articles</a></li>
+            <li><a href="articles.html" class="active">Articles</a></li>
             <li><a href="https://github.com/alib65" target="_blank">Code</a></li>
             <li><a href="news.html">News</a></li>
             <li><a href="https://alibalighi.bandcamp.com/" target="_blank">Bandcamp</a></li>
@@ -61,33 +67,64 @@
 
         <div class="article-item">
             <div class="article-title">The Role of Artificial Intelligence in Electroacoustic Score Generation: A Review</div>
-            <div class="article-meta">Ali Balighi, Hideki Isoda &bull; Source: practice, Vol. 7, pp. 8</div>
+            <div class="article-meta">
+                Ali Balighi, Hideki Isoda &bull; Dec 2025 &bull; 10th International Conference on Technologies for Music Notation and Representation (TENOR 2025)
+            </div>
             <div class="article-description">
                 Electroacoustic music—marked by nonlinear temporal structures, complex timbral materials, and non-standard notational practices—poses persistent challenges for representation, performance, and dissemination. This article offers a critical thematic review of how artificial intelligence (AI) shapes electroacoustic score generation across three primary domains: symbolic, spatial, and gestural. We survey contemporary approaches—symbolic modeling, deep generative methods, gesture mapping, and spatial trajectory prediction—and clarify their musical affordances and limits. We introduce a purpose-first taxonomy and three focused case discussions to deepen analysis without expanding scope. Alongside technical considerations, we foreground authorship, performer agency, interpretability, and aesthetic control, and examine ethical concerns around data bias, cultural specificity, and creative homogenization. We argue that AI’s potential is strongest when systems are designed transparently and inclusively and when practices are collaborative, interdisciplinary, and reflexive. By synthesizing developments with philosophical inquiry, we outline pathways for responsible, imaginative integrations of AI in electroacoustic music.
+            </div>
+            <div class="article-links">
+                <a href="https://doi.org/10.5281/zenodo.17958057" target="_blank">DOI: 10.5281/zenodo.17958057</a>
             </div>
         </div>
 
         <div class="article-item">
             <div class="article-title">From Programmer to Composer: A Survey of Creative Authorship in the Age of AI</div>
-            <div class="article-meta">Ali Balighi</div>
+            <div class="article-meta">
+                Ali Balighi &bull; Sep 2025 &bull; 19th SBCM Brazilian Symposium on Computer Music
+            </div>
             <div class="article-description">
                 This article explores the transformation of musical authorship in the age of artificial intelligence, reframing the composer as a mediator between code, sound, and agency. Drawing from perspectives in composition, programming, philosophy, music theory, and technological design, the paper examines how AI systems redistribute creative labor and challenge traditional models of authorship. Through analytical reflection and case studies, it argues for a posthuman, systemic understanding of composition one grounded in ethical design, cultural responsibility, and technological transparency. Rather than displacing the human composer, AI invites a redefinition of authorship as collaborative, distributed, and evolving.
             </div>
         </div>
 
         <div class="article-item">
+            <div class="article-title">Between Noise and Silence: The Mathematical Artistry of ‘Meditation’</div>
+            <div class="article-meta">
+                Ali Balighi &bull; July 2025 &bull; Faculty Research
+            </div>
+            <div class="article-description">
+                The paper discusses the composition process behind ‘Meditation’ for bass saxophone and live electronics, a work that explores themes of mindfulness, personal insight, and the relationship between disorder and calmness. Created amidst the composer’s personal difficulties and meditation routines, the piece conveys a transformation from personal distress to serenity. Utilizing the traditions of blending acoustic and electroacoustic music from different point of views, ‘Meditation’ merges new techniques with deep thinking, inspired by John Cage’s philosophies and Olivier Messiaen’s harmonic techniques. It incorporates the Fibonacci Sequence in its structure, reflecting the natural progression of life and the rhythm found in meditation practices. The article examines both the technical and philosophical bases of the piece and discusses the significant role of mindfulness in artistic creation.
+                <div class="article-keywords">Keywords: Mindfulness, Meditation, Electroacoustic Composition, Fibonacci Sequence, Creative Process</div>
+            </div>
+            <div class="article-links">
+                <a href="https://hdl.handle.net/2346/103022" target="_blank">View at Handle.net</a>
+            </div>
+        </div>
+
+        <div class="article-item">
             <div class="article-title">The Art and Science of Multichannel Audio in Electroacoustic Music: A Review</div>
-            <div class="article-meta">Ali Balighi &bull; Journal: Emille, Vol. 22 (2024)</div>
+            <div class="article-meta">
+                Ali Balighi &bull; Jan 2025 &bull; Emille, Vol. 22
+            </div>
             <div class="article-description">
                 This article follows the historical and technological evolution of multichannel audio in electroacoustic music, from its origins in the 1950s with pioneers like Pierre Schaeffer to its present role as a central element in music composition and performance. It examines key advancements in spatialization techniques, including surround sound, ambisonics, and site-specific diffusion systems, highlighting their impact on spatial perception, listener envelopment, and auditory aesthetics. The discussion integrates insights into the creative and technical challenges of multichannel composition, emphasizing its capacity to enhance spatial imagery, evoke emotional responses, and redefine performance practices. By exploring emerging technologies such as augmented reality, machine learning, and networked audio systems, the article offers a comprehensive view of multichannel audio's transformative role in shaping contemporary electroacoustic music and its future possibilities.
+            </div>
+            <div class="article-links">
+                <a href="https://doi.org/10.23277/emille.2024.22..002" target="_blank">DOI: 10.23277/emille.2024.22..002</a>
             </div>
         </div>
 
         <div class="article-item">
             <div class="article-title">A Song Below Water: Original Composition with Philosophy and Analysis</div>
-            <div class="article-meta">Ali Balighi &bull; 2023</div>
+            <div class="article-meta">
+                Ali Balighi &bull; May 2023 &bull; Master Thesis (Advisor: Dr. Peter Fischer)
+            </div>
             <div class="article-description">
                 A Song Below Water is an original composition for piano, alto saxophone, bassoon, timpani, and fixed media written for this thesis. I explain how I composed this piece in the introduction. Moreover, I describe an analysis of this piece and two extra-musical devices used in this composition in other chapters.
+            </div>
+            <div class="article-links">
+                <a href="https://doi.org/10.13140/RG.2.2.28665.85600" target="_blank">DOI: 10.13140/RG.2.2.28665.85600</a>
             </div>
         </div>
 
