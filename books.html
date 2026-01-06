@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Books - Ali Balighi</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&display=swap" rel="stylesheet">
+    
+    <style>
+        /* --- GENERAL STYLES --- */
+        body { margin: 0; padding: 0; font-family: 'Cormorant Garamond', serif; background-color: #ffffff; color: #333; text-align: center; font-size: 18px; }
+        
+        /* Navigation */
+        nav { padding: 30px 40px; margin-bottom: 20px; }
+        nav ul { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; justify-content: center; gap: 35px; }
+        nav a { text-decoration: none; color: #555; text-transform: uppercase; letter-spacing: 2px; font-size: 1.1rem; font-weight: 600; transition: color 0.3s; }
+        nav a:hover { color: #000; }
+        nav a.active { color: #d35448; }
+
+        /* Header */
+        header { margin-top: 40px; margin-bottom: 60px; }
+        h1 a { text-decoration: none; color: #222; font-size: 3.5rem; font-weight: 400; text-transform: uppercase; letter-spacing: 4px; }
+        .subtitle { font-style: italic; font-size: 1.4rem; color: #666; margin-top: 15px; letter-spacing: 1px; }
+
+        /* Content Layout */
+        .container { max-width: 900px; margin: 0 auto; padding: 0 20px 80px 20px; text-align: left; }
+        
+        /* Book/Article Items */
+        .article-item { margin-bottom: 60px; padding-bottom: 40px; border-bottom: 1px solid #eee; }
+        .article-item:last-child { border-bottom: none; }
+
+        .article-title { font-size: 1.6rem; font-weight: 600; color: #222; margin-bottom: 10px; line-height: 1.3; }
+        .article-meta { font-size: 1.1rem; color: #d35448; margin-bottom: 15px; font-style: italic; }
+        .article-description { font-size: 1.15rem; line-height: 1.8; color: #444; text-align: justify; margin-bottom: 20px; }
+        
+        /* Links/DOI */
+        .article-links { font-size: 1.05rem; margin-top: 15px; }
+        .article-links a { text-decoration: none; color: #d35448; font-weight: 600; border-bottom: 1px solid transparent; transition: border-bottom 0.3s; margin-right: 20px; }
+        .article-links a:hover { border-bottom: 1px solid #d35448; }
+
+        @media (max-width: 768px) { nav ul { flex-direction: column; gap: 15px; } h1 a { font-size: 2.5rem; } .container { text-align: center; } .article-description { text-align: left; } }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <ul>
+            <li><a href="about.html">About</a></li>
+            <li><a href="music.html">Music</a></li>
+            <li><a href="scores.html">Scores</a></li>
+            <li><a href="articles.html">Articles</a></li>
+            <li><a href="books.html" class="active">Books</a></li>
+            <li><a href="https://github.com/alib65" target="_blank">Code</a></li>
+            <li><a href="news.html">News</a></li>
+            <li><a href="https://alibalighi.bandcamp.com/" target="_blank">Bandcamp</a></li>
+            <li><a href="https://www.youtube.com/@AliBalighi" target="_blank">Youtube</a></li>
+            <li><a href="contact.html">Contact</a></li>
+        </ul>
+    </nav>
+
+    <header>
+        <h1><a href="index.html">Ali Balighi</a></h1>
+        <div class="subtitle">Books</div>
+    </header>
+
+    <div class="container">
+
+        <div class="article-item">
+            <div class="article-title">The woods caught fire; the snail did not know which way to run (in Persian)</div>
+            <div class="article-meta">
+                Ali Balighi &bull; Poetry Collection
+            </div>
+            <div class="article-description">
+                Ali Balighi’s poetry collection, The woods caught fire; the snail did not know which way to run (Jangal Atash Gerefteh Bud...), serves as a somber existential exploration within contemporary Persian literature, articulating the modern subject's struggle with alienation, psychological instability, and the absurdity of existence. The work is thematically anchored in the concepts of "madness and forgetfulness," utilizing visceral imagery of medication, suicide, and urban decay to construct a narrative of profound dislocation and melancholia. Balighi frequently juxtaposes intimate, lyrical reflections on romantic longing and memory against a backdrop of socio-political oppression—symbolized through recurrent motifs of prisons, war, and silence—ultimately portraying the human condition as a fragile state suspended between the desire for connection and the inevitable "bitterness of dying in the land of ghosts".
+            </div>
+            <div class="article-links">
+                <a href="https://doi.org/10.5281/zenodo.18164560" target="_blank">DOI: 10.5281/zenodo.18164560</a>
+            </div>
+        </div>
+
+        <div class="article-item">
+            <div class="article-title">My solitude is a rhinoceros; and it loves you (in Persian)</div>
+            <div class="article-meta">
+                Ali Balighi &bull; Poetry Collection
+            </div>
+            <div class="article-description">
+                Ali Balighi’s poetry collection, My Loneliness is a Rhinoceros That Loves You (Tanhāyi-ye man kargadani ast ke to rā dust dārad), functions as a poignant exploration of existential isolation and romantic longing within the tradition of contemporary Persian free verse (She’r-e Sepid). Through a series of minimalist, often surreal vignettes, Balighi articulates the weight of modern alienation—personified by the titular rhinoceros—while juxtaposing intimate addresses to a beloved "Lady" (Banoo) against a backdrop of urban decay, war, and political oppression. The collection oscillates between absurdist imagery, such as a girl transforming into a tree or a flood consuming a household, and deeply personal elegy, culminating in a "Soognāmeh" (Lamentation) dedicated to the poet's father that reflects on the finality of death and the persistence of memory.
+            </div>
+            <div class="article-links">
+                <a href="https://doi.org/10.5281/zenodo.18164710" target="_blank">DOI: 10.5281/zenodo.18164710</a>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+</html>
