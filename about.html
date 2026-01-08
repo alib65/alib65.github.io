@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>About - Ali Balighi</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        /* --- CORE STYLES --- */
+        body {
+            margin: 0;
+            overflow: hidden; /* Hide body scroll, handle inside content box */
+            background-color: #000000;
+            font-family: 'Courier New', Courier, monospace;
+        }
+        canvas { 
+            display: block; 
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 0;
+        }
+
+        /* --- UI LAYOUT (Menu - Same as Index) --- */
+        #top-container {
+            position: absolute;
+            top: 30px;
+            left: 0;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            z-index: 1000; /* Higher z-index to stay above content */
+            pointer-events: none;
+        }
+
+        .menu {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            max-width: 95%;
+            pointer-events: auto;
+        }
+
+        .highlight {
+            background-color: white;
+            color: black;
+            padding: 5px 8px;
+            text-decoration: none;
+            font-weight: normal;
+            font-size: 16px;
+            display: inline-block;
+            transition: opacity 0.2s, transform 0.2s;
+            border: 1px solid white;
+        }
+
+        .highlight:hover {
+            opacity: 0.8;
+            cursor: pointer;
+            transform: scale(1.05);
+        }
+
+        /* --- ABOUT CONTENT STYLES --- */
+        
+        /* The main container to center the white box */
+        #content-wrapper {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 10;
+            pointer-events: none; /* Let clicks pass through empty space */
+        }
+
+        /* The White Rectangle */
+        .about-box {
+            background-color: white;
+            color: black;
+            width: 800px;
+            max-width: 90%;
+            max-height: 75vh; /* Don't cover the whole screen, leave room for menu/anim */
+            margin-top: 60px; /* Space for the top menu */
+            padding: 30px;
+            overflow-y: auto; /* Scrollable internal text */
+            pointer-events: auto;
+            display: flex;
+            gap: 30px;
+            box-shadow: 0 0 50px rgba(255, 255, 255, 0.1);
+        }
+
+        /* Scrollbar customization for the white box */
+        .about-box::-webkit-scrollbar { width: 8px; }
+        .about-box::-webkit-scrollbar-track { background: #f1f1f1; }
+        .about-box::-webkit-scrollbar-thumb { background: #000; }
+        .about-box::-webkit-scrollbar-thumb:hover { background: #333; }
+
+        .profile-column {
+            flex: 0 0 250px; /* Fixed width for image column */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .profile-img {
+            width: 100%;
+            height: auto;
+            border: 2px solid black;
+            
+            /* --- ADD THIS LINE TO MOVE PICTURE DOWN --- */
+            margin-top: 20px; 
+            
+            margin-bottom: 10px;
+            filter: grayscale(100%);
+            transition: filter 0.3s;
+        }
+        .profile-img:hover { filter: grayscale(0%); }
+
+        .text-column {
+            flex: 1;
+            font-size: 14px;
+            line-height: 1.6;
+            text-align: justify;
+        }
+
+        .text-column p { margin-bottom: 15px; }
+        .text-column a { color: black; font-weight: bold; text-decoration: underline; }
+
+        /* --- MOBILE RESPONSIVENESS --- */
+        @media (max-width: 600px) {
+            #top-container { top: 20px; }
+            
+            .highlight { 
+                font-size: 11px; 
+                padding: 4px 6px;
+                margin-bottom: 2px;
+            }
+            .menu { gap: 5px; }
+
+            .about-box {
+                flex-direction: column; /* Stack image on top of text */
+                max-height: 70vh;
+                padding: 20px;
+                margin-top: 80px;
+            }
+            
+            .profile-column { flex: 0 0 auto; width: 150px; margin: 0 auto 20px auto; }
+        }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+</head>
+<body>
+
+    <div id="top-container">
+        <nav class="menu">
+            <a href="index.html" class="highlight">HOME</a>
+            <a href="about.html" class="highlight">ABOUT</a>
+            <a href="music.html" class="highlight">MUSIC</a>
+            <a href="scores.html" class="highlight">SCORES</a>
+            <a href="articles.html" class="highlight">ARTICLES</a>
+            <a href="books.html" class="highlight">BOOKS</a>
+            <a href="https://github.com/alib65" target="_blank" class="highlight">CODE</a>
+            <a href="news.html" class="highlight">NEWS</a>
+            <a href="https://alibalighi.bandcamp.com/" target="_blank" class="highlight">BANDCAMP</a>
+            <a href="https://www.youtube.com/@AliBalighi" target="_blank" class="highlight">YOUTUBE</a>
+            <a href="contact.html" class="highlight">CONTACT</a>
+        </nav>
+    </div>
+
+    <div id="content-wrapper">
+        <div class="about-box">
+            
+            <div class="profile-column">
+                <img src="Balighi_Ali_2023.jpg" alt="Ali Balighi" class="profile-img">
+            </div>
+
+            <div class="text-column">
+                <p><strong>Ali Balighi</strong>, a composer, sound designer, and sound engineer, was born in Tehran, Iran. He graduated from The University of Art in 2011 with a Bachelor’s degree in Music Performance. A passion for composition led him to pursue a Master’s degree in Composition at Texas Tech University, where he is currently a student for a Doctor of Musical Arts (DMA) in Composition.</p>
+
+                <p>A number of research and teaching interests align with Balighi’s academic pursuits, which include music technology, open-source software, contemporary music analysis, and music theory. His teaching experience includes positions as a sound engineer, music recording assistant, composition and music theory teacher, and positions as a cello instructor in various Iranian music institutions.</p>
+
+                <p>His publications and awards have made a notable contribution to the field in addition to his academic engagements. Among his poetry collections are <em>My Loneliness Is A Hippo That Loves You</em> and <em>The Forest Was on Fire And The Snail Did Not Know Which Way to Flee</em>. He received a residency and a grant at The Saari Residence in Finland for his electroacoustic ensemble opera, <em>Migration inside</em>. In addition, he won third place in the 5th Reza Korourian Awards 2020 competition for electroacoustic composition. He won second place in the composition competition of Radio Javan (Islamic Republic of Iran Broadcasting) 2017 with his composition titled <em>Daramad for Harp and Orchestra</em>.</p>
+
+                <p>Balighi’s compositions have been showcased internationally at festivals and conferences, including Sonic Matter, New York City Electroacoustic Music Festival, Hot Air Music Festival, Tehran Contemporary Music Festival, NoiseFloor UK Contemporary Music, Research On Contemporary Composition Conference, ClarinetFest, Cortona Sessions For New Music, Audiovisual Frontiers Festival, ICSC 2022 6th International Csound Conference, and Tehran International Electronic Music Festival.</p>
+
+                <p>His works, such as <em>Daramad for Three Sopranos and Fixed Media</em>, <em>Khane Haftom for Santur</em>, and <em>Too Loud A Solitude for Cello and Live Electronics</em>, have been featured in these platforms.</p>
+
+                <p>As a composer, Balighi has released contemporary music albums, including <em>Whispers of Papers</em>, <em>Noise vs. Silence vol. 1</em>, and <em>Intolerance</em>. His compositions have been performed by musicians and ensembles such as Sputter Box ensemble, Front Porch ensemble, Zenith Saxophone Quartet, Twenty Fingers Duo, SynthBeats, The ____ Experiment, Michael Bridge, Parker Fritz, Anoush Moazzeni, Kathryn Vetter, Hamed Shaded, Golnaz Khalili, Puneh Zare’i Sefid Dashti, Neda Asadinejad, Shaghayegh Bagheri, Behnoush Sabetghadam, Negin Goodarzi, Zeinab Hajihasani, and Ulrike Brand.</p>
+
+                <p>Balighi actively engages with the music community, holding memberships with the Millennium Composers Initiative in the USA and the Iran Music House. His involvement extends to conferences and collaborations, reflecting his commitment to the global exchange of musical ideas.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // --- CONFIGURATION FOR SLOW ANIMATION ---
+        // Fewer particles than index, moving much slower
+        const PARTICLE_COUNT = 30000; 
+        
+        let scene, camera, renderer, system;
+        let positions;
+        let time = 0;
+
+        init();
+        animate();
+
+        function init() {
+            scene = new THREE.Scene();
+            // Lighter fog for the about page so it feels airy
+            scene.fog = new THREE.FogExp2(0x000000, 0.0015);
+
+            camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 3000);
+            camera.position.z = 1000;
+            
+            renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setPixelRatio(window.devicePixelRatio);
+            document.body.appendChild(renderer.domElement);
+
+            positions = new Float32Array(PARTICLE_COUNT * 3);
+
+            // Create a wide field of particles
+            for(let i=0; i<PARTICLE_COUNT * 3; i+=3) {
+                positions[i] = (Math.random() - 0.5) * 2500;   // x
+                positions[i+1] = (Math.random() - 0.5) * 1500; // y
+                positions[i+2] = (Math.random() - 0.5) * 2000; // z
+            }
+
+            const geometry = new THREE.BufferGeometry();
+            geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+
+            // Smaller, slightly more transparent particles for "background" feel
+            const material = new THREE.PointsMaterial({
+                color: 0xaaaaaa, // Slightly grey/white
+                size: 1.2,
+                transparent: true,
+                opacity: 0.6,
+                blending: THREE.AdditiveBlending,
+                sizeAttenuation: true
+            });
+
+            system = new THREE.Points(geometry, material);
+            scene.add(system);
+
+            window.addEventListener('resize', () => {
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(window.innerWidth, window.innerHeight);
+            });
+        }
+
+        function animate() {
+            requestAnimationFrame(animate);
+            time += 0.002; // Slow time increment
+
+            const posAttribute = system.geometry.attributes.position;
+            const posArray = posAttribute.array;
+
+            // ANIMATION LOGIC: Slow sine waves / "Breathing"
+            for(let i=0; i<PARTICLE_COUNT; i++) {
+                const ix = i*3;
+                const iy = i*3+1;
+                const iz = i*3+2;
+
+                // Drift particles slowly on X axis
+                posArray[ix] -= 0.2; 
+                
+                // If particle goes too far left, wrap it to the right
+                if(posArray[ix] < -1250) {
+                    posArray[ix] = 1250;
+                }
+
+                // Gentle sine wave movement on Y and Z based on X position and time
+                // This creates a "flowing flag" or "slow water" effect
+                const wave = Math.sin(posArray[ix] * 0.005 + time) * 2;
+                
+                // Add the wave to the Y position, but keep original structure roughly
+                posArray[iy] += Math.sin(time + posArray[ix]*0.01) * 0.5;
+                
+                // Gentle rotation influence
+                posArray[iz] += Math.cos(time * 0.5 + posArray[iy]*0.01) * 0.5;
+            }
+
+            posAttribute.needsUpdate = true;
+
+            // Very slow camera orbit
+            camera.position.x = Math.sin(time * 0.1) * 200;
+            camera.position.y = Math.cos(time * 0.1) * 100;
+            camera.lookAt(0, 0, 0);
+
+            renderer.render(scene, camera);
+        }
+    </script>
+</body>
+</html>

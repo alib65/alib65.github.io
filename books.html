@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Books - Ali Balighi</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        /* --- CORE STYLES --- */
+        body {
+            margin: 0;
+            overflow: hidden;
+            background-color: #000000;
+            font-family: 'Courier New', Courier, monospace;
+        }
+        canvas { 
+            display: block; 
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 0;
+        }
+
+        /* --- UI LAYOUT (Menu) --- */
+        #top-container {
+            position: absolute;
+            top: 30px;
+            left: 0;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            z-index: 1000;
+            pointer-events: none;
+        }
+
+        .menu {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            max-width: 95%;
+            pointer-events: auto;
+        }
+
+        .highlight {
+            background-color: white;
+            color: black;
+            padding: 5px 8px;
+            text-decoration: none;
+            font-weight: normal;
+            font-size: 16px;
+            display: inline-block;
+            transition: opacity 0.2s, transform 0.2s;
+            border: 1px solid white;
+        }
+
+        .highlight:hover {
+            opacity: 0.8;
+            cursor: pointer;
+            transform: scale(1.05);
+        }
+
+        /* --- BOOKS CONTENT STYLES --- */
+        
+        #content-wrapper {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 10;
+            pointer-events: none;
+        }
+
+        .content-box {
+            background-color: white;
+            color: black;
+            width: 900px;
+            max-width: 90%;
+            max-height: 75vh;
+            margin-top: 60px;
+            padding: 40px;
+            overflow-y: auto;
+            pointer-events: auto;
+            box-shadow: 0 0 50px rgba(255, 255, 255, 0.1);
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Custom Scrollbar */
+        .content-box::-webkit-scrollbar { width: 8px; }
+        .content-box::-webkit-scrollbar-track { background: #f1f1f1; }
+        .content-box::-webkit-scrollbar-thumb { background: #000; }
+        .content-box::-webkit-scrollbar-thumb:hover { background: #333; }
+
+        /* Book Items */
+        .book-item {
+            margin-bottom: 50px;
+            padding-bottom: 30px;
+            border-bottom: 1px solid #ddd;
+        }
+        .book-item:last-child { border-bottom: none; margin-bottom: 0; }
+
+        .book-title {
+            font-size: 20px;
+            font-weight: normal;
+            margin-bottom: 8px;
+            line-height: 1.3;
+            color: #000;
+        }
+
+        .book-meta {
+            font-size: 14px;
+            color: #555;
+            margin-bottom: 15px;
+            font-style: italic;
+            border-left: 3px solid #000;
+            padding-left: 10px;
+        }
+
+        .book-description {
+            font-size: 15px;
+            line-height: 1.6;
+            text-align: justify;
+            margin-bottom: 15px;
+        }
+
+        /* Links styling - RED */
+        .book-links {
+            font-size: 14px;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+
+        .book-links a {
+            text-decoration: none;
+            color: #ff0000; /* Red Links */
+            border-bottom: 1px solid transparent;
+            transition: all 0.2s;
+        }
+
+        .book-links a:hover {
+            color: #8b0000;
+            border-bottom: 1px solid #8b0000;
+        }
+
+        /* --- MOBILE RESPONSIVENESS --- */
+        @media (max-width: 600px) {
+            #top-container { top: 20px; }
+            .highlight { font-size: 11px; padding: 4px 6px; margin-bottom: 2px; }
+            .menu { gap: 5px; }
+            .content-box { padding: 20px; margin-top: 80px; max-height: 70vh; }
+            .book-title { font-size: 18px; }
+            .book-description { text-align: left; font-size: 14px; }
+        }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+</head>
+<body>
+
+    <div id="top-container">
+        <nav class="menu">
+            <a href="index.html" class="highlight">HOME</a>
+            <a href="about.html" class="highlight">ABOUT</a>
+            <a href="music.html" class="highlight">MUSIC</a>
+            <a href="scores.html" class="highlight">SCORES</a>
+            <a href="articles.html" class="highlight">ARTICLES</a>
+            <a href="books.html" class="highlight">BOOKS</a>
+            <a href="https://github.com/alib65" target="_blank" class="highlight">CODE</a>
+            <a href="news.html" class="highlight">NEWS</a>
+            <a href="https://alibalighi.bandcamp.com/" target="_blank" class="highlight">BANDCAMP</a>
+            <a href="https://www.youtube.com/@AliBalighi" target="_blank" class="highlight">YOUTUBE</a>
+            <a href="contact.html" class="highlight">CONTACT</a>
+        </nav>
+    </div>
+
+    <div id="content-wrapper">
+        <div class="content-box">
+            
+            <div class="book-item">
+                <div class="book-title">The woods caught fire; the snail did not know which way to run (in Persian)</div>
+                <div class="book-meta">
+                    Ali Balighi &bull; Poetry Collection
+                </div>
+                <div class="book-description">
+                    Ali Balighi’s poetry collection, The woods caught fire; the snail did not know which way to run (Jangal Atash Gerefteh Bud...), serves as a somber existential exploration within contemporary Persian literature, articulating the modern subject's struggle with alienation, psychological instability, and the absurdity of existence. The work is thematically anchored in the concepts of "madness and forgetfulness," utilizing visceral imagery of medication, suicide, and urban decay to construct a narrative of profound dislocation and melancholia. Balighi frequently juxtaposes intimate, lyrical reflections on romantic longing and memory against a backdrop of socio-political oppression—symbolized through recurrent motifs of prisons, war, and silence—ultimately portraying the human condition as a fragile state suspended between the desire for connection and the inevitable "bitterness of dying in the land of ghosts".
+                </div>
+                <div class="book-links">
+                    <a href="https://doi.org/10.5281/zenodo.18164560" target="_blank">DOI: 10.5281/zenodo.18164560</a>
+                </div>
+            </div>
+
+            <div class="book-item">
+                <div class="book-title">My solitude is a rhinoceros; and it loves you (in Persian)</div>
+                <div class="book-meta">
+                    Ali Balighi &bull; Poetry Collection
+                </div>
+                <div class="book-description">
+                    Ali Balighi’s poetry collection, My Loneliness is a Rhinoceros That Loves You (Tanhāyi-ye man kargadani ast ke to rā dust dārad), functions as a poignant exploration of existential isolation and romantic longing within the tradition of contemporary Persian free verse (She’r-e Sepid). Through a series of minimalist, often surreal vignettes, Balighi articulates the weight of modern alienation—personified by the titular rhinoceros—while juxtaposing intimate addresses to a beloved "Lady" (Banoo) against a backdrop of urban decay, war, and political oppression. The collection oscillates between absurdist imagery, such as a girl transforming into a tree or a flood consuming a household, and deeply personal elegy, culminating in a "Soognāmeh" (Lamentation) dedicated to the poet's father that reflects on the finality of death and the persistence of memory.
+                </div>
+                <div class="book-links">
+                    <a href="https://doi.org/10.5281/zenodo.18164710" target="_blank">DOI: 10.5281/zenodo.18164710</a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        const PARTICLE_COUNT = 3500;
+        let scene, camera, renderer, system;
+        let positions, velocities, rotations;
+        let time = 0;
+
+        init();
+        animate();
+
+        function init() {
+            scene = new THREE.Scene();
+            scene.fog = new THREE.FogExp2(0x000000, 0.002);
+
+            camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 2000);
+            camera.position.z = 500;
+            camera.position.y = 0;
+            
+            renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setPixelRatio(window.devicePixelRatio);
+            document.body.appendChild(renderer.domElement);
+
+            positions = new Float32Array(PARTICLE_COUNT * 3);
+            velocities = new Float32Array(PARTICLE_COUNT * 3);
+            rotations = new Float32Array(PARTICLE_COUNT); // Store random rotation offset
+
+            const spreadX = 2000;
+            const spreadY = 2000;
+            const spreadZ = 800;
+
+            for(let i=0; i<PARTICLE_COUNT; i++) {
+                // Random starting positions
+                positions[i*3] = (Math.random() - 0.5) * spreadX;
+                positions[i*3+1] = (Math.random() - 0.5) * spreadY;
+                positions[i*3+2] = (Math.random() - 0.5) * spreadZ;
+
+                // Random falling speeds
+                velocities[i*3] = (Math.random() - 0.5) * 0.5; // Drift X
+                velocities[i*3+1] = - (Math.random() * 0.8 + 0.2); // Fall Y
+                velocities[i*3+2] = (Math.random() - 0.5) * 0.5; // Drift Z
+                
+                rotations[i] = Math.random() * Math.PI;
+            }
+
+            const geometry = new THREE.BufferGeometry();
+            geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+
+            const material = new THREE.PointsMaterial({
+                color: 0xffffff,
+                size: 2.0, // Slightly larger particles to look like paper bits
+                transparent: true,
+                opacity: 0.6,
+                blending: THREE.AdditiveBlending
+            });
+
+            system = new THREE.Points(geometry, material);
+            scene.add(system);
+
+            window.addEventListener('resize', () => {
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(window.innerWidth, window.innerHeight);
+            });
+        }
+
+        function animate() {
+            requestAnimationFrame(animate);
+            time += 0.01;
+
+            const posAttribute = system.geometry.attributes.position;
+            const posArray = posAttribute.array;
+            const spreadY = 2000;
+
+            for(let i=0; i<PARTICLE_COUNT; i++) {
+                const ix = i*3;
+                const iy = i*3+1;
+                const iz = i*3+2;
+
+                // Update Position with velocity
+                posArray[ix] += velocities[ix];
+                posArray[iy] += velocities[iy];
+                posArray[iz] += velocities[iz];
+
+                // Add "Swaying" motion like a falling leaf
+                // Use the random rotation offset so they don't all sway in sync
+                const sway = Math.sin(time + rotations[i]) * 0.5;
+                posArray[ix] += sway;
+
+                // Reset particles if they fall below the view
+                if(posArray[iy] < -1000) {
+                    posArray[iy] = 1000;
+                    posArray[ix] = (Math.random() - 0.5) * 2000;
+                    posArray[iz] = (Math.random() - 0.5) * 800;
+                }
+            }
+
+            posAttribute.needsUpdate = true;
+            
+            // Subtle rotation of the whole system
+            system.rotation.y = time * 0.05;
+
+            renderer.render(scene, camera);
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Ali Balighi - Composer</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        /* --- CORE STYLES --- */
+        body {
+            margin: 0;
+            overflow: hidden;
+            background-color: #000000;
+            font-family: 'Courier New', Courier, monospace;
+        }
+        canvas { display: block; }
+
+        /* --- UI LAYOUT --- */
+        
+        /* Top Container for Menu */
+        #top-container {
+            position: absolute;
+            top: 30px;
+            left: 0;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            z-index: 100;
+            pointer-events: none; /* Allow clicks to pass through empty areas */
+        }
+
+        /* Bottom Container for Name */
+        #bottom-container {
+            position: absolute;
+            bottom: 100px;
+            left: 0;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            z-index: 100;
+            pointer-events: none;
+        }
+
+        /* --- TYPOGRAPHY & ELEMENTS --- */
+
+        .menu {
+            display: flex;
+            flex-wrap: wrap; /* Allows menu to stack on phone screens */
+            justify-content: center;
+            gap: 10px;
+            max-width: 95%; /* Prevent touching screen edges */
+            pointer-events: auto; /* Re-enable clicking on the links */
+        }
+
+        .identity {
+            text-align: center;
+            pointer-events: auto;
+        }
+
+        /* The White Rectangle Style */
+        .highlight {
+            background-color: white;
+            color: black;
+            padding: 5px 8px;
+            text-decoration: none;
+            font-weight: normal;
+            font-size: 16px;
+            display: inline-block;
+            transition: opacity 0.2s, transform 0.2s;
+        }
+
+        .highlight:hover {
+            opacity: 0.8;
+            cursor: pointer;
+            transform: scale(1.05);
+        }
+
+        /* Specific tweak for the name size */
+        .name-text { font-size: 76.5px; }
+        .subtitle-text { font-size: 12px; margin-top: 4px; }
+
+        /* --- MOBILE RESPONSIVENESS --- */
+        @media (max-width: 600px) {
+            #top-container { top: 20px; }
+            #bottom-container { bottom: 30px; }
+            
+            .highlight { 
+                font-size: 11px; /* Smaller font for menu on phone */
+                padding: 4px 6px;
+                margin-bottom: 2px;
+            }
+            
+            .menu { gap: 5px; }
+            .name-text { font-size: 20px; }
+        }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+</head>
+<body>
+
+    <div id="top-container">
+        <nav class="menu">
+            <a href="index.html" class="highlight">HOME</a>
+            <a href="about.html" class="highlight">ABOUT</a>
+            <a href="music.html" class="highlight">MUSIC</a>
+            <a href="scores.html" class="highlight">SCORES</a>
+            <a href="articles.html" class="highlight">ARTICLES</a>
+            <a href="books.html" class="highlight">BOOKS</a>
+            <a href="https://github.com/alib65" target="_blank" class="highlight">CODE</a>
+            <a href="news.html" class="highlight">NEWS</a>
+            <a href="https://alibalighi.bandcamp.com/" target="_blank" class="highlight">BANDCAMP</a>
+            <a href="https://www.youtube.com/@AliBalighi" target="_blank" class="highlight">YOUTUBE</a>
+            <a href="contact.html" class="highlight">CONTACT</a>
+        </nav>
+    </div>
+
+    <div id="bottom-container">
+        <div class="identity">
+            <div class="highlight name-text">ALI BALIGHI</div><br>
+            <div class="highlight subtitle-text">Composer | Scholar | Performer | Visual Artist | Creative Coder | Poet</div>
+        </div>
+    </div>
+
+    <script>
+        // --- CONFIGURATION ---
+        const PARTICLE_COUNT = 50000;
+        const SHAPE_TIME = 20000; 
+        
+        // Physics settings
+        const ATTRACTION = 0.03;  
+        const DAMPING = 0.96;     
+        const NOISE_SCALE = 0.8;  
+        
+        let scene, camera, renderer, system;
+        let positions, velocities, targets;
+        let currentShape = 0;
+        let shapeTimer = 0;
+        
+        const shapes = [];
+
+        init();
+        animate();
+
+        function init() {
+            scene = new THREE.Scene();
+            scene.fog = new THREE.FogExp2(0x000000, 0.001);
+
+            camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 4000);
+            
+            renderer = new THREE.WebGLRenderer({ antialias: true, powerPreference: "high-performance" });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setPixelRatio(window.devicePixelRatio);
+            document.body.appendChild(renderer.domElement);
+
+            positions = new Float32Array(PARTICLE_COUNT * 3);
+            velocities = new Float32Array(PARTICLE_COUNT * 3);
+            targets = new Float32Array(PARTICLE_COUNT * 3);
+
+            for(let i=0; i<PARTICLE_COUNT * 3; i++) {
+                positions[i] = (Math.random() - 0.5) * 1000;
+                velocities[i] = (Math.random() - 0.5) * 2; 
+                targets[i] = positions[i];
+            }
+
+            const geometry = new THREE.BufferGeometry();
+            geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+
+            const material = new THREE.PointsMaterial({
+                color: 0xffffff,
+                size: 0.8,
+                transparent: true,
+                opacity: 0.8,
+                blending: THREE.AdditiveBlending,
+                sizeAttenuation: true
+            });
+
+            system = new THREE.Points(geometry, material);
+            scene.add(system);
+
+            createShapes();
+            changeShape();
+
+            window.addEventListener('resize', () => {
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(window.innerWidth, window.innerHeight);
+            });
+        }
+
+        function createShapes() {
+            const set = (arr, i, x, y, z) => {
+                arr[i*3] = x; arr[i*3+1] = y; arr[i*3+2] = z;
+            };
+
+            // 1. Exploded Star
+            shapes.push(() => {
+                const arr = new Float32Array(PARTICLE_COUNT * 3);
+                for(let i=0; i<PARTICLE_COUNT; i++){
+                    const t = i/PARTICLE_COUNT * Math.PI * 2;
+                    const r = 80 * (Math.abs(Math.cos(t*4)) + 0.2); 
+                    set(arr, i, r*Math.cos(t), r*Math.sin(t), (Math.random()-0.5)*100);
+                }
+                return arr;
+            });
+
+            // 2. The Vortex
+            shapes.push(() => {
+                const arr = new Float32Array(PARTICLE_COUNT * 3);
+                for(let i=0; i<PARTICLE_COUNT; i++){
+                    const t = i/PARTICLE_COUNT;
+                    const theta = t * Math.PI * 20;
+                    const r = t * 100;
+                    set(arr, i, r*Math.cos(theta), r*Math.sin(theta), Math.sin(r/10)*30);
+                }
+                return arr;
+            });
+
+            // 3. Muqarnas Cube 
+            shapes.push(() => {
+                const arr = new Float32Array(PARTICLE_COUNT * 3);
+                for(let i=0; i<PARTICLE_COUNT; i++){
+                    const side = Math.floor(Math.random()*6);
+                    let x,y,z;
+                    const s = 60;
+                    const u = (Math.random()-0.5)*2*s;
+                    const v = (Math.random()-0.5)*2*s;
+                    if(side===0){x=s;y=u;z=v;} else if(side===1){x=-s;y=u;z=v;}
+                    else if(side===2){x=u;y=s;z=v;} else if(side===3){x=u;y=-s;z=v;}
+                    else if(side===4){x=u;y=v;z=s;} else {x=u;y=v;z=-s;}
+                    
+                    if (Math.sqrt(u*u + v*v) < 20) { x*=1.5; y*=1.5; z*=1.5; } 
+                    set(arr, i, x, y, z);
+                }
+                return arr;
+            });
+
+            // 4. Double Rosette
+            shapes.push(() => {
+                const arr = new Float32Array(PARTICLE_COUNT * 3);
+                for(let i=0; i<PARTICLE_COUNT; i++){
+                    const t = (i/PARTICLE_COUNT)*Math.PI*2;
+                    const r1 = 60 * Math.cos(4*t);
+                    const r2 = 30 * Math.cos(8*t);
+                    const mix = (i%2===0)? r1 : r2;
+                    set(arr, i, mix*Math.cos(t), mix*Math.sin(t), (Math.random()-0.5)*40);
+                }
+                return arr;
+            });
+
+            // 5. Sphere Grid 
+            shapes.push(() => {
+                const arr = new Float32Array(PARTICLE_COUNT * 3);
+                const r = 90;
+                for(let i=0; i<PARTICLE_COUNT; i++){
+                    const phi = Math.acos( -1 + ( 2 * i ) / PARTICLE_COUNT );
+                    const theta = Math.sqrt( PARTICLE_COUNT * Math.PI ) * phi;
+                    const rNoisy = r + (Math.random() * 20);
+                    set(arr, i, rNoisy*Math.cos(theta)*Math.sin(phi), rNoisy*Math.sin(theta)*Math.sin(phi), rNoisy*Math.cos(phi));
+                }
+                return arr;
+            });
+            
+            // 6. Cross Chaos
+            shapes.push(() => {
+                const arr = new Float32Array(PARTICLE_COUNT * 3);
+                for(let i=0; i<PARTICLE_COUNT; i++){
+                    const branch = Math.floor(Math.random()*3);
+                    const d = (Math.random()-0.5)*200;
+                    const w = (Math.random()-0.5)*20;
+                    if(branch===0) set(arr, i, d, w, w);
+                    if(branch===1) set(arr, i, w, d, w);
+                    if(branch===2) set(arr, i, w, w, d);
+                }
+                return arr;
+            });
+
+             // 7. DNA Spiral 
+             shapes.push(() => {
+                const arr = new Float32Array(PARTICLE_COUNT * 3);
+                for(let i=0; i<PARTICLE_COUNT; i++){
+                    const t = i/PARTICLE_COUNT;
+                    const angle = t * Math.PI * 20;
+                    const y = (t*200) - 100;
+                    const r = 30 + 10*Math.sin(t*50);
+                    set(arr, i, r*Math.cos(angle), y, r*Math.sin(angle));
+                }
+                return arr;
+            });
+        }
+
+        function changeShape() {
+            currentShape = (currentShape + 1) % shapes.length;
+            const newPos = shapes[currentShape]();
+            
+            for(let i=0; i<PARTICLE_COUNT*3; i++) {
+                targets[i] = newPos[i];
+                velocities[i] += (Math.random()-0.5) * 5; 
+                velocities[i+1] += (Math.random()-0.5) * 5;
+                velocities[i+2] += (Math.random()-0.5) * 5;
+            }
+        }
+
+        function animate() {
+            requestAnimationFrame(animate);
+            const time = Date.now() * 0.001;
+            
+            for(let i=0; i<PARTICLE_COUNT*3; i+=3) {
+                const ix = i, iy = i+1, iz = i+2;
+
+                const ax = (targets[ix] - positions[ix]) * ATTRACTION;
+                const ay = (targets[iy] - positions[iy]) * ATTRACTION;
+                const az = (targets[iz] - positions[iz]) * ATTRACTION;
+
+                const swirlX = Math.sin(positions[iy] * 0.01 + time) * NOISE_SCALE;
+                const swirlY = Math.cos(positions[iz] * 0.01 + time) * NOISE_SCALE;
+                const swirlZ = Math.sin(positions[ix] * 0.01 + time) * NOISE_SCALE;
+
+                velocities[ix] += ax + swirlX;
+                velocities[iy] += ay + swirlY;
+                velocities[iz] += az + swirlZ;
+
+                velocities[ix] *= DAMPING;
+                velocities[iy] *= DAMPING;
+                velocities[iz] *= DAMPING;
+
+                positions[ix] += velocities[ix];
+                positions[iy] += velocities[iy];
+                positions[iz] += velocities[iz];
+            }
+
+            system.geometry.attributes.position.needsUpdate = true;
+
+            const camSpeed = 0.5;
+            const radius = 180;
+            camera.position.x = radius * Math.sin(time * camSpeed);
+            camera.position.y = radius * Math.sin(time * camSpeed * 0.6);
+            camera.position.z = radius * Math.cos(time * camSpeed * 0.8);
+            
+            camera.position.x += (Math.random()-0.5) * 2;
+            camera.position.y += (Math.random()-0.5) * 2;
+            camera.position.z += (Math.random()-0.5) * 2;
+            
+            camera.lookAt(0, 0, 0);
+            system.rotation.z = time * 0.1;
+
+            if(Date.now() - shapeTimer > SHAPE_TIME) {
+                shapeTimer = Date.now();
+                changeShape();
+            }
+
+            renderer.render(scene, camera);
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Articles - Ali Balighi</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        /* --- CORE STYLES --- */
+        body {
+            margin: 0;
+            overflow: hidden;
+            background-color: #000000;
+            font-family: 'Courier New', Courier, monospace;
+        }
+        canvas { 
+            display: block; 
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 0;
+        }
+
+        /* --- UI LAYOUT (Menu) --- */
+        #top-container {
+            position: absolute;
+            top: 30px;
+            left: 0;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            z-index: 1000;
+            pointer-events: none;
+        }
+
+        .menu {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            max-width: 95%;
+            pointer-events: auto;
+        }
+
+        .highlight {
+            background-color: white;
+            color: black;
+            padding: 5px 8px;
+            text-decoration: none;
+            font-weight: normal;
+            font-size: 16px;
+            display: inline-block;
+            transition: opacity 0.2s, transform 0.2s;
+            border: 1px solid white;
+        }
+
+        .highlight:hover {
+            opacity: 0.8;
+            cursor: pointer;
+            transform: scale(1.05);
+        }
+
+        /* --- ARTICLE CONTENT STYLES --- */
+        
+        #content-wrapper {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 10;
+            pointer-events: none;
+        }
+
+        .content-box {
+            background-color: white;
+            color: black;
+            width: 900px;
+            max-width: 90%;
+            max-height: 75vh;
+            margin-top: 60px;
+            padding: 40px;
+            overflow-y: auto;
+            pointer-events: auto;
+            box-shadow: 0 0 50px rgba(255, 255, 255, 0.1);
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Custom Scrollbar */
+        .content-box::-webkit-scrollbar { width: 8px; }
+        .content-box::-webkit-scrollbar-track { background: #f1f1f1; }
+        .content-box::-webkit-scrollbar-thumb { background: #000; }
+        .content-box::-webkit-scrollbar-thumb:hover { background: #333; }
+
+        /* Article Items */
+        .article-item {
+            margin-bottom: 50px;
+            padding-bottom: 30px;
+            border-bottom: 1px solid #ddd;
+        }
+        .article-item:last-child { border-bottom: none; margin-bottom: 0; }
+
+        .article-title {
+            font-size: 20px;
+            font-weight: normal;
+            margin-bottom: 8px;
+            line-height: 1.3;
+            color: #000;
+        }
+
+        .article-meta {
+            font-size: 14px;
+            color: #555;
+            margin-bottom: 15px;
+            font-style: italic;
+            border-left: 3px solid #000;
+            padding-left: 10px;
+        }
+
+        .article-description {
+            font-size: 15px;
+            line-height: 1.6;
+            text-align: justify;
+            margin-bottom: 15px;
+        }
+
+        .article-keywords {
+            font-size: 13px;
+            color: #666;
+            font-style: italic;
+            margin-top: 10px;
+        }
+
+        /* Links styling - RED */
+        .article-links {
+            font-size: 14px;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+
+        .article-links a {
+            text-decoration: none;
+            color: #ff0000; /* Red Links */
+            border-bottom: 1px solid transparent;
+            transition: all 0.2s;
+        }
+
+        .article-links a:hover {
+            color: #8b0000;
+            border-bottom: 1px solid #8b0000;
+        }
+
+        /* --- MOBILE RESPONSIVENESS --- */
+        @media (max-width: 600px) {
+            #top-container { top: 20px; }
+            .highlight { font-size: 11px; padding: 4px 6px; margin-bottom: 2px; }
+            .menu { gap: 5px; }
+            .content-box { padding: 20px; margin-top: 80px; max-height: 70vh; }
+            .article-title { font-size: 18px; }
+            .article-description { text-align: left; font-size: 14px; }
+        }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+</head>
+<body>
+
+    <div id="top-container">
+        <nav class="menu">
+            <a href="index.html" class="highlight">HOME</a>
+            <a href="about.html" class="highlight">ABOUT</a>
+            <a href="music.html" class="highlight">MUSIC</a>
+            <a href="scores.html" class="highlight">SCORES</a>
+            <a href="articles.html" class="highlight">ARTICLES</a>
+            <a href="books.html" class="highlight">BOOKS</a>
+            <a href="https://github.com/alib65" target="_blank" class="highlight">CODE</a>
+            <a href="news.html" class="highlight">NEWS</a>
+            <a href="https://alibalighi.bandcamp.com/" target="_blank" class="highlight">BANDCAMP</a>
+            <a href="https://www.youtube.com/@AliBalighi" target="_blank" class="highlight">YOUTUBE</a>
+            <a href="contact.html" class="highlight">CONTACT</a>
+        </nav>
+    </div>
+
+    <div id="content-wrapper">
+        <div class="content-box">
+            
+            <div class="article-item">
+                <div class="article-title">The Role of Artificial Intelligence in Electroacoustic Score Generation: A Review</div>
+                <div class="article-meta">
+                    Ali Balighi, Hideki Isoda &bull; Dec 2025 &bull; 10th International Conference on Technologies for Music Notation and Representation (TENOR 2025)
+                </div>
+                <div class="article-description">
+                    Electroacoustic music—marked by nonlinear temporal structures, complex timbral materials, and non-standard notational practices—poses persistent challenges for representation, performance, and dissemination. This article offers a critical thematic review of how artificial intelligence (AI) shapes electroacoustic score generation across three primary domains: symbolic, spatial, and gestural. We survey contemporary approaches—symbolic modeling, deep generative methods, gesture mapping, and spatial trajectory prediction—and clarify their musical affordances and limits. We introduce a purpose-first taxonomy and three focused case discussions to deepen analysis without expanding scope. Alongside technical considerations, we foreground authorship, performer agency, interpretability, and aesthetic control, and examine ethical concerns around data bias, cultural specificity, and creative homogenization. We argue that AI’s potential is strongest when systems are designed transparently and inclusively and when practices are collaborative, interdisciplinary, and reflexive. By synthesizing developments with philosophical inquiry, we outline pathways for responsible, imaginative integrations of AI in electroacoustic music.
+                </div>
+                <div class="article-links">
+                    <a href="https://doi.org/10.5281/zenodo.17958057" target="_blank">DOI: 10.5281/zenodo.17958057</a>
+                </div>
+            </div>
+
+            <div class="article-item">
+                <div class="article-title">From Programmer to Composer: A Survey of Creative Authorship in the Age of AI</div>
+                <div class="article-meta">
+                    Ali Balighi &bull; Sep 2025 &bull; 19th SBCM Brazilian Symposium on Computer Music
+                </div>
+                <div class="article-description">
+                    This article explores the transformation of musical authorship in the age of artificial intelligence, reframing the composer as a mediator between code, sound, and agency. Drawing from perspectives in composition, programming, philosophy, music theory, and technological design, the paper examines how AI systems redistribute creative labor and challenge traditional models of authorship. Through analytical reflection and case studies, it argues for a posthuman, systemic understanding of composition one grounded in ethical design, cultural responsibility, and technological transparency. Rather than displacing the human composer, AI invites a redefinition of authorship as collaborative, distributed, and evolving.
+                </div>
+            </div>
+
+            <div class="article-item">
+                <div class="article-title">Between Noise and Silence: The Mathematical Artistry of ‘Meditation’</div>
+                <div class="article-meta">
+                    Ali Balighi &bull; July 2025 &bull; Faculty Research
+                </div>
+                <div class="article-description">
+                    The paper discusses the composition process behind ‘Meditation’ for bass saxophone and live electronics, a work that explores themes of mindfulness, personal insight, and the relationship between disorder and calmness. Created amidst the composer’s personal difficulties and meditation routines, the piece conveys a transformation from personal distress to serenity. Utilizing the traditions of blending acoustic and electroacoustic music from different point of views, ‘Meditation’ merges new techniques with deep thinking, inspired by John Cage’s philosophies and Olivier Messiaen’s harmonic techniques. It incorporates the Fibonacci Sequence in its structure, reflecting the natural progression of life and the rhythm found in meditation practices. The article examines both the technical and philosophical bases of the piece and discusses the significant role of mindfulness in artistic creation.
+                    <div class="article-keywords">Keywords: Mindfulness, Meditation, Electroacoustic Composition, Fibonacci Sequence, Creative Process</div>
+                </div>
+                <div class="article-links">
+                    <a href="https://hdl.handle.net/2346/103022" target="_blank">View at Handle.net</a>
+                </div>
+            </div>
+
+            <div class="article-item">
+                <div class="article-title">The Art and Science of Multichannel Audio in Electroacoustic Music: A Review</div>
+                <div class="article-meta">
+                    Ali Balighi &bull; Jan 2025 &bull; Emille, Vol. 22
+                </div>
+                <div class="article-description">
+                    This article follows the historical and technological evolution of multichannel audio in electroacoustic music, from its origins in the 1950s with pioneers like Pierre Schaeffer to its present role as a central element in music composition and performance. It examines key advancements in spatialization techniques, including surround sound, ambisonics, and site-specific diffusion systems, highlighting their impact on spatial perception, listener envelopment, and auditory aesthetics. The discussion integrates insights into the creative and technical challenges of multichannel composition, emphasizing its capacity to enhance spatial imagery, evoke emotional responses, and redefine performance practices. By exploring emerging technologies such as augmented reality, machine learning, and networked audio systems, the article offers a comprehensive view of multichannel audio's transformative role in shaping contemporary electroacoustic music and its future possibilities.
+                </div>
+                <div class="article-links">
+                    <a href="https://doi.org/10.23277/emille.2024.22..002" target="_blank">DOI: 10.23277/emille.2024.22..002</a>
+                </div>
+            </div>
+
+            <div class="article-item">
+                <div class="article-title">A Song Below Water: Original Composition with Philosophy and Analysis</div>
+                <div class="article-meta">
+                    Ali Balighi &bull; May 2023 &bull; Master Thesis (Advisor: Dr. Peter Fischer)
+                </div>
+                <div class="article-description">
+                    A Song Below Water is an original composition for piano, alto saxophone, bassoon, timpani, and fixed media written for this thesis. I explain how I composed this piece in the introduction. Moreover, I describe an analysis of this piece and two extra-musical devices used in this composition in other chapters.
+                </div>
+                <div class="article-links">
+                    <a href="https://doi.org/10.13140/RG.2.2.28665.85600" target="_blank">DOI: 10.13140/RG.2.2.28665.85600</a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        const PARTICLE_COUNT = 4000; // Fewer particles for a cleaner look
+        let scene, camera, renderer, system;
+        let positions;
+        let time = 0;
+
+        init();
+        animate();
+
+        function init() {
+            scene = new THREE.Scene();
+            scene.fog = new THREE.FogExp2(0x000000, 0.002);
+
+            camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 2000);
+            camera.position.z = 400;
+            camera.position.y = 0;
+            
+            renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setPixelRatio(window.devicePixelRatio);
+            document.body.appendChild(renderer.domElement);
+
+            positions = new Float32Array(PARTICLE_COUNT * 3);
+
+            // Construct a Double Helix (DNA shape)
+            const radius = 100;
+            const height = 1000;
+            const turns = 10;
+            
+            for(let i=0; i<PARTICLE_COUNT; i++) {
+                // Percentage up the helix
+                const t = i / PARTICLE_COUNT;
+                
+                // Vertical position (spread out)
+                const y = (t * height) - (height / 2);
+                
+                // Angle
+                const angle = t * Math.PI * 2 * turns;
+
+                // Split particles into two strands
+                const strand = (i % 2 === 0) ? 0 : Math.PI; // 180 degrees offset
+                
+                // Add some random scatter (fuzziness) to the helix
+                const r = radius + (Math.random() - 0.5) * 20; 
+                
+                const x = r * Math.cos(angle + strand);
+                const z = r * Math.sin(angle + strand);
+
+                positions[i*3] = x;
+                positions[i*3+1] = y;
+                positions[i*3+2] = z;
+            }
+
+            const geometry = new THREE.BufferGeometry();
+            geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+
+            const material = new THREE.PointsMaterial({
+                color: 0xffffff,
+                size: 1.5,
+                transparent: true,
+                opacity: 0.6,
+                blending: THREE.AdditiveBlending
+            });
+
+            system = new THREE.Points(geometry, material);
+            scene.add(system);
+
+            window.addEventListener('resize', () => {
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(window.innerWidth, window.innerHeight);
+            });
+        }
+
+        function animate() {
+            requestAnimationFrame(animate);
+            time += 0.005;
+
+            // Rotate the entire helix system
+            system.rotation.y = time;
+            system.rotation.z = Math.sin(time * 0.5) * 0.2; // Slight tilt wobble
+
+            // Gently move camera up and down
+            camera.position.y = Math.sin(time * 0.5) * 50;
+            camera.lookAt(0, 0, 0);
+
+            renderer.render(scene, camera);
+        }
+    </script>
+</body>
+</html>

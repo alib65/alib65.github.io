@@ -1,0 +1,776 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Music - Ali Balighi</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        /* --- CORE STYLES --- */
+        body {
+            margin: 0;
+            overflow: hidden;
+            background-color: #000000;
+            font-family: 'Courier New', Courier, monospace;
+        }
+        canvas { 
+            display: block; 
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 0;
+        }
+
+        /* --- UI LAYOUT (Menu) --- */
+        #top-container {
+            position: absolute;
+            top: 30px;
+            left: 0;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            z-index: 1000;
+            pointer-events: none;
+        }
+
+        .menu {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            max-width: 95%;
+            pointer-events: auto;
+        }
+
+        .highlight {
+            background-color: white;
+            color: black;
+            padding: 5px 8px;
+            text-decoration: none;
+            font-weight: normal;
+            font-size: 16px;
+            display: inline-block;
+            transition: opacity 0.2s, transform 0.2s;
+            border: 1px solid white;
+        }
+
+        .highlight:hover {
+            opacity: 0.8;
+            cursor: pointer;
+            transform: scale(1.05);
+        }
+
+        /* --- MUSIC CONTENT STYLES --- */
+        
+        #content-wrapper {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 10;
+            pointer-events: none;
+        }
+
+        .content-box {
+            background-color: white;
+            color: black;
+            width: 900px;
+            max-width: 90%;
+            max-height: 75vh;
+            margin-top: 60px;
+            padding: 40px;
+            overflow-y: auto;
+            pointer-events: auto;
+            box-shadow: 0 0 50px rgba(255, 255, 255, 0.1);
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Custom Scrollbar */
+        .content-box::-webkit-scrollbar { width: 8px; }
+        .content-box::-webkit-scrollbar-track { background: #f1f1f1; }
+        .content-box::-webkit-scrollbar-thumb { background: #000; }
+        .content-box::-webkit-scrollbar-thumb:hover { background: #333; }
+
+        /* List Styling */
+        .music-list {
+            list-style: decimal;
+            padding-left: 20px;
+            margin: 0;
+        }
+
+        .music-item {
+            margin-bottom: 35px;
+            padding-bottom: 15px;
+            border-bottom: 1px dashed #ccc;
+        }
+        .music-item:last-child { border-bottom: none; margin-bottom: 0; }
+
+        .piece-title {
+            font-size: 18px;
+            font-weight: normal;
+            margin-bottom: 8px;
+            line-height: 1.4;
+        }
+
+        .media-links {
+            font-weight: normal;
+            font-size: 14px;
+            margin-left: 5px;
+        }
+        
+        /* --- CHANGED TO RED --- */
+        .media-links a, .perf-media-link {
+            color: #ff0000; /* Red color */
+            text-decoration: underline;
+            transition: color 0.2s;
+        }
+        
+        .media-links a:hover, .perf-media-link:hover {
+            color: #8b0000; /* Darker red on hover */
+            background-color: #eee;
+        }
+
+        .performance-list {
+            list-style: circle;
+            padding-left: 20px;
+            margin-top: 8px;
+            font-size: 14px;
+            line-height: 1.5;
+            color: #333;
+        }
+        
+        .performance-list li { margin-bottom: 6px; }
+
+        /* --- MOBILE RESPONSIVENESS --- */
+        @media (max-width: 600px) {
+            #top-container { top: 20px; }
+            .highlight { font-size: 11px; padding: 4px 6px; margin-bottom: 2px; }
+            .menu { gap: 5px; }
+            .content-box { padding: 20px; margin-top: 80px; max-height: 70vh; }
+            .piece-title { font-size: 16px; }
+        }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+</head>
+<body>
+
+    <div id="top-container">
+        <nav class="menu">
+            <a href="index.html" class="highlight">HOME</a>
+            <a href="about.html" class="highlight">ABOUT</a>
+            <a href="music.html" class="highlight">MUSIC</a>
+            <a href="scores.html" class="highlight">SCORES</a>
+            <a href="articles.html" class="highlight">ARTICLES</a>
+            <a href="books.html" class="highlight">BOOKS</a>
+            <a href="https://github.com/alib65" target="_blank" class="highlight">CODE</a>
+            <a href="news.html" class="highlight">NEWS</a>
+            <a href="https://alibalighi.bandcamp.com/" target="_blank" class="highlight">BANDCAMP</a>
+            <a href="https://www.youtube.com/@AliBalighi" target="_blank" class="highlight">YOUTUBE</a>
+            <a href="contact.html" class="highlight">CONTACT</a>
+        </nav>
+    </div>
+
+    <div id="content-wrapper">
+        <div class="content-box">
+            <ol class="music-list">
+                
+                <li class="music-item">
+                    <div class="piece-title">“The wind will carry us away for Strings and fixed media (8-channel)” 
+                        <span class="media-links">[<a href="https://www.youtube.com/watch?v=vS2xr9f8kuA" target="_blank">Video</a>]</span>
+                    </div>
+                    <ul class="performance-list">
+                        <li>2025, Thomas Tull Concert Hall of the Edward and Joyce Linde Music Building at MIT, Cambridge, Massachusetts</li>
+                    </ul>
+                </li>
+
+                <li class="music-item">
+                    <div class="piece-title">“Song of Trash” 
+                        <span class="media-links">[<a href="https://www.youtube.com/watch?v=NDToNWrAB3o" target="_blank">Video</a>, <a href="https://github.com/alib65/Sound-of-Trash" target="_blank">Code</a>]</span>
+                    </div>
+                    <ul class="performance-list">
+                        <li>2025, Laboratorio de Ecología Acústica en México LEAM, Mexico</li>
+                    </ul>
+                </li>
+
+                <li class="music-item">
+                    <div class="piece-title">“Daramad - A Solo for Marimba” 
+                        <span class="media-links">[<a href="https://www.youtube.com/watch?v=H5GtsY-9fuA" target="_blank">Video</a>]</span>
+                    </div>
+                    <ul class="performance-list">
+                        <li>2025, Composition Recital, Texas Tech University, USA</li>
+                    </ul>
+                </li>
+
+                <li class="music-item">
+                    <div class="piece-title">“Love in Exile” 
+                        <span class="media-links">[<a href="https://youtu.be/hLOe_43UqpA?si=nphFRlCiIcbs0i4C" target="_blank">Video-Art I</a>, <a href="https://youtu.be/9XFpDcII39o?si=3UVslmvo91hXJcJw" target="_blank">II</a>, <a href="https://youtu.be/yBDLYzr2naU?si=yfXl2dZpECoAWMsZ" target="_blank">III</a>, <a href="https://youtu.be/PJhb2wcIeBI?si=YuknsogJUNfdDc3R" target="_blank">IV</a>, <a href="https://youtu.be/6oQQH3Rc7DY?si=Tdp9UnLu2K2oTGZr" target="_blank">V</a>, <a href="https://alibalighi.bandcamp.com/album/radif-of-iranian-music-love-in-exile" target="_blank">Audio</a>]</span>
+                    </div>
+                    <ul class="performance-list">
+                        <li>2025, MUSLAB, Quito, Ecuador</li>
+                        <li>2024, Podcast, The Moderns ep. 345 by Kevin Press, USA</li>
+                    </ul>
+                </li>
+
+                <li class="music-item">
+                    <div class="piece-title">“Dastgah: Algorithmic Explorations of Persian Microtonality and Serialism” 
+                        <span class="media-links">[<a href="https://alibalighi.bandcamp.com/album/dastgah-algorithmic-explorations-of-persian-microtonality-and-serialism" target="_blank">Audio</a>, <a href="https://github.com/alib65/dastgah-supercollider" target="_blank">Code</a>]</span>
+                    </div>
+                    <ul class="performance-list">
+                        <li>2025, NACUSA (National Association of Composers), USA</li>
+                    </ul>
+                </li>
+
+                <li class="music-item">
+                    <div class="piece-title">"Electropoem No. 12 (4-channel)" 
+                        <span class="media-links">[<a href="https://alibalighi.bandcamp.com/album/electropoem-no-12-for-4-channel" target="_blank">Audio</a>]</span>
+                    </div>
+                    <ul class="performance-list">
+                        <li>2025, NOIS//E Festival 2025 — Nature, Art and Sound in Post-Places, Calabria, Italy</li>
+                        <li>2025, Ignite the Arts, Penticton, Canada</li>
+                        <li>2025, Marginale Festival, Napli Totale Elettronica, Napoli, Italy</li>
+                        <li>2025, Sonic Nomads, Seoul, South Korea</li>
+                        <li>2025, Saabrücker Tage für elektroakustische und visuelle Musik, Germany</li>
+                    </ul>
+                </li>
+
+                <li class="music-item">
+                    <div class="piece-title">“Elegy in Dashti” 
+                        <span class="media-links">[<a href="https://youtu.be/_b-DzZdDoKo?si=bK6DtwtirQgQX8CV" target="_blank">Video</a>, <a href="https://escholarship.org/uc/item/1v63f227" target="_blank">Score</a>]</span>
+                    </div>
+                    <ul class="performance-list">
+                        <li>2024, Lawrence University New Music Ensemble, Lawrence Memorial Chapel, Appleton, Wisconsin, USA</li>
+                    </ul>
+                </li>
+
+                <li class="music-item">
+                    <div class="piece-title">“Interwoven Soundscapes I for clarinet in B-flat and fixed media” 
+                        <span class="media-links">[<a href="https://youtu.be/bu-N3zkt24M?si=agt28yG96wiDUJzK" target="_blank">Video</a>]</span>
+                    </div>
+                    <ul class="performance-list">
+                        <li>2025, Texas Tech University, Lubbock, Texas, USA, Hamed Shadad, clarinet in b-flat</li>
+                    </ul>
+                </li>
+
+                <li class="music-item">
+                    <div class="piece-title">“Home is Far Away (Video Art)” 
+                        <span class="media-links">[<a href="https://www.youtube.com/watch?v=WVOPsivP1wg&list=PL6lKXOdo_pfHCxGFZPT0He1HdIwcdEjal" target="_blank">Video</a>, <a href="https://alibalighi.bandcamp.com/album/radif-of-iranian-music-home-is-far-away" target="_blank">Audio</a>]</span>
+                    </div>
+                    <ul class="performance-list">
+                        <li>2025, La Hora Acusmática, Argentina</li>
+                    </ul>
+                </li>
+
+                <li class="music-item">
+                    <div class="piece-title">“Electropoem No. 10 (4-channel)” 
+                        <span class="media-links">[<a href="https://alibalighi.bandcamp.com/album/electropoem-no-10-for-4-channel" target="_blank">Audio</a>]</span>
+                    </div>
+                    <ul class="performance-list">
+                        <li>2025, Composition Recital, Texas Tech University, Lubbock, Texas, USA</li>
+                    </ul>
+                </li>
+
+                <li class="music-item">
+                    <div class="piece-title">"Electropoem No. 4 (4-channel)" 
+                        <span class="media-links">[<a href="https://alibalighi.bandcamp.com/album/electropoem-no-4-for-4-channel" target="_blank">Audio</a>]</span>
+                    </div>
+                    <ul class="performance-list">
+                        <li>2025, Podcast, The Moderns ep. 375 by Kevin Press, USA</li>
+                    </ul>
+                </li>
+
+                <li class="music-item">
+                    <div class="piece-title">“Zone 19: An Algorithmic Journey Through the 19-EDO Soundscape” 
+                        <span class="media-links">[<a href="https://alibalighi.bandcamp.com/album/zone-19-an-algorithmic-journey-through-the-19-edo-soundscape" target="_blank">Audio</a>]</span>
+                    </div>
+                    <ul class="performance-list">
+                        <li>2025, Podcast, The Moderns ep. 380 by Kevin Press, USA</li>
+                    </ul>
+                </li>
+
+                <li class="music-item">
+                    <div class="piece-title">“You’re the lyric”</div>
+                    <ul class="performance-list">
+                        <li>2025, TellTale Opera Theatre, Baltimore, Maryland, USA <a href="https://youtu.be/rKivDc7D4I8?si=vY_cajG_kRiMAoKZ" class="perf-media-link" target="_blank">[Video]</a></li>
+                        <li>2024, Texas Tech University, Lubbock, Texas, USA <a href="https://youtu.be/QAfSIOMaQFA?si=ABKbU0yNtNMCH_HW" class="perf-media-link" target="_blank">[Video]</a></li>
+                    </ul>
+                </li>
+
+                <li class="music-item">
+                    <div class="piece-title">“Odyssey in Soundscape: An Algorithmic Journey Through the 19-EDO Microtonal Universe” 
+                        <span class="media-links">[<a href="https://alibalighi.bandcamp.com/album/odyssey-in-soundscape-an-algorithmic-journey-through-the-19-edo-microtonal-universe" target="_blank">Audio</a>]</span>
+                    </div>
+                    <ul class="performance-list">
+                        <li>2025, Immersive Festival 2025, at Lisboa Incomum, in Lisbon, Portugal</li>
+                        <li>2025, Podcast, The Moderns ep. 365 by Kevin Press, USA</li>
+                    </ul>
+                </li>
+                
+                <li class="music-item">
+                    <div class="piece-title">“The Mute Choir of the Streets”</div>
+                    <ul class="performance-list">
+                        <li>2025, Queens Tape Music Festival / World of Tomorrow, New York, USA</li>
+                        <li>2025, School of Music, Texas Tech University, Lubbock, Texas, USA</li>
+                    </ul>
+                </li>
+
+                <li class="music-item">
+                    <div class="piece-title">“Interwoven Soundscapes II for flute and fixed media”</div>
+                    <ul class="performance-list">
+                        <li>2025, Eastern Illinois University, Department of Music, USA, Meysam Ghodrati</li>
+                    </ul>
+                </li>
+
+                <li class="music-item">
+                    <div class="piece-title">“Electropoem No. 6 for 4-channel” 
+                        <span class="media-links">[<a href="https://alibalighi.bandcamp.com/album/electropoem-no-6-for-4-channel-and-8-channel" target="_blank">Audio</a>]</span>
+                    </div>
+                    <ul class="performance-list">
+                        <li>2025, Tehran international Electronic Music Festival, Tehran, Iran</li>
+                        <li>2025, Podcast, The Moderns ep. 352 by Kevin Press, USA</li>
+                    </ul>
+                </li>
+
+                <li class="music-item">
+                    <div class="piece-title">“Ay Adamha!” for Clarinet Quartet 
+                        <span class="media-links">[<a href="https://youtu.be/dwPP6iNDg24?si=wWWJn2kbFlz-q9_6" target="_blank">Video</a>, <a href="https://escholarship.org/uc/item/19x1446v" target="_blank">Score</a>]</span>
+                    </div>
+                    <ul class="performance-list">
+                        <li>2025, Texas Tech University, Lubbock, Texas, USA, Omni Quartet</li>
+                    </ul>
+                </li>
+
+                <li class="music-item">
+                    <div class="piece-title">“Ghazal-e Vay” 
+                        <span class="media-links">[<a href="https://alibalighi.bandcamp.com/album/ghazale-vay" target="_blank">Audio</a>, <a href="https://youtu.be/Yay8Y6nnto0?si=9z3BKWwlwXr7IWp7" target="_blank">Video</a>, <a href="https://youtu.be/G9VOI6USfIw?si=K8Ns-TNLflhxoyiR" target="_blank">Video-score</a>, <a href="https://escholarship.org/uc/item/1ps928qn" target="_blank">Score</a>]</span>
+                    </div>
+                    <ul class="performance-list">
+                        <li>2024, Texas Tech University, Lubbock, Texas, USA, Hamed Shadad, clarinet in b-flat</li>
+                    </ul>
+                </li>
+
+                <li class="music-item">
+                    <div class="piece-title">“Radif of Iranian Music: Love in Exile”</div>
+                    <ul class="performance-list">
+                        <li>2024, Podcast, The Moderns ep. 345 by Kevin Press, USA</li>
+                    </ul>
+                </li>
+
+                <li class="music-item">
+                    <div class="piece-title">“Qaf Mount Ballet” 
+                        <span class="media-links">[<a href="https://alibalighi.bandcamp.com/album/qaf-mount-ballet" target="_blank">Audio</a>]</span>
+                    </div>
+                    <ul class="performance-list">
+                        <li>2024, Experimental Radio Festival, Institute of Sonology, the Hague, the Netherlands</li>
+                        <li>2024, Podcast, The Moderns ep. 313 by Kevin Press, USA</li>
+                    </ul>
+                </li>
+
+                <li class="music-item">
+                    <div class="piece-title">“Vacuum State for One or More Instruments” 
+                        <span class="media-links">[<a href="https://youtu.be/AasHG1fgCME?si=wQxIb--mCW5PXMrH" target="_blank">Video</a>, <a href="https://youtu.be/heK-amAWV4Q?si=t5FDBEuD0I0Au20u" target="_blank">Video-score</a>, <a href="https://escholarship.org/uc/item/6cr7f4bp" target="_blank">Score</a>]</span>
+                    </div>
+                    <ul class="performance-list">
+                        <li>2024, Texas Tech University, Lubbock, Texas, USA, Hamed Shadad, clarinet in b-flat, Ali Balighi, piano</li>
+                    </ul>
+                </li>
+
+                <li class="music-item">
+                    <div class="piece-title">“Saz-o-Dohol for Clarinet in B-flat and Timpani” 
+                        <span class="media-links">[<a href="https://alibalighi.bandcamp.com/album/ghazale-vay" target="_blank">Audio</a>, <a href="https://youtu.be/ry7Lx7GNavE?si=ldJtNqnV9nlFPDGc" target="_blank">Video</a>, <a href="https://youtu.be/guGyTzmmt2g?si=IU4lHmIMdRY7gMR0" target="_blank">Video-score</a>, <a href="https://escholarship.org/uc/item/6dr6x1sg" target="_blank">Score</a>]</span>
+                    </div>
+                    <ul class="performance-list">
+                        <li>2023, Texas Tech University, Lubbock, Texas, USA, Hamed Shadad, clarinet in b-flat, Kyle Buentello, timpani</li>
+                    </ul>
+                </li>
+
+                <li class="music-item">
+                    <div class="piece-title">“Gerd-bad for Clarinet in B-flat and Fixed Media” 
+                        <span class="media-links">[<a href="https://youtu.be/bIBqdNjbhn4?si=vm1ZkHy8oBlczGkk" target="_blank">Video</a>, <a href="https://youtu.be/eqtt7QTaQm8?si=Q1X4DpxXYRByFubz" target="_blank">Video-score</a>, <a href="https://escholarship.org/uc/item/9qd5r5c4" target="_blank">Score</a>]</span>
+                    </div>
+                    <ul class="performance-list">
+                        <li>2024, 6th Tehran International Electronic Music Festival, Tehran, Iran, Hamed Shadad, clarinet in b-flat</li>
+                        <li>2023, Texas Tech University, Lubbock, Texas, USA, Hamed Shadad, clarinet in b-flat</li>
+                    </ul>
+                </li>
+
+                <li class="music-item">
+                    <div class="piece-title">“Whispers of Papers” 
+                        <span class="media-links">[<a href="https://alibalighi.bandcamp.com/album/whispers-of-papers-2" target="_blank">Audio</a>]</span>
+                    </div>
+                    <ul class="performance-list">
+                        <li>2023, Texas Tech University, Lubbock, Texas, USA, Ali Balighi, electronics</li>
+                        <li>2023, Podcast, The Moderns ep. 282 by Kevin Press, USA</li>
+                    </ul>
+                </li>
+
+                <li class="music-item">
+                    <div class="piece-title">“A Song Below Water for Alto Saxophone, Bassoon, Timpani, Piano and Live Electronics” 
+                        <span class="media-links">[<a href="https://alibalighi.bandcamp.com/album/ghazale-vay" target="_blank">Audio</a>, <a href="https://youtu.be/jZgsm9DwhMQ?si=uYAdVfmgAwJ9ITJ_" target="_blank">Video</a>]</span>
+                    </div>
+                    <ul class="performance-list">
+                        <li>2023, Texas Tech University, Lubbock, Texas, USA, Ting Ting Goh, piano, Austin Perry, bassoon, Matt Fowler, alto saxophone, Dr. Michael Mixtacki, timpani, Brad Cawyer, conductor</li>
+                    </ul>
+                </li>
+
+                <li class="music-item">
+                    <div class="piece-title">“Don’t Remember for One or More Instruments” 
+                        <span class="media-links">[<a href="https://youtu.be/2mdfKCEgP2U?si=KZ8A9FndbYv9xcdH" target="_blank">Video</a>, <a href="https://escholarship.org/uc/item/18p9m72m" target="_blank">Score</a>]</span>
+                    </div>
+                    <ul class="performance-list">
+                        <li>2023, Texas Tech University, Lubbock, Texas, USA, Hamed Shadad, clarinet in B-flat, Ali Balighi, Piano</li>
+                    </ul>
+                </li>
+
+                <li class="music-item">
+                    <div class="piece-title">“Rumor for One or More Instruments” 
+                        <span class="media-links">[<a href="https://youtu.be/33Xd-s3OzJg?si=wupWsf6YjkoBnvQK" target="_blank">Video</a>, <a href="https://escholarship.org/uc/item/87m729hh" target="_blank">Score</a>]</span>
+                    </div>
+                    <ul class="performance-list">
+                        <li>2023, Texas Tech University, Lubbock, Texas, USA, Hamed Shadad, clarinet in B-flat, Ali Balighi, Piano</li>
+                    </ul>
+                </li>
+
+                 <li class="music-item">
+                    <div class="piece-title">“Meditation for Bass Saxophone and live Electronics (Max/MSP)”</div>
+                    <ul class="performance-list">
+                        <li>2023, Hemmle Recital Hall, Texas Tech University, Lubbock, Texas, Natalie Wilson</li>
+                    </ul>
+                </li>
+
+                <li class="music-item">
+                    <div class="piece-title">“LAL-BAZI for Soprano, Bass Clarinet and Percussion (Tombak)” 
+                        <span class="media-links">[<a href="https://www.youtube.com/watch?v=r_Ob3rj5EUE&list=RDr_Ob3rj5EUE&start_radio=1" target="_blank">Video</a>, <a href="https://www.youtube.com/watch?v=Pga92B84-Yk" target="_blank">Video-score</a>, <a href="https://escholarship.org/uc/item/3q87t010" target="_blank">Score</a>]</span>
+                    </div>
+                    <ul class="performance-list">
+                        <li>2022, Scholes Street Studio, New York City, USA, Sputter Box ensemble</li>
+                    </ul>
+                </li>
+
+                <li class="music-item">
+                    <div class="piece-title">“Rang-ha for Clarinet in Bb and Live Electronics”</div>
+                    <ul class="performance-list">
+                        <li>2022, Texas Tech University, Lubbock, Texas, USA, Vicente Pedroza, clarinet in B-flat</li>
+                    </ul>
+                </li>
+
+                <li class="music-item">
+                    <div class="piece-title">“Korsoo for Alto Saxophone, Tenor Saxophone and Fixed Media” 
+                        <span class="media-links">[<a href="https://soundcloud.com/alibalighi/korsoo-for-alto-saxophone-tenor-saxophone-and-fixed-media?si=66ab6c6222294c8c95d786ca28a31785&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" target="_blank">Audio</a>]</span>
+                    </div>
+                    <ul class="performance-list">
+                        <li>2022, Morris R. Pitman Recital Hall, the University of Oklahoma, Parrington Oval, Norman, Parker Fritz, alto saxophone, Justin Evangelist, tenor saxophone</li>
+                    </ul>
+                </li>
+                
+                <li class="music-item">
+                    <div class="piece-title">“The Denseness of Loneliness” 
+                        <span class="media-links">[<a href="https://youtu.be/25Ennd-nioE?si=1PZtaZorVDUW9ypp" target="_blank">Video</a>]</span>
+                    </div>
+                    <ul class="performance-list">
+                        <li>2022, Hemmle Recital Hall, Texas Tech University, Lubbock, Texas, USA, Mysterium Ensemble</li>
+                    </ul>
+                </li>
+                
+                <li class="music-item">
+                    <div class="piece-title">“Still Life (video art)”</div>
+                    <ul class="performance-list">
+                        <li>2024, SPAM New Media Festival, University of Washington, Seattle, Washington, USA</li>
+                        <li>2022, the NoiseFloor UK Music Festival at Staffordshire University, Stoke-on-Trent, the UK</li>
+                        <li>2022, Hemmle Recital Hall, Texas Tech University, Lubbock, Texas, USA</li>
+                    </ul>
+                </li>
+
+                <li class="music-item">
+                    <div class="piece-title">“Memory for Piano and Fixed Media (4 channels)”</div>
+                    <ul class="performance-list">
+                        <li>2021, Toronto, Canada, Anoush Moazzeni</li>
+                    </ul>
+                </li>
+                
+                <li class="music-item">
+                    <div class="piece-title">“Electropoem In 41.68 Hz Nr. 3”</div>
+                    <ul class="performance-list">
+                        <li>2023, the School of Music, Texas Tech University, Lubbock, Texas, USA, Ali Balighi</li>
+                        <li>2024, Lost and Found Sounds, Sydney, Australia</li>
+                    </ul>
+                </li>
+                
+                 <li class="music-item">
+                    <div class="piece-title">“Liberation Rhapsody” 
+                        <span class="media-links">[<a href="https://noise-a-noise.bandcamp.com/track/liberation-rhapsody" target="_blank">Audio</a>]</span>
+                    </div>
+                    <ul class="performance-list">
+                        <li>2023, Texas Tech University, Lubbock, Texas, USA, Ali Balighi</li>
+                        <li>2024, Lost and Found Sounds, Sydney, Australia</li>
+                    </ul>
+                </li>
+
+                <li class="music-item">
+                    <div class="piece-title">“Who am I? for Clarinet in B-flat and Fixed Media” 
+                        <span class="media-links">[<a href="https://youtu.be/KwTNMx381Tw?si=0Cikk3QXP07dUKu4" target="_blank">Video</a>]</span>
+                    </div>
+                    <ul class="performance-list">
+                        <li>2023, ClarinetFest, Colorado State University, Fort Collins, Colorado, USA, Kathryn Vetter</li>
+                        <li>2021, Recital Hall, Staller Center for the Arts, Stony Brook University, Stony Brook, New York, Kathryn Vetter</li>
+                        <li>2020, Cortona Sessions for New Music in a virtual festival from Akoesticum, Netherlands due to coronavirus pandemic, Kathryn Vetter</li>
+                    </ul>
+                </li>
+
+                <li class="music-item">
+                    <div class="piece-title">“Daramad for Tar and Fixed Media” 
+                        <span class="media-links">[<a href="https://youtu.be/gCpTUPoS-ws?si=wmxIrSqCex9g1BTo" target="_blank">Video-Art</a>]</span>
+                    </div>
+                    <ul class="performance-list">
+                        <li>2025, the 7th Tehran Electronic Festival, Tehran, Iran, Alireza Aghighi</li>
+                        <li>2021, Hot Air Music Festival, San Francisco Conservatory of Music, San Francisco, California</li>
+                        <li>2021, the NoiseFloor UK Music Festival, Staffordshire University, Stoke-on-Trent, UK</li>
+                        <li>2020, The opening of Yarava electronic studio, Tehran, Iran, Golnaz Khalili</li>
+                        <li>2020, Selected for Season Fall 2020 of Followmyscore on www.scorefollower.org</li>
+                        <li>2020, The fourth annual ROCC at the University of North Georgia, Dahlonega, Georgia, USA, Golnaz Khalili</li>
+                    </ul>
+                </li>
+
+                <li class="music-item">
+                    <div class="piece-title">“Daramad for Soprano Saxophone, Tenor Saxophone and Fixed Media” 
+                        <span class="media-links">[<a href="https://youtu.be/v-RUXwgDEt8?si=lWA4Jk2XL8W3MeDB" target="_blank">Video</a>]</span>
+                    </div>
+                    <ul class="performance-list">
+                        <li>2020, the University of Oklahoma, Parrington Oval, Norman, USA, Zen Duo</li>
+                    </ul>
+                </li>
+
+                <li class="music-item">
+                    <div class="piece-title">“Daramad for Three Sopranos and Fixed Media” 
+                        <span class="media-links">[<a href="https://youtu.be/AG2V2HsOFqg?si=OTwMfN9kiwkUwsYw" target="_blank">Video</a>, <a href="https://youtu.be/3yqAHVEt86Y?si=3h389CRefqfbKsrb" target="_blank">Video-Art</a>, <a href="https://youtu.be/wDU5jT-9nmo?si=jZjhTZGNIGJvrItR" target="_blank">Video-score</a>, <a href="https://escholarship.org/uc/item/3vx3r3n1" target="_blank">Score</a>]</span>
+                    </div>
+                    <ul class="performance-list">
+                        <li>2021, the 4th Tehran Electronic Festival, Tehran, Iran</li>
+                        <li>2021, the New York City Electroacoustic Music Festival, New York City, New York, USA</li>
+                        <li>2021, the Audiovisual Frontiers festival, University of California, Riverside, California, USA</li>
+                        <li>2021, the Sonic Matter festival, Zurich, Switzerland</li>
+                        <li>2021, the Lift-off session Online film Festival, the UK</li>
+                        <li>2022, the ICSC 2022 6th International Csound Conference, Tus Midlands, Ireland</li>
+                        <li>2022, Hemmle Recital Hall, the School of Music, Texas Tech University, Lubbock, Texas, USA</li>
+                    </ul>
+                </li>
+
+                <li class="music-item">
+                    <div class="piece-title">“On The Threshold for Soprano, Santoor, Tar, Piano and Fixed Media”</div>
+                    <ul class="performance-list">
+                        <li>2020, Tehran, Iran, the Other ensemble</li>
+                    </ul>
+                </li>
+
+                <li class="music-item">
+                    <div class="piece-title">“Labyrinth” 
+                        <span class="media-links">[<a href="https://noise-a-noise.bandcamp.com/track/01-ali-balighi-labyrinth" target="_blank">Audio</a>]</span>
+                    </div>
+                    <ul class="performance-list">
+                        <li>2021, Sonic Matter festival, Zurich, Switzerland</li>
+                    </ul>
+                </li>
+
+                <li class="music-item">
+                    <div class="piece-title">“Khane-Haftom for Santoor and Fixed Media” 
+                        <span class="media-links">[<a href="https://soundcloud.com/alibalighi/khane-haftom?si=ebaf2c26932c42c49417e5a2014566af&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" target="_blank">Audio</a>]</span>
+                    </div>
+                    <ul class="performance-list">
+                        <li>2025, 3rd Contemporary Music Magazine Festival, Music Museum, Tehran, Soheil Tabatabaei</li>
+                        <li>2024, Electroacoustic Music Festival, School of Art & Architecture, Kurdistan University, Sanandaj, Iran, Soheil Tabatabaei</li>
+                        <li>2020, New York City Electroacoustic Music Festival, New York City, New York, USA, Puneh Zare’i Sefid Dashti</li>
+                        <li>2019, the 3rd Tehran Electronic Festival, Tehran, Iran, Soheil Tabatabaei</li>
+                        <li>2018, The Waterloo Region Contemporary Music Sessions (WRCMS), Waterloo, Ontario, Canada, Puneh Zare’i Sefid Dashti</li>
+                    </ul>
+                </li>
+
+                <li class="music-item">
+                    <div class="piece-title">“Daramad for Piano, Violin, Bassoon and Percussion” 
+                        <span class="media-links">[<a href="https://youtu.be/L3SU0Tt0o_I?si=CsVHtFbh1XSd6o_J" target="_blank">Video</a>, <a href="https://youtu.be/0O8YNfZMeqA?si=9aA3yJlxr8ENXYfC" target="_blank">Video-score</a>]</span>
+                    </div>
+                    <ul class="performance-list">
+                        <li>2019, the University of Michigan, Arbor, Michigan, USA, Front Porch ensemble</li>
+                    </ul>
+                </li>
+
+                <li class="music-item">
+                    <div class="piece-title">“Too Loud a Solitude for Cello and Live Electronics (Max/MSP)” 
+                        <span class="media-links">[<a href="https://soundcloud.com/alibalighi/too-loud-a-solitude?si=216d390212774b01b5376c189aacf857&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" target="_blank">Audio</a>]</span>
+                    </div>
+                    <ul class="performance-list">
+                        <li>2018, the 2nd Tehran Electronic Festival, Avini Hall, University of Tehran, Tehran, Iran, Ulrike Brand and Ali Balighi</li>
+                        <li>2019, Sprengel Museum, Hanover, Germany, Ulrike Brand and Ali Balighi</li>
+                        <li>2019, Vilnius, Lithuania, Twenty Fingers Duo</li>
+                    </ul>
+                </li>
+                
+                <li class="music-item">
+                    <div class="piece-title">“Chahar-Rah for 6 Laptops (Max/MSP)” 
+                        <span class="media-links">[<a href="https://soundcloud.com/alibalighi/chahar-rahsynthbeats?si=fa090c978d014fa9bb4068cfc027bfc7&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" target="_blank">Audio</a>]</span>
+                    </div>
+                    <ul class="performance-list">
+                        <li>2019, International Computer Music Conference and New York City Electroacoustic Music Festival, Loreto Theater, New York City, New York, USA, SynthBeats</li>
+                        <li>2018, Blackbox theatre, Stony Brook University, Stony Brook, New York, USA, SynthBeats</li>
+                    </ul>
+                </li>
+
+                <li class="music-item">
+                    <div class="piece-title">“A Little Piece for Violin and Live Electronics (Max/MSP)” 
+                        <span class="media-links">[<a href="https://soundcloud.com/alibalighi/a-little-piece-for-violin-and-live-electronics-ali-balighi?si=c53e02e8a2444c19948cdbc8898ad645&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" target="_blank">Audio</a>]</span>
+                    </div>
+                    <ul class="performance-list">
+                        <li>2018, Tehran, Iran, Neda Asadi Nejad</li>
+                        <li>2018, UnTwelve composition competition as special mention, Neda Asadi Nejad</li>
+                    </ul>
+                </li>
+
+                <li class="music-item">
+                    <div class="piece-title">“Walking in The Darkness for Santoor” 
+                        <span class="media-links">[<a href="https://www.youtube.com/watch?v=0_6P4EwKkyA" target="_blank">Video</a>]</span>
+                    </div>
+                    <ul class="performance-list">
+                        <li>2018, invited by Tulkinnanvaraista, Viikki Church, Helsinki, Finland, Puneh Zare’i Sefid Dashti</li>
+                        <li>2017, the 2nd Tehran Contemporary Music Festival, Rodaki Hall, Tehran, Iran, Puneh Zare’i Sefid Dashti</li>
+                    </ul>
+                </li>
+                
+                <li class="music-item">
+                    <div class="piece-title">“Daramad for Clarinet in B-flat, Baritone Saxophone & Harp”</div>
+                    <ul class="performance-list">
+                        <li>2018, McIntosh Theatre, the University of Michigan, Ann Arbor, Michigan, USA, The _______ Experiment</li>
+                    </ul>
+                </li>
+                
+                <li class="music-item">
+                    <div class="piece-title">“5 Poems for Piano”</div>
+                    <ul class="performance-list">
+                        <li>2018, Krakow, Poland, Ludger Hofmann-Engl</li>
+                    </ul>
+                </li>
+                
+                <li class="music-item">
+                    <div class="piece-title">“The Birth of Tragedy for Santoor and Fixed Media” 
+                        <span class="media-links">[<a href="https://soundcloud.com/alibalighi/the-birth-of-tragedy-for-santor-and-fix-media" target="_blank">Audio</a>]</span>
+                    </div>
+                    <ul class="performance-list">
+                        <li>2019, Tehran, Iran, Puneh Zare’i Sefid Dashti</li>
+                        <li>2018, the 3rd Tehran Contemporary Music Festival, Tehran, Iran, Ladan Sheikhi</li>
+                        <li>2018, Ghent, Belgium, Puneh Zare’i Sefid Dashti</li>
+                    </ul>
+                </li>
+
+                 <li class="music-item">
+                    <div class="piece-title">“Daramad for Accordion”</div>
+                    <ul class="performance-list">
+                        <li>2017, the Canadian Music Centre, Toronto, Canada, Michael Bridge</li>
+                    </ul>
+                </li>
+
+            </ol>
+        </div>
+    </div>
+
+    <script>
+        const PARTICLE_COUNT = 15000;
+        let scene, camera, renderer, system;
+        let positions, time = 0;
+
+        init();
+        animate();
+
+        function init() {
+            scene = new THREE.Scene();
+            scene.fog = new THREE.FogExp2(0x000000, 0.001);
+
+            camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 3000);
+            // Camera slightly above looking down at the waves
+            camera.position.set(0, 300, 600);
+            camera.lookAt(0, 0, 0);
+
+            renderer = new THREE.WebGLRenderer({ antialias: true });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setPixelRatio(window.devicePixelRatio);
+            document.body.appendChild(renderer.domElement);
+
+            positions = new Float32Array(PARTICLE_COUNT * 3);
+
+            // Create a grid of particles on the floor (X-Z plane)
+            let i = 0;
+            const gridSize = 150; 
+            const spacing = 15;
+            
+            for(let x = 0; x < gridSize; x++) {
+                for(let z = 0; z < gridSize; z++) {
+                    if (i >= PARTICLE_COUNT * 3) break;
+                    
+                    const px = (x - gridSize/2) * spacing;
+                    const pz = (z - gridSize/2) * spacing;
+                    
+                    positions[i] = px;     // x
+                    positions[i+1] = 0;    // y (will be animated)
+                    positions[i+2] = pz;   // z
+                    
+                    i += 3;
+                }
+            }
+
+            const geometry = new THREE.BufferGeometry();
+            geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+
+            const material = new THREE.PointsMaterial({
+                color: 0xffffff,
+                size: 1.5,
+                transparent: true,
+                opacity: 0.7,
+                blending: THREE.AdditiveBlending
+            });
+
+            system = new THREE.Points(geometry, material);
+            scene.add(system);
+
+            window.addEventListener('resize', () => {
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(window.innerWidth, window.innerHeight);
+            });
+        }
+
+        function animate() {
+            requestAnimationFrame(animate);
+            time += 0.04; // Speed of the ripples
+
+            const posAttribute = system.geometry.attributes.position;
+            const posArray = posAttribute.array;
+
+            for(let i=0; i < posArray.length; i+=3) {
+                const x = posArray[i];
+                const z = posArray[i+2];
+
+                // Create a "Digital Wave" effect: 
+                // Using Sine waves based on distance from center + independent ripples
+                
+                const dist = Math.sqrt(x*x + z*z);
+                
+                // Main ripple radiating out
+                const wave1 = Math.sin(dist * 0.01 - time) * 30;
+                
+                // Secondary interfering wave
+                const wave2 = Math.cos(x * 0.02 + time) * Math.sin(z * 0.02 + time) * 20;
+
+                // Combine them
+                posArray[i+1] = wave1 + wave2;
+            }
+
+            posAttribute.needsUpdate = true;
+
+            // Subtle rotation of the entire system for dynamism
+            system.rotation.y = time * 0.05;
+
+            renderer.render(scene, camera);
+        }
+    </script>
+</body>
+</html>
