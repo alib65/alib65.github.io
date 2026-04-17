@@ -8,34 +8,119 @@
   <meta name="author" content="Ali Balighi">
   <title>Ali Balighi - Composer | Electronic, Electroacoustic & Contemporary Music</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500&family=Space+Mono&display=swap" rel="stylesheet">
+  
   <style>
+    :root {
+      --bg-color: #08080A; /* Deep Charcoal / Off-black */
+      --text-main: #F4F0EB; /* Bone white */
+      --text-dim: #888888;
+      --accent-color: #ff0000; /* Red */
+    }
+
     body {
       margin: 0;
       overflow: hidden;
-      background-color: #000000;
-      font-family: 'Courier New', Courier, monospace;
+      background-color: var(--bg-color);
     }
+    
     canvas { display: block; }
+
+    /* --- Digital Grain (Noise Overlay) --- */
+    body::after {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      opacity: 0.04; /* Very subtle texture */
+      pointer-events: none;
+      z-index: 9999;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+    }
 
     /* --- FULL-WIDTH CENTERED CONTAINER --- */
     #center-container {
       position: absolute;
       top: 50%;
       left: 0;
-      transform: translateY(-50%); /* Centers vertically */
+      transform: translateY(-50%);
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 25px; /* Space between identity and menu */
+      gap: 35px; /* Spacious layout */
       z-index: 100;
       
-      /* Full-width flat black background styling */
-      background: rgba(0, 0, 0, 0.85); 
-      padding: 40px 0; /* Padding top and bottom, full width takes care of sides */
+      /* Liminal Blur: Semi-transparent dark band */
+      background: rgba(8, 8, 10, 0.65); 
+      padding: 50px 0; 
       width: 100%;
-      backdrop-filter: blur(5px); /* Soft blur for the particles behind */
+      backdrop-filter: blur(10px); /* Frosted glass effect */
+      -webkit-backdrop-filter: blur(10px);
+      border-top: 1px solid rgba(244, 240, 235, 0.05);
+      border-bottom: 1px solid rgba(244, 240, 235, 0.05);
       
-      pointer-events: none; /* Lets you click through empty space */
+      pointer-events: none; 
+    }
+
+    .identity {
+      text-align: center;
+      pointer-events: auto; 
+    }
+
+    .name-text { 
+      font-family: 'Cormorant Garamond', serif; 
+      font-size: 85px; 
+      font-weight: 400;
+      letter-spacing: 4px;
+      color: var(--text-main);
+      margin: 0;
+      line-height: 1;
+    }
+
+    .subtitle-text { 
+      font-family: 'Cormorant Garamond', serif; 
+      font-size: 14px; 
+      letter-spacing: 2px; 
+      color: var(--text-dim);
+      /* text-transform: uppercase; ---> REMOVED THIS LINE */
+      margin-top: 15px;
+    }
+
+    .menu {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 15px;
+      max-width: 90%;
+      pointer-events: auto; 
+    }
+
+    /* The Technical Anchor: Menu Links */
+    .highlight {
+      font-family: 'Cormorant Garamond', serif; 
+      color: var(--text-dim);
+      padding: 6px 12px;
+      text-decoration: none;
+      font-size: 11px;
+      letter-spacing: 2px;
+      border: 1px solid transparent;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      user-select: none;
+      text-transform: uppercase;
+    }
+
+    /* The Rupture: Hover state */
+    .highlight:hover {
+      color: var(--accent-color);
+      border-color: rgba(255, 0, 0, 0.3);
+      text-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
+      background: rgba(255, 0, 0, 0.05);
     }
 
     #pause-container {
@@ -45,66 +130,28 @@
       z-index: 101;
     }
 
-    .menu {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 10px;
-      max-width: 95%;
-      pointer-events: auto; /* Re-enable clicks for menu */
-    }
-
-    .identity {
-      text-align: center;
-      pointer-events: auto; /* Re-enable clicks for identity */
-    }
-
-    .highlight {
-      background-color: white;
-      color: black;
-      padding: 5px 8px;
-      text-decoration: none;
-      font-weight: normal;
-      font-size: 16px;
-      display: inline-block;
-      transition: opacity 0.2s, transform 0.2s, background-color 0.2s;
-      cursor: pointer;
-      user-select: none;
-    }
-
-    .highlight:hover {
-      opacity: 0.8;
-      transform: scale(1.05);
-    }
-
     .red-highlight {
-      background-color: #b30000;
-      color: white;
+      border: 1px solid rgba(244, 240, 235, 0.2);
+      color: var(--text-dim);
     }
 
     .red-highlight:hover {
-      background-color: #ff0000;
-      opacity: 1;
+      border-color: var(--text-main);
+      color: var(--text-main);
+      background: rgba(255, 255, 255, 0.05);
+      text-shadow: none;
     }
 
-    .name-text { font-size: 76.5px; }
-    .subtitle-text { font-size: 12px; margin-top: 4px; }
-
-    @media (max-width: 600px) {
+    @media (max-width: 768px) {
       #center-container {
-        padding: 25px 0;
+        padding: 35px 0;
+        gap: 25px;
       }
-      #pause-container { bottom: 10px; right: 10px; }
-
-      .highlight {
-        font-size: 11px;
-        padding: 4px 6px;
-        margin-bottom: 2px;
-      }
-
-      .menu { gap: 5px; }
-      .name-text { font-size: 28px; } 
-      .subtitle-text { font-size: 10px; }
+      .name-text { font-size: 42px; letter-spacing: 2px; } 
+      .subtitle-text { font-size: 11px; letter-spacing: 1px; padding: 0 15px; line-height: 1.6; }
+      .menu { gap: 8px; }
+      .highlight { font-size: 10px; padding: 5px 8px; }
+      #pause-container { bottom: 20px; right: 20px; }
     }
   </style>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
@@ -114,8 +161,8 @@
   <div id="center-container">
     
     <div class="identity">
-      <div class="highlight name-text">ALI BALIGHI</div><br />
-      <div class="highlight subtitle-text">Composer & Scholar — electroacoustic, contemporary, and cross-cultural music</div>
+      <h1 class="name-text">Ali Balighi</h1>
+      <div class="subtitle-text">Composer & scholar — electroacoustic, contemporary, and cross-cultural music</div>
     </div>
 
     <nav class="menu">
@@ -136,7 +183,7 @@
   </div>
 
   <div id="pause-container">
-    <div id="pause-btn" class="highlight red-highlight">Pause Animation</div>
+    <div id="pause-btn" class="highlight red-highlight">PAUSE ANIMATION</div>
   </div>
 
   <script>
@@ -165,11 +212,12 @@
 
     function init() {
       scene = new THREE.Scene();
-      scene.fog = new THREE.FogExp2(0x000000, 0.001);
+      // Updated fog to match the new deep charcoal background
+      scene.fog = new THREE.FogExp2(0x08080A, 0.001);
 
       camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 4000);
 
-      renderer = new THREE.WebGLRenderer({ antialias: true, powerPreference: "high-performance" });
+      renderer = new THREE.WebGLRenderer({ antialias: true, powerPreference: "high-performance", alpha: true });
       renderer.setSize(window.innerWidth, window.innerHeight);
       renderer.setPixelRatio(window.devicePixelRatio);
       document.body.appendChild(renderer.domElement);
@@ -188,10 +236,10 @@
       geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
 
       const material = new THREE.PointsMaterial({
-        color: 0xffffff,
+        color: 0xF4F0EB, // Changed from pure white to bone white
         size: 0.8,
         transparent: true,
-        opacity: 0.8,
+        opacity: 0.6, // Slightly softer particles
         blending: THREE.AdditiveBlending,
         sizeAttenuation: true
       });
@@ -210,12 +258,12 @@
       });
 
       const pauseBtn = document.getElementById('pause-btn');
-      if (isPaused) pauseBtn.innerText = "Resume Animation";
+      if (isPaused) pauseBtn.innerText = "RESUME ANIMATION";
 
       pauseBtn.addEventListener('click', () => {
         isPaused = !isPaused;
         localStorage.setItem('siteAnimationPaused', isPaused);
-        pauseBtn.innerText = isPaused ? "Resume Animation" : "Pause Animation";
+        pauseBtn.innerText = isPaused ? "RESUME ANIMATION" : "PAUSE ANIMATION";
       });
     }
 
@@ -239,14 +287,13 @@
 
       shapes.length = 0;
 
-      // 01. Flower-of-life arc field (hex circle grid)
+      // 01. Flower-of-life arc field
       shapes.push((() => {
         const spacing = 64;
         const r0 = 22;
         const h = spacing * Math.sqrt(3) / 2;
         const centers = [];
         const R = 320;
-
         for (let j = -8; j <= 8; j++) {
           for (let i = -8; i <= 8; i++) {
             const cx = spacing * (i + j * 0.5);
@@ -254,7 +301,6 @@
             if (cx * cx + cy * cy <= R * R) centers.push([cx, cy]);
           }
         }
-
         return () => {
           const arr = new Float32Array(PARTICLE_COUNT * 3);
           for (let i = 0; i < PARTICLE_COUNT; i++) {
@@ -268,7 +314,7 @@
         };
       })());
 
-      // 02. Square lattice with rotated-square frames
+      // 02. Square lattice
       shapes.push((() => {
         const cell = 70;
         const half = 10;
@@ -277,7 +323,6 @@
         for (let y = -half; y <= half; y++) {
           for (let x = -half; x <= half; x++) centers.push([x * cell, y * cell]);
         }
-
         const edgePoint = (s, e) => {
           const u = (Math.random() - 0.5) * s;
           if (e === 0) return [ s / 2, u];
@@ -285,7 +330,6 @@
           if (e === 2) return [-s / 2, u];
           return [u, -s / 2];
         };
-
         return () => {
           const arr = new Float32Array(PARTICLE_COUNT * 3);
           for (let i = 0; i < PARTICLE_COUNT; i++) {
@@ -300,7 +344,7 @@
         };
       })());
 
-      // 03. Triangular grid, edge-weave
+      // 03. Triangular grid
       shapes.push((() => {
         const s = 62;
         const h = s * Math.sqrt(3) / 2;
@@ -309,17 +353,14 @@
         for (let j = -half; j <= half; j++) {
           for (let i = -half; i <= half; i++) nodes.push([i * s + (j & 1 ? s / 2 : 0), j * h]);
         }
-
         const tri = (up) => {
           const a = [0, 0];
           const b = [s, 0];
           const c = [s / 2, up ? h : -h];
           return [a, b, c];
         };
-
         const TUP = tri(true);
         const TDN = tri(false);
-
         return () => {
           const arr = new Float32Array(PARTICLE_COUNT * 3);
           for (let i = 0; i < PARTICLE_COUNT; i++) {
@@ -335,7 +376,7 @@
         };
       })());
 
-      // 04. Honeycomb (hexagon edge lattice)
+      // 04. Honeycomb
       shapes.push((() => {
         const spacing = 74;
         const h = spacing * Math.sqrt(3) / 2;
@@ -344,14 +385,12 @@
         for (let j = -half; j <= half; j++) {
           for (let i = -half; i <= half; i++) centers.push([spacing * (i + j * 0.5), h * j]);
         }
-
         const R = 26;
         const hex = [];
         for (let k = 0; k < 6; k++) {
           const a = (k / 6) * TAU;
           hex.push([R * Math.cos(a), R * Math.sin(a)]);
         }
-
         return () => {
           const arr = new Float32Array(PARTICLE_COUNT * 3);
           for (let i = 0; i < PARTICLE_COUNT; i++) {
@@ -366,7 +405,7 @@
         };
       })());
 
-      // 05. Octagon frames on a square grid
+      // 05. Octagon frames
       shapes.push((() => {
         const cell = 92;
         const half = 8;
@@ -374,14 +413,12 @@
         for (let y = -half; y <= half; y++) {
           for (let x = -half; x <= half; x++) centers.push([x * cell, y * cell]);
         }
-
         const R = 30;
         const oct = [];
         for (let k = 0; k < 8; k++) {
           const a = (k / 8) * TAU + Math.PI / 8;
           oct.push([R * Math.cos(a), R * Math.sin(a)]);
         }
-
         return () => {
           const arr = new Float32Array(PARTICLE_COUNT * 3);
           for (let i = 0; i < PARTICLE_COUNT; i++) {
@@ -396,7 +433,7 @@
         };
       })());
 
-      // 06. Eight-point star outline (tiled)
+      // 06. Eight-point star
       shapes.push((() => {
         const cell = 92;
         const half = 8;
@@ -404,7 +441,6 @@
         for (let y = -half; y <= half; y++) {
           for (let x = -half; x <= half; x++) centers.push([x * cell, y * cell]);
         }
-
         const R = 34, r = 16;
         const star = [];
         for (let k = 0; k < 16; k++) {
@@ -412,7 +448,6 @@
           const rr = (k & 1) === 0 ? R : r;
           star.push([rr * Math.cos(a), rr * Math.sin(a)]);
         }
-
         return () => {
           const arr = new Float32Array(PARTICLE_COUNT * 3);
           for (let i = 0; i < PARTICLE_COUNT; i++) {
@@ -435,7 +470,6 @@
         for (let y = -half; y <= half; y++) {
           for (let x = -half; x <= half; x++) centers.push([x * cell, y * cell]);
         }
-
         const R = 46;
         return () => {
           const arr = new Float32Array(PARTICLE_COUNT * 3);
@@ -449,12 +483,11 @@
         };
       })());
 
-      // 08. Interlaced strapwork lattice
+      // 08. Interlaced strapwork
       shapes.push((() => {
         const S = 720;
         const A = 22;
         const F = 0.045;
-
         return () => {
           const arr = new Float32Array(PARTICLE_COUNT * 3);
           for (let i = 0; i < PARTICLE_COUNT; i++) {
@@ -468,27 +501,19 @@
         };
       })());
 
-      // 09. Rhombille-style diamonds on a 60° lattice
+      // 09. Rhombille-style diamonds
       shapes.push((() => {
         const cell = 78;
         const half = 8;
         const e1 = [cell, 0];
         const e2 = [cell / 2, cell * Math.sqrt(3) / 2];
-
         const centers = [];
         for (let j = -half; j <= half; j++) {
           for (let i = -half; i <= half; i++) centers.push([i * e1[0] + j * e2[0], i * e1[1] + j * e2[1]]);
         }
-
         const w = 46;
         const h = w * Math.sqrt(3) / 2;
-        const diamond = [
-          [0, -h],
-          [w, 0],
-          [0, h],
-          [-w, 0]
-        ];
-
+        const diamond = [[0, -h], [w, 0], [0, h], [-w, 0]];
         return () => {
           const arr = new Float32Array(PARTICLE_COUNT * 3);
           for (let i = 0; i < PARTICLE_COUNT; i++) {
@@ -507,7 +532,7 @@
         };
       })());
 
-      // 10. Tenfold star field (non-tessellated clustered rosettes)
+      // 10. Tenfold star field
       shapes.push((() => {
         const centers = [];
         for (let i = 0; i < 90; i++) {
@@ -515,7 +540,6 @@
           const r = 80 + Math.random() * 260;
           centers.push([r * Math.cos(a), r * Math.sin(a)]);
         }
-
         const R = 62;
         return () => {
           const arr = new Float32Array(PARTICLE_COUNT * 3);
