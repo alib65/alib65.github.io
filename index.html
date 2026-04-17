@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <link rel="icon" type="image/png" href="logo.png">
-    <meta name="description" content="Official portfolio of Ali Balighi. Explore original works in electronic music, contemporary music, and electroacoustic music. Featuring articles, scores, and research on animated notation and computer music.">
-    <meta name="keywords" content="electronic music, contemporary music, electroacoustic music, computer music, articles, animated notation, Ali Balighi, composer, sound art">
-    <meta name="author" content="Ali Balighi">
+  <meta name="description" content="Official portfolio of Ali Balighi. Explore original works in electronic music, contemporary music, and electroacoustic music. Featuring articles, scores, and research on animated notation and computer music.">
+  <meta name="keywords" content="electronic music, contemporary music, electroacoustic music, computer music, articles, animated notation, Ali Balighi, composer, sound art">
+  <meta name="author" content="Ali Balighi">
   <title>Ali Balighi - Composer | Electronic, Electroacoustic & Contemporary Music</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <style>
@@ -17,26 +17,25 @@
     }
     canvas { display: block; }
 
-    #top-container {
+    /* --- FULL-WIDTH CENTERED CONTAINER --- */
+    #center-container {
       position: absolute;
-      top: 30px;
+      top: 50%;
       left: 0;
-      width: 100%;
+      transform: translateY(-50%); /* Centers vertically */
       display: flex;
-      justify-content: center;
+      flex-direction: column;
+      align-items: center;
+      gap: 25px; /* Space between identity and menu */
       z-index: 100;
-      pointer-events: none;
-    }
-
-    #bottom-container {
-      position: absolute;
-      bottom: 100px;
-      left: 0;
+      
+      /* Full-width flat black background styling */
+      background: rgba(0, 0, 0, 0.85); 
+      padding: 40px 0; /* Padding top and bottom, full width takes care of sides */
       width: 100%;
-      display: flex;
-      justify-content: center;
-      z-index: 100;
-      pointer-events: none;
+      backdrop-filter: blur(5px); /* Soft blur for the particles behind */
+      
+      pointer-events: none; /* Lets you click through empty space */
     }
 
     #pause-container {
@@ -52,12 +51,12 @@
       justify-content: center;
       gap: 10px;
       max-width: 95%;
-      pointer-events: auto;
+      pointer-events: auto; /* Re-enable clicks for menu */
     }
 
     .identity {
       text-align: center;
-      pointer-events: auto;
+      pointer-events: auto; /* Re-enable clicks for identity */
     }
 
     .highlight {
@@ -92,8 +91,9 @@
     .subtitle-text { font-size: 12px; margin-top: 4px; }
 
     @media (max-width: 600px) {
-      #top-container { top: 20px; }
-      #bottom-container { bottom: 30px; }
+      #center-container {
+        padding: 25px 0;
+      }
       #pause-container { bottom: 10px; right: 10px; }
 
       .highlight {
@@ -103,14 +103,21 @@
       }
 
       .menu { gap: 5px; }
-      .name-text { font-size: 20px; }
+      .name-text { font-size: 28px; } 
+      .subtitle-text { font-size: 10px; }
     }
   </style>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 </head>
 <body>
 
-  <div id="top-container">
+  <div id="center-container">
+    
+    <div class="identity">
+      <div class="highlight name-text">ALI BALIGHI</div><br />
+      <div class="highlight subtitle-text">Composer & Scholar — electroacoustic, contemporary, and cross-cultural music</div>
+    </div>
+
     <nav class="menu">
         <a href="index.html" class="highlight">HOME</a>
         <a href="about.html" class="highlight">ABOUT</a>
@@ -125,13 +132,7 @@
         <a href="https://electronicnights.github.io" target="_blank" class="highlight">ELECTRONIC NIGHTS</a>
         <a href="contact.html" class="highlight">CONTACT</a>
     </nav>
-  </div>
-
-  <div id="bottom-container">
-    <div class="identity">
-      <div class="highlight name-text">ALI BALIGHI</div><br />
-      <div class="highlight subtitle-text">Composer | Scholar | Performer | Visual Artist | Creative Coder | Poet</div>
-    </div>
+    
   </div>
 
   <div id="pause-container">
