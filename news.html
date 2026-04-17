@@ -8,161 +8,170 @@
     <meta name="author" content="Ali Balighi">
     <title>News - Ali Balighi</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;700&family=Space+Mono&display=swap" rel="stylesheet">
+
     <style>
+        :root {
+            --bg-color: #000000; /* Simple Pure Black */
+            --text-main: #F4F0EB; /* Bone white */
+            --text-dim: #cccccc; /* Light gray for readability */
+            --text-muted: #888888; /* Muted gray for menu/meta */
+            --accent-color: #ff0000; /* Red */
+            --border-color: rgba(244, 240, 235, 0.15); /* Subtle white for lines */
+        }
+
         /* --- CORE STYLES --- */
         body {
             margin: 0;
-            overflow: hidden;
-            background-color: #000000;
-            font-family: 'Courier New', Courier, monospace;
-        }
-        canvas { 
-            display: block; 
-            position: fixed;
-            top: 0;
-            left: 0;
-            z-index: 0;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: 'Cormorant Garamond', serif;
+            overflow-x: hidden;
         }
 
-        /* --- UI LAYOUT (Menu) --- */
+        /* Page Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #000000; }
+        ::-webkit-scrollbar-thumb { background: #333333; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--accent-color); }
+
+        /* --- UI LAYOUT (Menu & Title) --- */
         #top-container {
-            position: absolute;
-            top: 30px;
-            left: 0;
             width: 100%;
             display: flex;
-            justify-content: center;
-            z-index: 1000;
-            pointer-events: none;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 40px;
+            padding-bottom: 20px;
+            gap: 25px;
         }
 
         .menu {
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
-            gap: 10px;
-            max-width: 95%;
-            pointer-events: auto;
+            gap: 15px;
+            max-width: 90%;
         }
 
         .highlight {
-            background-color: white;
-            color: black;
-            padding: 5px 8px;
+            font-family: 'Cormorant Garamond', serif;
+            color: var(--text-muted);
+            padding: 6px 12px;
             text-decoration: none;
-            font-weight: normal;
-            font-size: 16px;
-            display: inline-block;
-            transition: opacity 0.2s, transform 0.2s, background-color 0.2s;
-            border: 1px solid white;
+            font-size: 11px;
+            letter-spacing: 2px;
+            border: 1px solid transparent;
+            transition: all 0.3s ease;
+            cursor: pointer;
             user-select: none;
+            text-transform: uppercase;
         }
 
         .highlight:hover {
-            opacity: 0.8;
-            cursor: pointer;
-            transform: scale(1.05);
+            color: var(--accent-color);
+            border-color: rgba(255, 0, 0, 0.3);
+            text-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
+            background: rgba(255, 0, 0, 0.05);
+            transform: scale(1.02);
         }
 
-        /* --- PAUSE BUTTON STYLES --- */
-        #pause-container {
-            position: absolute;
-            bottom: 30px;
-            right: 30px;
-            z-index: 1001; /* Higher than content wrapper */
+        /* --- IDENTITY / TITLE STYLES --- */
+        .identity {
+            text-align: center;
         }
 
-        .red-highlight {
-            background-color: #b30000; 
-            color: white;
-            border: none;
+        .name-text { 
+            font-size: 54px; 
+            color: #ffffff;
+            margin: 0;
+            line-height: 1;
+            letter-spacing: 2px;
+            font-weight: 500;
         }
         
-        .red-highlight:hover {
-            background-color: #ff0000; 
-            opacity: 1;
+        .subtitle-text { 
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 13px; 
+            color: #aaaaaa; 
+            margin-top: 12px; 
+            letter-spacing: 1px;
         }
 
         /* --- NEWS CONTENT STYLES --- */
-        
         #content-wrapper {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
             display: flex;
             justify-content: center;
-            align-items: center;
-            z-index: 10;
-            pointer-events: none;
+            padding-bottom: 80px;
         }
 
-        .content-box {
-            background-color: white;
-            color: black;
+        .news-container {
             width: 900px;
             max-width: 90%;
-            max-height: 75vh;
-            margin-top: 60px;
-            padding: 40px;
-            overflow-y: auto;
-            pointer-events: auto;
-            box-shadow: 0 0 50px rgba(255, 255, 255, 0.1);
+            margin-top: 20px;
             display: flex;
             flex-direction: column;
         }
 
-        /* Custom Scrollbar */
-        .content-box::-webkit-scrollbar { width: 8px; }
-        .content-box::-webkit-scrollbar-track { background: #f1f1f1; }
-        .content-box::-webkit-scrollbar-thumb { background: #000; }
-        .content-box::-webkit-scrollbar-thumb:hover { background: #333; }
-
-        /* News Items */
         .news-item {
-            margin-bottom: 30px;
+            margin-bottom: 35px;
             padding-bottom: 20px;
-            border-bottom: 1px dashed #ccc;
+            border-bottom: 1px dashed var(--border-color);
         }
-        .news-item:last-child { border-bottom: none; margin-bottom: 0; }
+        
+        .news-item:last-child { 
+            border-bottom: none; 
+            margin-bottom: 0; 
+        }
 
         .news-title {
-            margin-bottom: 8px;
+            margin-bottom: 10px;
             line-height: 1.4;
         }
 
         /* Red Links */
         .news-title a {
-            font-size: 18px;
-            font-weight: normal;
-            color: #ff0000; /* Red */
+            font-size: 22px;
+            font-weight: 500;
+            color: var(--accent-color); /* Red */
             text-decoration: none;
-            transition: color 0.2s;
+            transition: all 0.2s ease;
+            border-bottom: 1px solid transparent;
         }
 
         .news-title a:hover {
             color: #8b0000; /* Darker Red */
-            text-decoration: underline;
+            border-bottom-style: solid;
+            text-shadow: 0 0 8px rgba(255, 0, 0, 0.4);
         }
 
         .news-meta {
-            font-size: 14px;
-            color: #555;
-            font-style: italic;
+            font-family: 'Space Mono', monospace;
+            font-size: 13px;
+            color: var(--text-dim);
+            letter-spacing: 0.5px;
         }
 
         /* --- MOBILE RESPONSIVENESS --- */
-        @media (max-width: 600px) {
-            #top-container { top: 20px; }
-            #pause-container { bottom: 10px; right: 10px; }
-            .highlight { font-size: 11px; padding: 4px 6px; margin-bottom: 2px; }
-            .menu { gap: 5px; }
-            .content-box { padding: 20px; margin-top: 80px; max-height: 70vh; }
-            .news-title a { font-size: 16px; }
+        @media (max-width: 768px) {
+            #top-container { padding-top: 25px; gap: 20px; }
+            
+            .highlight { 
+                font-size: 10px; 
+                padding: 5px 8px; 
+            }
+            .menu { gap: 8px; }
+
+            .name-text { font-size: 36px; } 
+            .subtitle-text { font-size: 10px; line-height: 1.4; padding: 0 15px; }
+
+            .news-title a { font-size: 18px; }
+            .news-meta { font-size: 11px; }
         }
     </style>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 </head>
 <body>
 
@@ -181,10 +190,15 @@
             <a href="https://electronicnights.github.io" target="_blank" class="highlight">ELECTRONIC NIGHTS</a>
             <a href="contact.html" class="highlight">CONTACT</a>
         </nav>
+
+        <div class="identity">
+            <h1 class="name-text">Ali Balighi</h1>
+            <div class="subtitle-text">Composer & scholar — electroacoustic, contemporary, and cross-cultural music</div>
+        </div>
     </div>
 
     <div id="content-wrapper">
-        <div class="content-box">
+        <div class="news-container">
 
             <div class="news-item">
                 <div class="news-title"><a href="https://themoderns.blog/2025/12/26/friday-five-25-favourites-from-2025/" target="_blank">Friday Five: 25 Favourites From 2025</a></div>
@@ -379,131 +393,5 @@
         </div>
     </div>
 
-    <div id="pause-container">
-        <div id="pause-btn" class="highlight red-highlight">Pause Animation</div>
-    </div>
-
-    <script>
-        const PARTICLE_COUNT = 6000;
-        let scene, camera, renderer, system;
-        let positions, sizes;
-        let time = 0;
-
-        // --- GLOBAL PAUSE LOGIC ---
-        // Check local storage to see if animation was paused on another page
-        let isPaused = localStorage.getItem('siteAnimationPaused') === 'true';
-
-        init();
-        animate();
-
-        function init() {
-            scene = new THREE.Scene();
-            scene.fog = new THREE.FogExp2(0x000000, 0.001);
-
-            camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 2000);
-            camera.position.z = 500;
-            
-            renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-            renderer.setSize(window.innerWidth, window.innerHeight);
-            renderer.setPixelRatio(window.devicePixelRatio);
-            document.body.appendChild(renderer.domElement);
-
-            positions = new Float32Array(PARTICLE_COUNT * 3);
-            sizes = new Float32Array(PARTICLE_COUNT);
-
-            const radius = 300;
-
-            for(let i=0; i<PARTICLE_COUNT; i++) {
-                // Spherical Distribution
-                const phi = Math.acos(-1 + (2 * i) / PARTICLE_COUNT);
-                const theta = Math.sqrt(PARTICLE_COUNT * Math.PI) * phi;
-
-                const x = radius * Math.cos(theta) * Math.sin(phi);
-                const y = radius * Math.sin(theta) * Math.sin(phi);
-                const z = radius * Math.cos(phi);
-
-                positions[i*3] = x;
-                positions[i*3+1] = y;
-                positions[i*3+2] = z;
-
-                sizes[i] = Math.random() * 2;
-            }
-
-            const geometry = new THREE.BufferGeometry();
-            geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-            geometry.setAttribute('size', new THREE.BufferAttribute(sizes, 1));
-
-            const material = new THREE.PointsMaterial({
-                color: 0xffffff,
-                size: 1.5,
-                transparent: true,
-                opacity: 0.6,
-                blending: THREE.AdditiveBlending
-            });
-
-            system = new THREE.Points(geometry, material);
-            scene.add(system);
-
-            window.addEventListener('resize', () => {
-                camera.aspect = window.innerWidth / window.innerHeight;
-                camera.updateProjectionMatrix();
-                renderer.setSize(window.innerWidth, window.innerHeight);
-            });
-
-            // --- PAUSE BUTTON SETUP ---
-            const pauseBtn = document.getElementById('pause-btn');
-            
-            // Set initial button text based on saved state
-            if(isPaused) {
-                pauseBtn.innerText = "Resume Animation";
-            }
-
-            pauseBtn.addEventListener('click', () => {
-                isPaused = !isPaused;
-                // Save the new state to localStorage
-                localStorage.setItem('siteAnimationPaused', isPaused);
-                
-                pauseBtn.innerText = isPaused ? "Resume Animation" : "Pause Animation";
-            });
-        }
-
-        function animate() {
-            requestAnimationFrame(animate);
-
-            // IF PAUSED: Render one static frame and exit
-            if (isPaused) {
-                renderer.render(scene, camera);
-                return; 
-            }
-
-            time += 0.005;
-
-            // Rotate the Globe
-            system.rotation.y = time;
-            system.rotation.z = 0.2; // Slight tilt
-
-            const posAttribute = system.geometry.attributes.position;
-            const posArray = posAttribute.array;
-            
-            // Add a subtle "pulse" breathing effect to the points
-            // as if data is flowing in and out
-            for(let i=0; i<PARTICLE_COUNT; i++) {
-                const ix = i*3;
-                
-                // Use sine wave based on index to create non-uniform pulsing
-                const pulse = 1 + Math.sin(time * 3 + i) * 0.05;
-                
-                // We don't want to re-calculate sphere math every frame for performance,
-                // but we can scale the whole system or manipulate points in vertex shader.
-                // Here we just rely on system rotation and camera movement for the main effect.
-            }
-
-            // Move camera slightly
-            camera.position.z = 500 + Math.sin(time) * 50;
-            camera.lookAt(0, 0, 0);
-
-            renderer.render(scene, camera);
-        }
-    </script>
 </body>
 </html>
