@@ -8,121 +8,114 @@
     <meta name="author" content="Ali Balighi">
     <title>About - Ali Balighi</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;700&family=Space+Mono&display=swap" rel="stylesheet">
+
     <style>
+        :root {
+            --bg-color: #000000; /* Simple Pure Black */
+            --text-main: #F4F0EB; /* Bone white */
+            --text-dim: #888888;
+            --accent-color: #ff0000; /* Red */
+        }
+
         /* --- CORE STYLES --- */
         body {
             margin: 0;
-            overflow: hidden; /* Hide body scroll, handle inside content box */
-            background-color: #000000;
-            font-family: 'Courier New', Courier, monospace;
-        }
-        canvas { 
-            display: block; 
-            position: fixed;
-            top: 0;
-            left: 0;
-            z-index: 0;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: 'Cormorant Garamond', serif;
+            overflow-x: hidden;
         }
 
-        /* --- UI LAYOUT (Menu - Same as Index) --- */
+        /* Page Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #000000; }
+        ::-webkit-scrollbar-thumb { background: #333333; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--accent-color); }
+
+        /* --- UI LAYOUT (Menu & Title) --- */
         #top-container {
-            position: absolute;
-            top: 30px;
-            left: 0;
             width: 100%;
             display: flex;
-            justify-content: center;
-            z-index: 1000; /* Higher z-index to stay above content */
-            pointer-events: none;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 40px;
+            padding-bottom: 20px;
+            gap: 25px;
         }
 
         .menu {
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
-            gap: 10px;
-            max-width: 95%;
-            pointer-events: auto;
+            gap: 15px;
+            max-width: 90%;
         }
 
         .highlight {
-            background-color: white;
-            color: black;
-            padding: 5px 8px;
+            font-family: 'Cormorant Garamond', monospace;
+            color: var(--text-dim);
+            padding: 6px 12px;
             text-decoration: none;
-            font-weight: normal;
-            font-size: 16px;
-            display: inline-block;
-            transition: opacity 0.2s, transform 0.2s, background-color 0.2s;
-            border: 1px solid white;
+            font-size: 11px;
+            letter-spacing: 2px;
+            border: 1px solid transparent;
+            transition: all 0.3s ease;
+            cursor: pointer;
             user-select: none;
+            text-transform: uppercase;
         }
 
         .highlight:hover {
-            opacity: 0.8;
-            cursor: pointer;
-            transform: scale(1.05);
+            color: var(--accent-color);
+            border-color: rgba(255, 0, 0, 0.3);
+            text-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
+            background: rgba(255, 0, 0, 0.05);
+            transform: scale(1.02);
         }
 
-        /* PAUSE BUTTON STYLES (MATCHING INDEX) */
-        #pause-container {
-            position: absolute;
-            bottom: 30px;
-            right: 30px;
-            z-index: 1001; /* Higher than content wrapper */
+        /* --- IDENTITY / TITLE STYLES --- */
+        .identity {
+            text-align: center;
         }
 
-        .red-highlight {
-            background-color: #b30000; 
-            color: white;
-            border: none;
+        .name-text { 
+            font-size: 54px; 
+            color: #ffffff;
+            margin: 0;
+            line-height: 1;
+            letter-spacing: 2px;
+            font-weight: 500;
         }
         
-        .red-highlight:hover {
-            background-color: #ff0000; 
-            opacity: 1;
+        .subtitle-text { 
+            font-family: 'Cormorant Garamond', monospace;
+            font-size: 13px; 
+            color: #aaaaaa; 
+            margin-top: 12px; 
+            letter-spacing: 1px;
         }
 
         /* --- ABOUT CONTENT STYLES --- */
-        
-        /* The main container to center the white box */
         #content-wrapper {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
             display: flex;
             justify-content: center;
-            align-items: center;
-            z-index: 10;
-            pointer-events: none; /* Let clicks pass through empty space */
+            padding-bottom: 60px;
         }
 
-        /* The White Rectangle */
-        .about-box {
-            background-color: white;
-            color: black;
-            width: 800px;
-            max-width: 90%;
-            max-height: 75vh; /* Don't cover the whole screen, leave room for menu/anim */
-            margin-top: 60px; /* Space for the top menu */
-            padding: 30px;
-            overflow-y: auto; /* Scrollable internal text */
-            pointer-events: auto;
+        .about-container {
             display: flex;
-            gap: 30px;
-            box-shadow: 0 0 50px rgba(255, 255, 255, 0.1);
+            gap: 50px;
+            width: 900px;
+            max-width: 90%;
+            margin-top: 20px;
         }
-
-        /* Scrollbar customization for the white box */
-        .about-box::-webkit-scrollbar { width: 8px; }
-        .about-box::-webkit-scrollbar-track { background: #f1f1f1; }
-        .about-box::-webkit-scrollbar-thumb { background: #000; }
-        .about-box::-webkit-scrollbar-thumb:hover { background: #333; }
 
         .profile-column {
-            flex: 0 0 250px; /* Fixed width for image column */
+            flex: 0 0 250px; 
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -131,47 +124,62 @@
         .profile-img {
             width: 100%;
             height: auto;
-            border: 2px solid black;
-            margin-top: 20px; 
-            margin-bottom: 10px;
-            filter: grayscale(100%);
-            transition: filter 0.3s;
+            border: 1px solid rgba(244, 240, 235, 0.15);
+            filter: grayscale(100%) contrast(1.1);
+            transition: all 0.4s ease;
         }
-        .profile-img:hover { filter: grayscale(0%); }
+        
+        .profile-img:hover { 
+            filter: grayscale(0%) contrast(1);
+            border-color: rgba(255, 0, 0, 0.5);
+            box-shadow: 0 0 20px rgba(255, 0, 0, 0.2);
+        }
 
         .text-column {
             flex: 1;
-            font-size: 14px;
+            font-size: 20px; 
             line-height: 1.6;
             text-align: justify;
         }
 
-        .text-column p { margin-bottom: 15px; }
-        .text-column a { color: black; font-weight: bold; text-decoration: underline; }
+        .text-column p { margin-top: 0; margin-bottom: 20px; }
+        .text-column strong { color: var(--text-main); font-weight: 700; letter-spacing: 1px; }
+        
+        .text-column a { 
+            color: var(--accent-color); 
+            text-decoration: none; 
+            border-bottom: 1px dashed var(--accent-color);
+            transition: all 0.2s;
+        }
+        
+        .text-column a:hover { 
+            border-bottom-style: solid;
+            text-shadow: 0 0 8px rgba(255, 0, 0, 0.4);
+        }
 
         /* --- MOBILE RESPONSIVENESS --- */
-        @media (max-width: 600px) {
-            #top-container { top: 20px; }
-            #pause-container { bottom: 10px; right: 10px; }
+        @media (max-width: 768px) {
+            #top-container { padding-top: 25px; gap: 20px; }
             
             .highlight { 
-                font-size: 11px; 
-                padding: 4px 6px;
-                margin-bottom: 2px;
+                font-size: 10px; 
+                padding: 5px 8px;
             }
-            .menu { gap: 5px; }
+            .menu { gap: 8px; }
 
-            .about-box {
-                flex-direction: column; /* Stack image on top of text */
-                max-height: 70vh;
-                padding: 20px;
-                margin-top: 80px;
+            .name-text { font-size: 36px; } 
+            .subtitle-text { font-size: 10px; line-height: 1.4; padding: 0 15px; }
+
+            .about-container {
+                flex-direction: column; 
+                gap: 30px;
+                margin-top: 10px;
             }
             
-            .profile-column { flex: 0 0 auto; width: 150px; margin: 0 auto 20px auto; }
+            .profile-column { flex: 0 0 auto; width: 180px; margin: 0 auto; }
+            .text-column { font-size: 18px; text-align: left; }
         }
     </style>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 </head>
 <body>
 
@@ -190,10 +198,15 @@
             <a href="https://electronicnights.github.io" target="_blank" class="highlight">ELECTRONIC NIGHTS</a>
             <a href="contact.html" class="highlight">CONTACT</a>
         </nav>
+
+        <div class="identity">
+            <h1 class="name-text">Ali Balighi</h1>
+            <div class="subtitle-text">Composer & Scholar — electroacoustic, contemporary, and cross-cultural music</div>
+        </div>
     </div>
 
     <div id="content-wrapper">
-        <div class="about-box">
+        <div class="about-container">
             
             <div class="profile-column">
                 <img src="Balighi_Ali_2023.jpg" alt="Ali Balighi" class="profile-img">
@@ -217,130 +230,5 @@
         </div>
     </div>
 
-    <div id="pause-container">
-        <div id="pause-btn" class="highlight red-highlight">Pause Animation</div>
-    </div>
-
-    <script>
-        // --- CONFIGURATION FOR SLOW ANIMATION ---
-        const PARTICLE_COUNT = 30000; 
-        
-        let scene, camera, renderer, system;
-        let positions;
-        let time = 0;
-
-        // --- GLOBAL PAUSE LOGIC ---
-        // Check local storage to see if animation was paused on another page
-        let isPaused = localStorage.getItem('siteAnimationPaused') === 'true';
-
-        init();
-        animate();
-
-        function init() {
-            scene = new THREE.Scene();
-            // Lighter fog for the about page so it feels airy
-            scene.fog = new THREE.FogExp2(0x000000, 0.0015);
-
-            camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 3000);
-            camera.position.z = 1000;
-            
-            renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-            renderer.setSize(window.innerWidth, window.innerHeight);
-            renderer.setPixelRatio(window.devicePixelRatio);
-            document.body.appendChild(renderer.domElement);
-
-            positions = new Float32Array(PARTICLE_COUNT * 3);
-
-            // Create a wide field of particles
-            for(let i=0; i<PARTICLE_COUNT * 3; i+=3) {
-                positions[i] = (Math.random() - 0.5) * 2500;   // x
-                positions[i+1] = (Math.random() - 0.5) * 1500; // y
-                positions[i+2] = (Math.random() - 0.5) * 2000; // z
-            }
-
-            const geometry = new THREE.BufferGeometry();
-            geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-
-            // Smaller, slightly more transparent particles for "background" feel
-            const material = new THREE.PointsMaterial({
-                color: 0xaaaaaa, // Slightly grey/white
-                size: 1.2,
-                transparent: true,
-                opacity: 0.6,
-                blending: THREE.AdditiveBlending,
-                sizeAttenuation: true
-            });
-
-            system = new THREE.Points(geometry, material);
-            scene.add(system);
-
-            window.addEventListener('resize', () => {
-                camera.aspect = window.innerWidth / window.innerHeight;
-                camera.updateProjectionMatrix();
-                renderer.setSize(window.innerWidth, window.innerHeight);
-            });
-
-             // --- PAUSE BUTTON SETUP ---
-             const pauseBtn = document.getElementById('pause-btn');
-            
-            // Set initial button text based on saved state
-            if(isPaused) {
-                pauseBtn.innerText = "Resume Animation";
-            }
-
-            pauseBtn.addEventListener('click', () => {
-                isPaused = !isPaused;
-                // Save the new state to localStorage
-                localStorage.setItem('siteAnimationPaused', isPaused);
-                
-                pauseBtn.innerText = isPaused ? "Resume Animation" : "Pause Animation";
-            });
-        }
-
-        function animate() {
-            requestAnimationFrame(animate);
-
-            // IF PAUSED: Render one static frame and exit
-            if (isPaused) {
-                renderer.render(scene, camera);
-                return; 
-            }
-
-            time += 0.002; // Slow time increment
-
-            const posAttribute = system.geometry.attributes.position;
-            const posArray = posAttribute.array;
-
-            // ANIMATION LOGIC: Slow sine waves / "Breathing"
-            for(let i=0; i<PARTICLE_COUNT; i++) {
-                const ix = i*3;
-                const iy = i*3+1;
-                const iz = i*3+2;
-
-                // Drift particles slowly on X axis
-                posArray[ix] -= 0.2; 
-                
-                // If particle goes too far left, wrap it to the right
-                if(posArray[ix] < -1250) {
-                    posArray[ix] = 1250;
-                }
-
-                // Gentle sine wave movement on Y and Z based on X position and time
-                const wave = Math.sin(posArray[ix] * 0.005 + time) * 2;
-                
-                posArray[iy] += Math.sin(time + posArray[ix]*0.01) * 0.5;
-                posArray[iz] += Math.cos(time * 0.5 + posArray[iy]*0.01) * 0.5;
-            }
-
-            posAttribute.needsUpdate = true;
-
-            // Very slow camera orbit
-            camera.position.x = Math.sin(time * 0.1) * 200;
-            camera.position.y = Math.cos(time * 0.1) * 100;
-            camera.lookAt(0, 0, 0);
-
-            renderer.render(scene, camera);
-        }
-    </script>
 </body>
 </html>
