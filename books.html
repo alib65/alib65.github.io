@@ -8,180 +8,191 @@
     <meta name="author" content="Ali Balighi">
     <title>Books - Ali Balighi</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;700&family=Space+Mono&display=swap" rel="stylesheet">
+
     <style>
+        :root {
+            --bg-color: #000000; /* Simple Pure Black */
+            --text-main: #F4F0EB; /* Bone white */
+            --text-dim: #cccccc; /* Light gray for readability */
+            --text-muted: #888888; /* Muted gray for menu/meta */
+            --accent-color: #ff0000; /* Red */
+            --border-color: rgba(244, 240, 235, 0.15); /* Subtle white for lines */
+        }
+
         /* --- CORE STYLES --- */
         body {
             margin: 0;
-            overflow: hidden;
-            background-color: #000000;
-            font-family: 'Courier New', Courier, monospace;
-        }
-        canvas { 
-            display: block; 
-            position: fixed;
-            top: 0;
-            left: 0;
-            z-index: 0;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: 'Cormorant Garamond', serif;
+            overflow-x: hidden;
         }
 
-        /* --- UI LAYOUT (Menu) --- */
+        /* Page Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #000000; }
+        ::-webkit-scrollbar-thumb { background: #333333; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--accent-color); }
+
+        /* --- UI LAYOUT (Menu & Title) --- */
         #top-container {
-            position: absolute;
-            top: 30px;
-            left: 0;
             width: 100%;
             display: flex;
-            justify-content: center;
-            z-index: 1000;
-            pointer-events: none;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 40px;
+            padding-bottom: 20px;
+            gap: 25px;
         }
 
         .menu {
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
-            gap: 10px;
-            max-width: 95%;
-            pointer-events: auto;
+            gap: 15px;
+            max-width: 90%;
         }
 
         .highlight {
-            background-color: white;
-            color: black;
-            padding: 5px 8px;
+            font-family: 'Cormorant Garamond', serif;
+            color: var(--text-muted);
+            padding: 6px 12px;
             text-decoration: none;
-            font-weight: normal;
-            font-size: 16px;
-            display: inline-block;
-            transition: opacity 0.2s, transform 0.2s, background-color 0.2s;
-            border: 1px solid white;
+            font-size: 11px;
+            letter-spacing: 2px;
+            border: 1px solid transparent;
+            transition: all 0.3s ease;
+            cursor: pointer;
             user-select: none;
+            text-transform: uppercase;
         }
 
         .highlight:hover {
-            opacity: 0.8;
-            cursor: pointer;
-            transform: scale(1.05);
+            color: var(--accent-color);
+            border-color: rgba(255, 0, 0, 0.3);
+            text-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
+            background: rgba(255, 0, 0, 0.05);
+            transform: scale(1.02);
         }
 
-        /* --- PAUSE BUTTON STYLES --- */
-        #pause-container {
-            position: absolute;
-            bottom: 30px;
-            right: 30px;
-            z-index: 1001; /* Higher than content wrapper */
+        /* --- IDENTITY / TITLE STYLES --- */
+        .identity {
+            text-align: center;
         }
 
-        .red-highlight {
-            background-color: #b30000; 
-            color: white;
-            border: none;
+        .name-text { 
+            font-size: 54px; 
+            color: #ffffff;
+            margin: 0;
+            line-height: 1;
+            letter-spacing: 2px;
+            font-weight: 500;
         }
         
-        .red-highlight:hover {
-            background-color: #ff0000; 
-            opacity: 1;
+        .subtitle-text { 
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 13px; 
+            color: #aaaaaa; 
+            margin-top: 12px; 
+            letter-spacing: 1px;
         }
 
         /* --- BOOKS CONTENT STYLES --- */
-        
         #content-wrapper {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
             display: flex;
             justify-content: center;
-            align-items: center;
-            z-index: 10;
-            pointer-events: none;
+            padding-bottom: 80px;
         }
 
-        .content-box {
-            background-color: white;
-            color: black;
+        .books-container {
             width: 900px;
             max-width: 90%;
-            max-height: 75vh;
-            margin-top: 60px;
-            padding: 40px;
-            overflow-y: auto;
-            pointer-events: auto;
-            box-shadow: 0 0 50px rgba(255, 255, 255, 0.1);
+            margin-top: 20px;
             display: flex;
             flex-direction: column;
         }
 
-        /* Custom Scrollbar */
-        .content-box::-webkit-scrollbar { width: 8px; }
-        .content-box::-webkit-scrollbar-track { background: #f1f1f1; }
-        .content-box::-webkit-scrollbar-thumb { background: #000; }
-        .content-box::-webkit-scrollbar-thumb:hover { background: #333; }
-
-        /* Book Items */
         .book-item {
             margin-bottom: 50px;
             padding-bottom: 30px;
-            border-bottom: 1px solid #ddd;
+            border-bottom: 1px dashed var(--border-color);
         }
-        .book-item:last-child { border-bottom: none; margin-bottom: 0; }
+        
+        .book-item:last-child { 
+            border-bottom: none; 
+            margin-bottom: 0; 
+        }
 
         .book-title {
-            font-size: 20px;
-            font-weight: normal;
-            margin-bottom: 8px;
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 12px;
             line-height: 1.3;
-            color: #000;
+            color: var(--text-main);
         }
 
         .book-meta {
-            font-size: 14px;
-            color: #555;
-            margin-bottom: 15px;
-            font-style: italic;
-            border-left: 3px solid #000;
-            padding-left: 10px;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 13px;
+            color: var(--text-dim);
+            margin-bottom: 18px;
+            border-left: 2px solid var(--accent-color); /* Red line accent */
+            padding-left: 12px;
         }
 
         .book-description {
-            font-size: 15px;
+            font-size: 20px;
             line-height: 1.6;
             text-align: justify;
-            margin-bottom: 15px;
+            margin-bottom: 18px;
+            color: var(--text-main);
         }
 
         /* Links styling - RED */
         .book-links {
-            font-size: 14px;
-            margin-top: 10px;
-            font-weight: bold;
+            font-family: 'Space Mono', monospace;
+            font-size: 13px;
+            margin-top: 15px;
+            line-height: 1.8;
         }
 
         .book-links a {
             text-decoration: none;
-            color: #ff0000; /* Red Links */
-            border-bottom: 1px solid transparent;
+            color: var(--accent-color); 
+            border-bottom: 1px dashed var(--accent-color);
             transition: all 0.2s;
+            word-break: break-all;
         }
 
         .book-links a:hover {
             color: #8b0000;
-            border-bottom: 1px solid #8b0000;
+            border-bottom-style: solid;
+            text-shadow: 0 0 8px rgba(255, 0, 0, 0.4);
         }
 
         /* --- MOBILE RESPONSIVENESS --- */
-        @media (max-width: 600px) {
-            #top-container { top: 20px; }
-            #pause-container { bottom: 10px; right: 10px; }
-            .highlight { font-size: 11px; padding: 4px 6px; margin-bottom: 2px; }
-            .menu { gap: 5px; }
-            .content-box { padding: 20px; margin-top: 80px; max-height: 70vh; }
-            .book-title { font-size: 18px; }
-            .book-description { text-align: left; font-size: 14px; }
+        @media (max-width: 768px) {
+            #top-container { padding-top: 25px; gap: 20px; }
+            
+            .highlight { 
+                font-size: 10px; 
+                padding: 5px 8px; 
+            }
+            .menu { gap: 8px; }
+
+            .name-text { font-size: 36px; } 
+            .subtitle-text { font-size: 10px; line-height: 1.4; padding: 0 15px; }
+
+            .book-title { font-size: 22px; }
+            .book-meta { font-size: 11px; }
+            .book-description { text-align: left; font-size: 18px; }
+            .book-links a { font-size: 12px; }
         }
     </style>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 </head>
 <body>
 
@@ -200,10 +211,15 @@
             <a href="https://electronicnights.github.io" target="_blank" class="highlight">ELECTRONIC NIGHTS</a>
             <a href="contact.html" class="highlight">CONTACT</a>
         </nav>
+
+        <div class="identity">
+            <h1 class="name-text">Ali Balighi</h1>
+            <div class="subtitle-text">Composer & scholar — electroacoustic, contemporary, and cross-cultural music</div>
+        </div>
     </div>
 
     <div id="content-wrapper">
-        <div class="content-box">
+        <div class="books-container">
             
             <div class="book-item">
                 <div class="book-title">The woods caught fire; the snail did not know which way to run (in Persian)</div>
@@ -234,140 +250,5 @@
         </div>
     </div>
 
-    <div id="pause-container">
-        <div id="pause-btn" class="highlight red-highlight">Pause Animation</div>
-    </div>
-
-    <script>
-        const PARTICLE_COUNT = 3500;
-        let scene, camera, renderer, system;
-        let positions, velocities, rotations;
-        let time = 0;
-
-        // --- GLOBAL PAUSE LOGIC ---
-        // Check local storage to see if animation was paused on another page
-        let isPaused = localStorage.getItem('siteAnimationPaused') === 'true';
-
-        init();
-        animate();
-
-        function init() {
-            scene = new THREE.Scene();
-            scene.fog = new THREE.FogExp2(0x000000, 0.002);
-
-            camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 2000);
-            camera.position.z = 500;
-            camera.position.y = 0;
-            
-            renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-            renderer.setSize(window.innerWidth, window.innerHeight);
-            renderer.setPixelRatio(window.devicePixelRatio);
-            document.body.appendChild(renderer.domElement);
-
-            positions = new Float32Array(PARTICLE_COUNT * 3);
-            velocities = new Float32Array(PARTICLE_COUNT * 3);
-            rotations = new Float32Array(PARTICLE_COUNT); // Store random rotation offset
-
-            const spreadX = 2000;
-            const spreadY = 2000;
-            const spreadZ = 800;
-
-            for(let i=0; i<PARTICLE_COUNT; i++) {
-                // Random starting positions
-                positions[i*3] = (Math.random() - 0.5) * spreadX;
-                positions[i*3+1] = (Math.random() - 0.5) * spreadY;
-                positions[i*3+2] = (Math.random() - 0.5) * spreadZ;
-
-                // Random falling speeds
-                velocities[i*3] = (Math.random() - 0.5) * 0.5; // Drift X
-                velocities[i*3+1] = - (Math.random() * 0.8 + 0.2); // Fall Y
-                velocities[i*3+2] = (Math.random() - 0.5) * 0.5; // Drift Z
-                
-                rotations[i] = Math.random() * Math.PI;
-            }
-
-            const geometry = new THREE.BufferGeometry();
-            geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-
-            const material = new THREE.PointsMaterial({
-                color: 0xffffff,
-                size: 2.0, // Slightly larger particles to look like paper bits
-                transparent: true,
-                opacity: 0.6,
-                blending: THREE.AdditiveBlending
-            });
-
-            system = new THREE.Points(geometry, material);
-            scene.add(system);
-
-            window.addEventListener('resize', () => {
-                camera.aspect = window.innerWidth / window.innerHeight;
-                camera.updateProjectionMatrix();
-                renderer.setSize(window.innerWidth, window.innerHeight);
-            });
-
-            // --- PAUSE BUTTON SETUP ---
-            const pauseBtn = document.getElementById('pause-btn');
-            
-            // Set initial button text based on saved state
-            if(isPaused) {
-                pauseBtn.innerText = "Resume Animation";
-            }
-
-            pauseBtn.addEventListener('click', () => {
-                isPaused = !isPaused;
-                // Save the new state to localStorage
-                localStorage.setItem('siteAnimationPaused', isPaused);
-                
-                pauseBtn.innerText = isPaused ? "Resume Animation" : "Pause Animation";
-            });
-        }
-
-        function animate() {
-            requestAnimationFrame(animate);
-
-            // IF PAUSED: Render one static frame and exit
-            if (isPaused) {
-                renderer.render(scene, camera);
-                return; 
-            }
-
-            time += 0.01;
-
-            const posAttribute = system.geometry.attributes.position;
-            const posArray = posAttribute.array;
-            const spreadY = 2000;
-
-            for(let i=0; i<PARTICLE_COUNT; i++) {
-                const ix = i*3;
-                const iy = i*3+1;
-                const iz = i*3+2;
-
-                // Update Position with velocity
-                posArray[ix] += velocities[ix];
-                posArray[iy] += velocities[iy];
-                posArray[iz] += velocities[iz];
-
-                // Add "Swaying" motion like a falling leaf
-                // Use the random rotation offset so they don't all sway in sync
-                const sway = Math.sin(time + rotations[i]) * 0.5;
-                posArray[ix] += sway;
-
-                // Reset particles if they fall below the view
-                if(posArray[iy] < -1000) {
-                    posArray[iy] = 1000;
-                    posArray[ix] = (Math.random() - 0.5) * 2000;
-                    posArray[iz] = (Math.random() - 0.5) * 800;
-                }
-            }
-
-            posAttribute.needsUpdate = true;
-            
-            // Subtle rotation of the whole system
-            system.rotation.y = time * 0.05;
-
-            renderer.render(scene, camera);
-        }
-    </script>
 </body>
 </html>
