@@ -1,6 +1,0 @@
-title: Ali Balighi — Blog
-baseurl: "/blog"
-url: "https://alibalighi.com"
-theme: null
-plugins:
-  - jekyll-feed
