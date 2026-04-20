@@ -135,6 +135,16 @@
             box-shadow: 0 0 20px rgba(255, 0, 0, 0.2);
         }
 
+        .photo-credit {
+            font-family: 'Space Mono', monospace;
+            font-size: 10px;
+            color: var(--text-dim);
+            margin-top: 8px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            align-self: flex-start;
+        }
+
         .text-column {
             flex: 1;
             font-size: 20px; 
@@ -184,6 +194,7 @@
             
             .profile-column { flex: 0 0 auto; width: 180px; margin: 0 auto; }
             .text-column { font-size: 18px; text-align: left; }
+            .photo-credit { align-self: center; }
         }
     </style>
 </head>
@@ -217,6 +228,7 @@
             
             <div class="profile-column">
                 <img src="Balighi_Ali_2023.jpg" alt="Ali Balighi" class="profile-img">
+                <span class="photo-credit">Photo by Venus Bayat</span>
             </div>
 
             <div class="text-column">
