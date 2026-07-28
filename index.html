@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <link rel="icon" type="image/png" href="logo.png">
-  <meta name="description" content="Official portfolio of Ali Balighi. Explore original works in electronic music, contemporary music, and electroacoustic music. Featuring articles, scores, and research on animated notation and computer music.">
+  <meta name="description" content="Official portfolio of Ali Balighi. Explore original works in electronic music, contemporary music, and electroacoustic music.">
   <meta name="keywords" content="electronic music, contemporary music, electroacoustic music, computer music, articles, animated notation, Ali Balighi, composer, sound art">
   <meta name="author" content="Ali Balighi">
   <title>Ali Balighi - Composer | Electronic, Electroacoustic & Contemporary Music</title>
@@ -27,7 +27,14 @@
       background-color: var(--bg-color);
     }
     
-    canvas { display: block; }
+    /* Fixed canvas positioning so it stays perfectly in the background */
+    canvas { 
+      display: block; 
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 1;
+    }
 
     /* --- Digital Grain (Noise Overlay) --- */
     body::after {
@@ -37,7 +44,7 @@
       left: 0;
       width: 100vw;
       height: 100vh;
-      opacity: 0.04; /* Very subtle texture */
+      opacity: 0.04;
       pointer-events: none;
       z-index: 9999;
       background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
@@ -52,14 +59,13 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 35px; /* Spacious layout */
+      gap: 35px;
       z-index: 100;
       
-      /* Liminal Blur: Semi-transparent dark band */
       background: rgba(8, 8, 10, 0.65); 
       padding: 50px 0; 
       width: 100%;
-      backdrop-filter: blur(10px); /* Frosted glass effect */
+      backdrop-filter: blur(10px);
       -webkit-backdrop-filter: blur(10px);
       border-top: 1px solid rgba(244, 240, 235, 0.05);
       border-bottom: 1px solid rgba(244, 240, 235, 0.05);
@@ -87,7 +93,6 @@
       font-size: 14px; 
       letter-spacing: 2px; 
       color: var(--text-dim);
-      /* text-transform: uppercase; ---> REMOVED THIS LINE */
       margin-top: 15px;
     }
 
@@ -100,7 +105,6 @@
       pointer-events: auto; 
     }
 
-    /* The Technical Anchor: Menu Links */
     .highlight {
       font-family: 'Cormorant Garamond', serif; 
       color: #ffffff;
@@ -115,7 +119,6 @@
       text-transform: uppercase;
     }
 
-    /* The Rupture: Hover state */
     .highlight:hover {
       color: var(--accent-color);
       border-color: rgba(255, 0, 0, 0.3);
@@ -159,7 +162,6 @@
 <body>
 
   <div id="center-container">
-    
     <div class="identity">
       <h1 class="name-text">Ali Balighi</h1>
       <div class="subtitle-text">Composer & scholar — electroacoustic, contemporary, and cross-cultural music</div>
@@ -180,7 +182,6 @@
         <a href="/blog" class="highlight">BLOG</a>
         <a href="contact.html" class="highlight">CONTACT</a>
     </nav>
-    
   </div>
 
   <div id="pause-container">
@@ -203,8 +204,13 @@
     let currentShape = -1;
     let shapeTimer = Date.now();
 
-    // --- GLOBAL PAUSE LOGIC ---
-    let isPaused = localStorage.getItem('siteAnimationPaused') === 'true';
+    // --- GLOBAL PAUSE LOGIC (Wrapped in Try/Catch to prevent strict-browser crashes) ---
+    let isPaused = false;
+    try {
+      isPaused = localStorage.getItem('siteAnimationPaused') === 'true';
+    } catch (e) {
+      console.warn("Local storage blocked by browser settings, defaulting to play.");
+    }
 
     const shapes = [];
 
@@ -213,7 +219,6 @@
 
     function init() {
       scene = new THREE.Scene();
-      // Updated fog to match the new deep charcoal background
       scene.fog = new THREE.FogExp2(0x08080A, 0.001);
 
       camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 4000);
@@ -237,10 +242,10 @@
       geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
 
       const material = new THREE.PointsMaterial({
-        color: 0xF4F0EB, // Changed from pure white to bone white
+        color: 0xF4F0EB, 
         size: 0.8,
         transparent: true,
-        opacity: 0.6, // Slightly softer particles
+        opacity: 0.6, 
         blending: THREE.AdditiveBlending,
         sizeAttenuation: true
       });
@@ -263,7 +268,9 @@
 
       pauseBtn.addEventListener('click', () => {
         isPaused = !isPaused;
-        localStorage.setItem('siteAnimationPaused', isPaused);
+        try {
+          localStorage.setItem('siteAnimationPaused', isPaused);
+        } catch (e) {}
         pauseBtn.innerText = isPaused ? "RESUME ANIMATION" : "PAUSE ANIMATION";
       });
     }
@@ -549,7 +556,7 @@
             const a = Math.random() * TAU;
             const rr = R * (0.35 + 0.65 * Math.abs(Math.cos(5 * a)));
             const m = 0.75 + Math.random() * 0.35;
-            set(arr, i, cx + m * rr * Math.cos(a), cy + m * rr * Math.sin(a), zJ());
+            set(arr, i, cx + m * rr * Math.cos(a), cy + m * m * Math.sin(a), zJ());
           }
           return arr;
         };
