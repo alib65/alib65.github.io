@@ -205,11 +205,6 @@ body.music-page .music-item {
   padding-bottom: 0;
 }
 
-body.music-page .piece-title {
-  font-size: 17px;
-  line-height: 1.4;
-}
-
 body.music-page .music-container .section-title {
   margin-top: 44px;
   padding-top: 26px;
@@ -338,14 +333,10 @@ body.music-page .music-container .section-title + .year-title {
 }
 
 .music-list,
-.score-list {
+.score-list,
+.article-list {
   margin: 0;
   padding-left: 24px;
-}
-
-.score-list {
-  padding-left: 0;
-  list-style: none;
 }
 
 .music-item,
