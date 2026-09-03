@@ -205,6 +205,11 @@ body.music-page .music-item {
   padding-bottom: 0;
 }
 
+body.music-page .piece-title {
+  font-size: 17px;
+  line-height: 1.4;
+}
+
 body.music-page .music-container .section-title {
   margin-top: 44px;
   padding-top: 26px;
