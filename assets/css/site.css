@@ -32,12 +32,6 @@ a {
   color: inherit;
 }
 
-a[target="_blank"]::after {
-  content: " ↗";
-  font-size: 0.72em;
-  vertical-align: 0.12em;
-}
-
 img {
   display: block;
   max-width: 100%;
