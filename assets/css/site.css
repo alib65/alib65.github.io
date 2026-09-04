@@ -686,6 +686,16 @@ body.music-page .music-container .section-title + .year-title {
     opacity: 1;
   }
 
+  .home-page .nav-toggle-label {
+    display: none;
+  }
+
+  .home-page .menu,
+  .home-page .social-menu {
+    max-height: none;
+    opacity: 1;
+  }
+
   .social-menu {
     margin-top: 4px;
     border-top: 1px dashed var(--border-color);
