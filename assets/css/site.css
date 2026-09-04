@@ -177,6 +177,19 @@ a {
   font-size: 13px;
 }
 
+.social-menu .icon-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.social-menu .icon-img {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+  display: block;
+}
+
 .highlight:hover,
 .highlight[aria-current="page"] {
   border-color: rgba(255, 42, 42, 0.55);
