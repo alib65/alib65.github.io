@@ -525,7 +525,9 @@ body.music-page .music-container .section-title + .year-title {
 
 /* Home */
 .home-page {
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
   background: var(--home-bg-color);
 }
 
