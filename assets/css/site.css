@@ -628,22 +628,34 @@ body.music-page .music-container .section-title + .year-title {
     top: 24px;
     right: 14px;
     z-index: 10;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
+    gap: 5px;
     width: 40px;
     height: 40px;
     border: 1px solid var(--border-color);
-    color: #ffffff;
     cursor: pointer;
-    font-size: 18px;
   }
 
-  .nav-toggle-label::before {
-    content: "\2630";
+  .nav-toggle-bar {
+    display: block;
+    width: 18px;
+    height: 2px;
+    background: #ffffff;
+    transition: transform 0.25s ease, opacity 0.2s ease;
   }
 
-  .nav-toggle-checkbox:checked + .nav-toggle-label::before {
-    content: "\2715";
+  .nav-toggle-checkbox:checked + .nav-toggle-label .nav-toggle-bar:nth-child(1) {
+    transform: translateY(7px) rotate(45deg);
+  }
+
+  .nav-toggle-checkbox:checked + .nav-toggle-label .nav-toggle-bar:nth-child(2) {
+    opacity: 0;
+  }
+
+  .nav-toggle-checkbox:checked + .nav-toggle-label .nav-toggle-bar:nth-child(3) {
+    transform: translateY(-7px) rotate(-45deg);
   }
 
   .menu,
