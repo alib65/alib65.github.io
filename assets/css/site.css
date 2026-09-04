@@ -686,14 +686,61 @@ body.music-page .music-container .section-title + .year-title {
     opacity: 1;
   }
 
+  .home-page .site-header {
+    gap: 18px;
+    padding: 38px 20px 24px;
+  }
+
   .home-page .nav-toggle-label {
     display: none;
   }
 
+  .home-page .name-text {
+    font-size: clamp(54px, 8vw, 80px);
+    letter-spacing: 4px;
+  }
+
+  .home-page .subtitle-text {
+    max-width: none;
+    margin-top: 12px;
+    padding: 0;
+    font-size: 14px;
+    letter-spacing: 2px;
+  }
+
   .home-page .menu,
   .home-page .social-menu {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: auto;
+    max-width: 1000px;
+    gap: 6px;
     max-height: none;
     opacity: 1;
+  }
+
+  .home-page .social-menu {
+    gap: 4px;
+    margin-top: 0;
+    border-top: none;
+    padding-top: 0;
+  }
+
+  .home-page .highlight {
+    min-height: 36px;
+    padding: 8px 11px;
+    font-size: 15px;
+    letter-spacing: 1.5px;
+  }
+
+  .home-page .social-menu .highlight {
+    font-size: 13px;
+  }
+
+  .home-page .home-shell {
+    gap: 24px;
+    padding: 42px 20px;
   }
 
   .social-menu {
