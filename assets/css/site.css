@@ -609,6 +609,11 @@ body.music-page .music-container .section-title + .year-title {
   backdrop-filter: blur(10px);
 }
 
+.home-page .site-footer {
+  position: relative;
+  z-index: 100;
+}
+
 .home-page .name-text {
   font-size: clamp(54px, 8vw, 80px);
   font-weight: 400;
