@@ -360,7 +360,8 @@ body.music-page .music-container .section-title + .year-title {
 .scores-container,
 .articles-container,
 .books-container,
-.news-container {
+.news-container,
+.albums-container {
   width: min(var(--content-width), 90%);
 }
 
@@ -375,7 +376,8 @@ body.music-page .music-container .section-title + .year-title {
 .score-item,
 .article-item,
 .book-item,
-.news-item {
+.news-item,
+.album-item {
   margin-bottom: 40px;
   border-bottom: 1px dashed var(--border-color);
   padding-bottom: 26px;
@@ -385,7 +387,8 @@ body.music-page .music-container .section-title + .year-title {
 .score-item:last-child,
 .article-item:last-child,
 .book-item:last-child,
-.news-item:last-child {
+.news-item:last-child,
+.album-item:last-child {
   margin-bottom: 0;
 }
 
@@ -393,7 +396,8 @@ body.music-page .music-container .section-title + .year-title {
 .score-title,
 .article-title,
 .book-title,
-.news-title {
+.news-title,
+.album-title {
   margin: 0 0 10px;
   color: var(--text-main);
   font-size: 24px;
@@ -410,7 +414,8 @@ body.music-page .music-container .section-title + .year-title {
 .media-links a,
 .score-link a,
 .article-links a,
-.book-links a {
+.book-links a,
+.album-links a {
   border-bottom: 1px dashed var(--accent-color);
   color: var(--accent-color);
   text-decoration: none;
@@ -420,7 +425,8 @@ body.music-page .music-container .section-title + .year-title {
 .media-links a:hover,
 .score-link a:hover,
 .article-links a:hover,
-.book-links a:hover {
+.book-links a:hover,
+.album-links a:hover {
   border-bottom-style: solid;
   color: var(--accent-dark);
 }
@@ -440,7 +446,8 @@ body.music-page .music-container .section-title + .year-title {
 
 .score-location,
 .article-meta,
-.book-meta {
+.book-meta,
+.album-meta {
   margin-bottom: 16px;
   color: var(--text-dim);
   font-size: 14px;
@@ -448,21 +455,24 @@ body.music-page .music-container .section-title + .year-title {
 }
 
 .article-meta,
-.book-meta {
+.book-meta,
+.album-meta {
   border-left: 2px solid var(--accent-color);
   padding-left: 12px;
 }
 
 .score-link,
 .article-links,
-.book-links {
+.book-links,
+.album-links {
   margin-top: 15px;
   font: 12px/1.9 "Space Mono", monospace;
   overflow-wrap: anywhere;
 }
 
 .article-item,
-.book-item {
+.book-item,
+.album-item {
   margin-bottom: 50px;
   padding-bottom: 30px;
 }
@@ -807,7 +817,8 @@ body.music-page .music-container .section-title + .year-title {
   .score-title,
   .article-title,
   .book-title,
-  .news-title {
+  .news-title,
+  .album-title {
     font-size: 21px;
   }
 
