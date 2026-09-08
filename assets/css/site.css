@@ -377,7 +377,8 @@ body.music-page .music-container .section-title + .year-title {
 .articles-container,
 .books-container,
 .news-container,
-.albums-container {
+.albums-container,
+.courses-container {
   width: min(var(--content-width), 90%);
 }
 
