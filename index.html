@@ -36,9 +36,10 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500&amp;family=Space+Mono&amp;display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/css/site.css?v=202609072109">
+  <link rel="stylesheet" href="assets/css/site.css?v=202609101902">
   <script defer src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" crossorigin="anonymous"></script>
   <script defer src="assets/js/home-animation.js"></script>
+  <script defer src="assets/js/upcoming-events.js"></script>
 </head>
 <body class="home-page">
   <a class="skip-link" href="#main-content">Skip to main content</a>
@@ -69,6 +70,11 @@
         <a href="https://blog.alibalighi.com/" class="highlight">BLOG</a>
         <a href="contact.html" class="highlight">CONTACT</a>
     </nav>
+
+    <section id="upcoming-events" class="upcoming-events" aria-label="Upcoming performances" hidden>
+      <h2 class="section-title">Upcoming Performances</h2>
+      <ol id="upcoming-events-list" class="upcoming-list"></ol>
+    </section>
   </main>
 
   <div class="animation-controls">

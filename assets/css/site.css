@@ -615,6 +615,50 @@ body.music-page .music-container .section-title + .year-title {
   z-index: 100;
 }
 
+.upcoming-events {
+  width: 100%;
+  max-width: 640px;
+  margin-top: 4px;
+  text-align: center;
+}
+
+.upcoming-events[hidden] {
+  display: none;
+}
+
+.upcoming-events .section-title {
+  margin: 0 0 14px;
+  font-size: 20px;
+}
+
+.upcoming-list {
+  margin: 0;
+  padding-left: 24px;
+  text-align: left;
+}
+
+.upcoming-item {
+  margin-bottom: 14px;
+}
+
+.upcoming-item:last-child {
+  margin-bottom: 0;
+}
+
+.upcoming-title {
+  color: var(--text-main);
+  font-size: 17px;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+.upcoming-detail {
+  margin-top: 2px;
+  color: var(--text-dim);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
 .home-page .name-text {
   font-size: clamp(54px, 8vw, 80px);
   font-weight: 400;
