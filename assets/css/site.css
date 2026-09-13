@@ -432,7 +432,8 @@ body.music-page .music-container .section-title + .year-title {
 .score-link a,
 .article-links a,
 .book-links a,
-.album-links a {
+.album-links a,
+.performance-list a {
   border-bottom: 1px dashed var(--accent-color);
   color: var(--accent-color);
   text-decoration: none;
@@ -443,7 +444,8 @@ body.music-page .music-container .section-title + .year-title {
 .score-link a:hover,
 .article-links a:hover,
 .book-links a:hover,
-.album-links a:hover {
+.album-links a:hover,
+.performance-list a:hover {
   border-bottom-style: solid;
   color: var(--accent-dark);
 }
