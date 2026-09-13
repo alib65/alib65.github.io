@@ -661,6 +661,18 @@ body.music-page .music-container .section-title + .year-title {
   line-height: 1.5;
 }
 
+.upcoming-detail a {
+  border-bottom: 1px dashed var(--accent-color);
+  color: var(--accent-color);
+  text-decoration: none;
+  text-underline-offset: 3px;
+}
+
+.upcoming-detail a:hover {
+  border-bottom-style: solid;
+  color: var(--accent-dark);
+}
+
 .home-page .name-text {
   font-size: clamp(54px, 8vw, 80px);
   font-weight: 400;

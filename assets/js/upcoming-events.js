@@ -31,7 +31,7 @@
         var end = endAttr ? new Date(endAttr) : start;
         if (isNaN(start.getTime())) return;
         if (end >= today) {
-          events.push({ title: title, text: li.textContent.trim(), sortKey: start });
+          events.push({ title: title, html: li.innerHTML.trim(), sortKey: start });
         }
       });
     });
@@ -56,7 +56,7 @@
 
       var detail = document.createElement('div');
       detail.className = 'upcoming-detail';
-      detail.textContent = ev.text;
+      detail.innerHTML = ev.html;
 
       li.appendChild(title);
       li.appendChild(detail);
