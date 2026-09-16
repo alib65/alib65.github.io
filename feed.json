@@ -6,6 +6,12 @@
   "description": "Latest news, interviews, and press regarding composer Ali Balighi.",
   "items": [
     {
+      "id": "https://www.ttu.edu/now/posts/2026/09/texas-tech-professor-integrates-ai-and-human-creativity-into-education.php",
+      "url": "https://www.ttu.edu/now/posts/2026/09/texas-tech-professor-integrates-ai-and-human-creativity-into-education.php",
+      "title": "Texas Tech Professor Integrates AI and Human Creativity into Education",
+      "date_published": "2026-09-15T12:00:00Z"
+    },
+    {
       "id": "https://icareifyoulisten.com/2026/06/5-questions-to-ali-balighi-composer/",
       "url": "https://icareifyoulisten.com/2026/06/5-questions-to-ali-balighi-composer/",
       "title": "5 Questions to Ali Balighi (composer)",
