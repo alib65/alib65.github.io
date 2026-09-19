@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Elegy in White — Ali Balighi</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Vazirmatn:wght@300;400&display=swap" rel="stylesheet">
+    <style>
+        :root{
+            --ink:#ece8df;
+            --muted:#a3a9b4;
+            --faint:#6b7382;
+            --rule:rgba(236,232,223,.18);
+            --bg:#0b0e14;
+            --hud:rgb(236,232,223);
+            --hudline:rgba(236,232,223,.35);
+            --serif:"Crimson Pro","Cambria","Georgia",serif;
+            --fa:"Vazirmatn","Vazir","Tahoma","Segoe UI","Noto Sans Arabic",sans-serif;
+        }
+        *{box-sizing:border-box}
+        html,body{margin:0;height:100%;background:var(--bg);color:var(--ink);font-family:var(--serif);-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+        body{background:radial-gradient(120% 90% at 50% 22%,#1a2231 0%,#0b0e14 68%) fixed}
+        button{font-family:inherit}
+        :focus-visible{outline:2px solid rgba(255,255,255,.75);outline-offset:3px}
+
+        /* ---------- book & pages ---------- */
+        #book{position:fixed;inset:0 0 56px 0}
+        .page{position:absolute;inset:0;overflow-y:auto;overflow-x:hidden;opacity:0;visibility:hidden;transition:opacity .45s ease,visibility 0s linear .45s}
+        .page.active{opacity:1;visibility:visible;transition:opacity .45s ease}
+        .page::-webkit-scrollbar{width:8px}
+        .page::-webkit-scrollbar-thumb{background:rgba(236,232,223,.16);border-radius:8px}
+
+        /* ---------- page 1 : title ---------- */
+        #p1{display:flex;flex-direction:column;align-items:center;text-align:center;padding:7vh 24px 4vh}
+        #p1 h1{font-size:clamp(40px,min(7vw,10.5vh),88px);font-weight:300;letter-spacing:.06em;margin:0;text-shadow:0 0 46px rgba(255,255,255,.30),0 0 8px rgba(255,255,255,.12)}
+        .subtitle{font-size:clamp(17px,2vw,23px);color:var(--muted);margin:8px 0 0}
+        .subtitle.small{font-size:clamp(15px,1.6vw,18px);font-style:italic;color:var(--faint);margin-top:4px}
+        .fa{font-family:var(--fa);direction:rtl;line-height:1.8;font-weight:300}
+        .fa-title{font-size:clamp(30px,min(4.4vw,6.8vh),52px);margin:clamp(16px,4.5vh,56px) 0 0}
+        .fa-sub{font-size:clamp(15px,1.8vw,20px);color:var(--muted);line-height:1.8;font-weight:400}
+        .fa-sub.small{font-size:clamp(13px,1.4vw,16px);color:var(--faint)}
+        .composer{margin-top:auto;padding-top:3vh}
+        .composer .name{font-size:clamp(20px,2.3vw,26px)}
+        .composer .site{font-size:clamp(15px,1.6vw,18px);color:var(--muted);margin-top:2px}
+        .meta{margin-top:clamp(16px,4vh,48px);font-size:clamp(14px,1.5vw,17px);color:var(--muted);line-height:1.65}
+
+        /* ---------- page 2 : program note ---------- */
+        .sheet{max-width:840px;margin:0 auto;padding:13vh 30px 9vh}
+        .sheet.wide{max-width:1180px;padding:8vh 34px 8vh}
+        .sheet h2{font-size:22px;font-weight:600;margin:0 0 22px;letter-spacing:.01em}
+        .note-p{font-size:clamp(18px,1.7vw,22px);line-height:1.78;text-align:justify;hyphens:auto;margin:0}
+        .notation-line{margin-top:38px;padding-top:26px;border-top:1px solid var(--rule);font-size:clamp(17px,1.5vw,20px);line-height:1.7;color:var(--muted)}
+        .notation-line em{color:var(--ink)}
+
+        /* ---------- page 3 : performance note ---------- */
+        .perf p{font-size:17.5px;line-height:1.62;margin:0;text-align:left}
+        .perf h3{font-size:18px;font-weight:600;margin:0 0 6px}
+        .perf .intro{max-width:none;margin-bottom:28px}
+        .perf .cols{column-count:2;column-gap:60px}
+        .perf .cols section{break-inside:avoid;margin:0 0 22px}
+        .perf .keyhead{margin:6px 0 14px;padding-top:22px;border-top:1px solid var(--rule)}
+        .key{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px 46px;margin:0 0 30px}
+        .key .item{display:flex;gap:16px;align-items:center}
+        .key svg{flex:0 0 96px;width:96px;height:36px;overflow:visible}
+        .key .txt{font-size:16px;line-height:1.42;color:var(--muted)}
+        .key .txt b{color:var(--ink);font-weight:600}
+        .key.compact{grid-template-columns:1fr;gap:12px;margin:0}
+
+        /* ---------- page 4 : animated notation ---------- */
+        #p4{overflow:hidden}
+        #stage{position:absolute;inset:0}
+        #cv{position:absolute;inset:0;width:100%;height:100%;display:block}
+        #hud{position:absolute;left:0;right:0;bottom:0;display:flex;align-items:center;justify-content:center;gap:10px 12px;padding:10px 16px 12px;color:var(--hud);font-size:16px;flex-wrap:wrap}
+        #hud button{font-size:15.5px;color:inherit;background:rgba(10,12,17,.0);border:1px solid var(--hudline);border-radius:999px;padding:7px 16px;cursor:pointer;white-space:nowrap;transition:background .2s,border-color .2s}
+        #hud button:hover{background:rgba(128,128,128,.16)}
+        #hud button[aria-pressed="true"]{border-color:var(--hud)}
+        #hud .chips{display:flex;gap:6px;flex-wrap:wrap;justify-content:center;align-items:center;padding:0 6px}
+        #hud .chips .lab{font-style:italic;opacity:.65;font-size:14.5px;margin-right:4px}
+        #hud .chips button{font-size:14.5px;font-style:italic;padding:6px 13px;border-color:transparent}
+        #hud .chips button:hover{border-color:var(--hudline)}
+        #hud .chips button[aria-pressed="true"]{border-color:var(--hud)}
+        .hint{position:absolute;left:50%;top:47%;transform:translate(-50%,-50%);width:min(560px,calc(100% - 40px));text-align:center;font-style:italic;font-size:clamp(15px,1.5vw,18px);line-height:1.6;color:var(--muted);background:rgba(9,11,16,.78);border:1px solid var(--rule);border-radius:14px;padding:16px 24px;pointer-events:none;transition:opacity .8s}
+        .hint.gone{opacity:0}
+        .key-panel{position:absolute;right:16px;top:14px;width:min(430px,calc(100% - 32px));max-height:calc(100% - 96px);overflow:auto;background:rgba(9,11,16,.95);border:1px solid var(--rule);border-radius:14px;padding:16px 18px;display:none;color:var(--ink);z-index:5}
+        .key-panel.open{display:block}
+        .key-panel h4{margin:0 0 12px;font-size:17px;font-weight:600}
+
+        /* ---------- pager ---------- */
+        #pager{position:fixed;left:0;right:0;bottom:0;height:56px;display:flex;align-items:center;justify-content:space-between;padding:0 18px;background:rgba(8,10,15,.94);border-top:1px solid var(--rule);z-index:10}
+        #pager button{display:inline-flex;align-items:center;gap:9px;white-space:nowrap;font-size:17px;color:var(--ink);background:transparent;border:1px solid var(--rule);border-radius:999px;padding:8px 20px;cursor:pointer;transition:background .2s,border-color .2s}
+        #pager button svg{width:16px;height:16px;flex:0 0 16px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+        #pager button:hover:not(:disabled){background:rgba(236,232,223,.10);border-color:rgba(236,232,223,.45)}
+        #pager button:disabled{opacity:.28;cursor:default}
+        #pager .mid{display:flex;align-items:center;gap:14px;color:var(--muted);font-size:15.5px}
+        #dots{display:flex;gap:10px;align-items:center}
+        #dots i{display:block;width:7px;height:7px;border-radius:50%;background:var(--faint);transition:all .3s}
+        #dots i.on{background:var(--ink);box-shadow:0 0 10px rgba(255,255,255,.65)}
+
+        @media (max-width:900px){
+            .perf .cols{column-count:1}
+            .key{grid-template-columns:1fr}
+            .sheet{padding-top:9vh}
+        }
+        @media (max-width:640px){
+            #pager{padding:0 10px}
+            #pager button{padding:8px 13px;font-size:15.5px;gap:6px}
+            #pageInfo{display:none}
+            #hud{gap:8px;padding:8px 10px 10px}
+            #hud .chips .lab{display:none}
+            #fsBtn{display:none}
+        }
+        @media (prefers-reduced-motion:reduce){
+            .page,.page.active{transition:none}
+        }
+    </style>
+</head>
+<body>
+
+<main id="book">
+
+    <!-- ================= PAGE 1 : TITLE ================= -->
+    <section class="page active" id="p1" aria-label="Title page">
+        <h1>Elegy in White</h1>
+        <p class="subtitle">For one or more instruments</p>
+        <p class="subtitle small">Animated notation</p>
+
+        <div class="fa fa-title" lang="fa" dir="rtl">مرثیه‌ای در سپید</div>
+        <div class="fa fa-sub" lang="fa" dir="rtl">برای یک یا چند ساز</div>
+        <div class="fa fa-sub small" lang="fa" dir="rtl">نت‌نگاری متحرک</div>
+
+        <div class="composer">
+            <div class="name">Ali Balighi</div>
+            <div class="site">www.alibalighi.com</div>
+        </div>
+
+        <div class="meta">
+            <div>Texas Tech University</div>
+            <div>© 2026 Ali Balighi</div>
+        </div>
+    </section>
+
+    <!-- ================= PAGE 2 : PROGRAM NOTE ================= -->
+    <section class="page" id="p2" aria-label="Program note">
+        <div class="sheet">
+            <h2>Program note:</h2>
+            <p class="note-p">In a dream, Dr. Fischer wore white, though I had always known him in black. He said nothing, and I said nothing back. There was no conversation between us, only a quiet that stayed with me, close and unexplained. The next morning, an email told me he had died. Since then I keep thinking about that white, wondering what it meant to see him dressed in a color he never wore.</p>
+            <p class="notation-line"><em>Elegy in White</em> is written in animated notation. The performer needs to follow the performance note and the animated notation.</p>
+        </div>
+    </section>
+
+    <!-- ================= PAGE 3 : PERFORMANCE NOTE ================= -->
+    <section class="page" id="p3" aria-label="Performance note">
+        <div class="sheet wide perf">
+            <h2>Performance note:</h2>
+
+            <p class="intro"><em>Elegy in White</em> is a slow, quiet piece for one or more instruments, written in animated notation. It imagines a white spirit that speaks without words while others listen, answer, and stay near, and a quiet that remains after they are gone. As a performer, follow the points and lines as they fade in and out and drift across the page, and let their atmosphere guide you. The notes below describe how to read the notation and how to shape the sound.</p>
+
+            <h3 class="keyhead">Reading the animated notation</h3>
+            <div class="key" id="keyInline"></div>
+
+            <div class="cols">
+                <section>
+                    <h3>Pitch:</h3>
+                    <p>Read the height of a point or line as pitch. The bottom of the page is a low, soft home tone that rings well in your instrument (D is suggested), and the top of the page is about a fifth above it (A). Favor the pitches D, E♭, F, G, and A, and small falling steps, above all the half step from E♭ to D. Where your instrument can glide, let a rising or falling line move the pitch smoothly. Stay in a soft, intimate register and play plainly, with little or no vibrato. The half step above the home tone should sound narrow and tender; you may make it a little smaller than usual.</p>
+                </section>
+
+                <section>
+                    <h3>Harmony:</h3>
+                    <p>The piece has three colors, which are three voices: white is the spirit, pale violet is a high other, and pale blue is a low other. A solo performer follows the white points and lines only, and listens to the silence where the others appear. With two or three performers, each takes one color; with more, double the colors. Everyone uses the same home tone (D is suggested) and reads the height of the page in a range that suits the voice: the high other higher, the low other lower. The others answer the spirit, echoing what it has just done, and once, in the middle of the piece, all three rest together and sound side by side, a soft D minor sound. Otherwise there are no chords; keep the sound bare and transparent.</p>
+                </section>
+
+                <section>
+                    <h3>Music Atmosphere:</h3>
+                    <p>Aim for sadness without drama, a quiet that stays, close and unexplained. The animation moves through six atmospheres, named at the top of the page. In <em>breath</em> the spirit is only air, small and faint. In <em>a voice</em> it begins to sound, and falls. In <em>answers</em> the others appear, pale violet and pale blue, and answer the spirit near where it faded. In <em>weight</em> everything is larger and brighter, and once the three colors come together and rest side by side. In <em>fading</em> the others leave one by one and the spirit thins back toward breath. In <em>white</em> the screen slowly turns white, and there is only the quiet. Never push the sound and never act out the sadness; let it happen.</p>
+                </section>
+
+                <section>
+                    <h3>Rhythm:</h3>
+                    <p>There is no pulse, no meter, and no count. Time is set only by the points and lines: a sound begins as something appears, lasts while it is visible, and ends as it fades away. Keep the rhythm free, slow, and simple, and let breath and gesture decide. Do not add patterns, syncopation, or ornament. Begin each sound gently, without a hard attack, and let it disappear the way the point or line does, without a cut. When several things are visible at once, take only what belongs to your color, and never hurry.</p>
+                </section>
+
+                <section>
+                    <h3>Silence:</h3>
+                    <p>Silence is the most important sound in the piece, since in the dream nothing was said. When nothing of your color is on the page, or the page is empty, stop completely and listen, perhaps to another voice. Do not prepare the next sound audibly. Between the utterances the silence should feel occupied. The last silence is the longest: after the final breath the screen slowly turns white. Remain still until the animation has ended, and a little longer.</p>
+                </section>
+
+                <section>
+                    <h3>Style:</h3>
+                    <p>Simple, quiet, and intimate, closer to an elegy, a lament, or a whispered prayer than to a display of technique. No extended techniques are required. What matters is tone color, softness, and patience. You may draw on the lament, lullaby, or chant traditions of your own instrument, but avoid flourish. Dynamics range from ppp to mp; never play louder than mp.</p>
+                </section>
+
+                <section>
+                    <h3>Performance Considerations:</h3>
+                    <p>Follow the animation as you would follow weather rather than a conductor: it shows an atmosphere, not a beat. Listen to the room and to the other performers, and breathe together. Every performer must be able to see the screen, and performers in an ensemble should sit close enough to hear each other's softest sounds. Keep the hall dim and the movements small. One person may move the atmosphere on with the atmosphere buttons or the N key. Optionally, performers may dress in black, so that the only white in the room is the light of the screen.</p>
+                </section>
+
+                <section>
+                    <h3>Duration:</h3>
+                    <p>The duration is variable. Left on Auto, the animation moves through its six atmospheres in about five to six minutes, a little differently each time. For a shorter or longer performance, turn Auto off and choose when to move on to the next atmosphere.</p>
+                </section>
+            </div>
+        </div>
+    </section>
+
+    <!-- ================= PAGE 4 : ANIMATED NOTATION ================= -->
+    <section class="page" id="p4" aria-label="Animated notation">
+        <div id="stage">
+            <canvas id="cv" role="img" aria-label="Animated notation for Elegy in White: points and lines that fade in and out and drift across the page"></canvas>
+            <div class="hint" id="hint">Follow the points and lines as they fade in and out and drift across the page, and let their atmosphere guide you. Press Play (or the space bar) when everyone is ready.</div>
+
+            <div class="key-panel" id="keyPanel">
+                <h4>Key</h4>
+                <div class="key compact" id="keyOverlay"></div>
+            </div>
+
+            <div id="hud">
+                <button id="playBtn" type="button">Play</button>
+                <button id="restartBtn" type="button">Restart</button>
+                <div class="chips" id="chips" role="group" aria-label="Atmosphere"><span class="lab">atmosphere</span></div>
+                <button id="autoBtn" type="button" aria-pressed="true">Auto: on</button>
+                <button id="keyBtn" type="button" aria-pressed="false">Key</button>
+                <button id="fsBtn" type="button">Full screen</button>
+            </div>
+        </div>
+    </section>
+
+</main>
+
+<nav id="pager" aria-label="Page navigation">
+    <button id="prev" type="button" aria-label="Previous page"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M10 3 5 8l5 5"/></svg><span>Previous page</span></button>
+    <div class="mid">
+        <div id="dots" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+        <span id="pageInfo">Page 1 of 4</span>
+    </div>
+    <button id="next" type="button" aria-label="Next page"><span>Next page</span><svg viewBox="0 0 16 16" aria-hidden="true"><path d="m6 3 5 5-5 5"/></svg></button>
+</nav>
+
+<script>
+    (() => {
+        'use strict';
+
+        /* =====================================================================
+           Small helpers
+           ===================================================================== */
+        const $ = s => document.querySelector(s);
+        const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+        const ss = (x, a, b) => { const u = clamp((x - a) / (b - a), 0, 1); return u * u * (3 - 2 * u); };
+        const TAU = Math.PI * 2;
+        const SERIF = '"Crimson Pro","Cambria","Georgia",serif';
+
+        /* =====================================================================
+           Notation key (used on page 3 and as an overlay on page 4)
+           ===================================================================== */
+        function legendHTML(p) {
+            const INK = '#ece8df', VIOLET = 'rgb(198,188,228)', BLUE = 'rgb(168,194,228)';
+            const svg = inner => `<svg viewBox="0 0 96 36" aria-hidden="true">${inner}</svg>`;
+            const glowDef = (id, col) => `<radialGradient id="${p}${id}"><stop offset="0" stop-color="${col}" stop-opacity=".55"/><stop offset="1" stop-color="${col}" stop-opacity="0"/></radialGradient>`;
+            const pt = (cx, cy, r, col, op) => `<circle cx="${cx}" cy="${cy}" r="${r * 2.6}" fill="url(#${p}gl${col === INK ? 'w' : col === VIOLET ? 'v' : 'b'})" opacity="${op}"/><circle cx="${cx}" cy="${cy}" r="${r}" fill="${col}" fill-opacity="${op}"/>`;
+            const defs = `<defs>${glowDef('glw', INK)}${glowDef('glv', VIOLET)}${glowDef('glb', BLUE)}` +
+                `<linearGradient id="${p}lg" x1="0" x2="1"><stop offset="0" stop-color="${INK}" stop-opacity="0"/><stop offset="1" stop-color="${INK}" stop-opacity="1"/></linearGradient>` +
+                `<linearGradient id="${p}tg" x1="0" x2="1"><stop offset="0" stop-color="${INK}" stop-opacity="0"/><stop offset="1" stop-color="${INK}" stop-opacity=".6"/></linearGradient>` +
+                `<linearGradient id="${p}wg" x1="0" x2="1"><stop offset="0" stop-color="#10141d"/><stop offset="1" stop-color="#f0eee8"/></linearGradient></defs>`;
+            const items = [
+                [svg(defs + pt(48, 18, 6, INK, 1)),
+                    'Point', 'A single soft sound. It fades in, lasts while it is visible, and fades away.'],
+                [svg(defs + `<path d="M8 9 C34 9 56 27 86 27" fill="none" stroke="url(#${p}lg)" stroke-width="2.2" stroke-linecap="round"/>` + pt(86, 27, 3.4, INK, 1)),
+                    'Line', 'A sound that moves. Follow its bright head: when the line falls across the page, let the pitch fall; when it rises, let the pitch rise.'],
+                [svg(defs + pt(16, 18, 4, INK, .25) + pt(48, 18, 7, INK, 1) + pt(80, 18, 4, INK, .25)),
+                    'Fade', 'Everything fades in and fades out. Begin softly when something appears, and end softly when it is gone.'],
+                [svg(defs + pt(18, 18, 2.2, INK, .4) + pt(44, 18, 5, INK, .7) + pt(76, 18, 9, INK, 1)),
+                    'Size and brightness', 'A bigger, brighter point or a thicker line is louder. The smallest and faintest are breath: airy, with almost no pitch.'],
+                [svg(defs + `<path d="M48 5 V31" stroke="${INK}" stroke-width="1.6" stroke-linecap="round" fill="none"/><path d="M43.5 10 L48 5 L52.5 10 M43.5 26 L48 31 L52.5 26" stroke="${INK}" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/>`),
+                    'Height', 'The height on the page is pitch: your lowest soft pitch at the bottom, and about a fifth above it at the top.'],
+                [svg(defs + `<path d="M10 11 C30 12 48 17 70 21" fill="none" stroke="url(#${p}tg)" stroke-width="2" stroke-linecap="round"/>` + pt(72, 21, 5, INK, 1)),
+                    'Drift', 'Points and lines drift slowly across the page. Let the sound follow: drifting up may rise a little, drifting down may sink.'],
+                [svg(defs + pt(20, 18, 6, INK, 1) + pt(48, 18, 6, VIOLET, 1) + pt(76, 18, 6, BLUE, 1)),
+                    'Three colors', 'White is the spirit. Pale violet is the high other, and pale blue is the low other. A solo performer follows the white only.'],
+                [svg(`<rect x="6" y="5" width="84" height="26" rx="8" fill="none" stroke="${INK}" stroke-opacity=".3"/>`),
+                    'Empty page', 'When nothing of your color is on the page, be silent and listen.'],
+                [svg(`<text x="48" y="23" text-anchor="middle" font-family="${SERIF}" font-style="italic" font-weight="400" font-size="15" fill="${INK}">breath · weight</text>`),
+                    'Atmosphere', 'The word at the top names the atmosphere: breath, a voice, answers, weight, fading, white. It changes slowly by itself, or when you choose it.'],
+                [svg(defs + `<rect x="4" y="6" width="88" height="24" rx="7" fill="url(#${p}wg)" stroke="${INK}" stroke-opacity=".3"/>`),
+                    'White', 'At the end the screen turns white. Stay in the quiet.']
+            ];
+            return items.map(([icon, title, text]) =>
+                `<div class="item">${icon}<div class="txt"><b>${title}.</b> ${text}</div></div>`).join('');
+        }
+        $('#keyInline').innerHTML = legendHTML('a');
+        $('#keyOverlay').innerHTML = legendHTML('b');
+
+        /* =====================================================================
+           Page navigation
+           ===================================================================== */
+        const pages = [...document.querySelectorAll('.page')];
+        const dots = [...document.querySelectorAll('#dots i')];
+        const prevBtn = $('#prev'), nextBtn = $('#next'), pageInfo = $('#pageInfo');
+        let cur = 0;
+
+        function go(n) {
+            n = clamp(n, 0, pages.length - 1);
+            const leaving = cur;
+            pages[cur].classList.remove('active');
+            cur = n;
+            pages[cur].classList.add('active');
+            pages[cur].scrollTop = 0;
+            dots.forEach((d, i) => d.classList.toggle('on', i === cur));
+            prevBtn.disabled = cur === 0;
+            nextBtn.disabled = cur === pages.length - 1;
+            pageInfo.textContent = `Page ${cur + 1} of ${pages.length}`;
+            try { history.replaceState(null, '', location.pathname + location.search + '#' + (cur + 1)); } catch (e) {}
+            if (leaving === 3 && cur !== 3) score.pause();
+            if (cur === 3) { score.layout(); score.start(); } else { score.stop(); }
+            if (document.activeElement && document.activeElement.blur) document.activeElement.blur();
+        }
+        prevBtn.addEventListener('click', () => go(cur - 1));
+        nextBtn.addEventListener('click', () => go(cur + 1));
+
+        addEventListener('keydown', e => {
+            if (e.key === 'ArrowRight' || e.key === 'PageDown') { e.preventDefault(); go(cur + 1); }
+            else if (e.key === 'ArrowLeft' || e.key === 'PageUp') { e.preventDefault(); go(cur - 1); }
+            else if (e.key === ' ' && cur === 3) { e.preventDefault(); score.toggle(); }
+            else if ((e.key === 'n' || e.key === 'N') && cur === 3) { score.nextAtmosphere(); }
+            else if ((e.key === 'f' || e.key === 'F') && cur === 3) { score.fullscreen(); }
+            else if (e.key === 'Escape') { score.closeKey(); }
+        });
+        addEventListener('keyup', e => { if (e.key === ' ' && cur === 3) e.preventDefault(); });
+
+        /* =====================================================================
+           Animated notation
+           Simple points and lines fade in and out and drift across the whole page.
+           Nothing here is a timeline: the field is shaped only by the atmosphere.
+           ===================================================================== */
+        const score = (() => {
+            /* Optional, for rehearsal or testing:  ...html?seed=12  repeats one performance,
+               ...html?speed=4  runs the atmospheres four times faster. */
+            const qs = new URLSearchParams(location.search);
+            const SIM = clamp(parseFloat(qs.get('speed')) || 1, 0.2, 30);
+            const FIXED = parseInt(qs.get('seed'), 10);
+            const hasSeed = Number.isFinite(FIXED);
+            const mulberry32 = a => () => { a |= 0; a = a + 0x6D2B79F5 | 0; let t = Math.imul(a ^ a >>> 15, 1 | a); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; };
+            let rnd = mulberry32(hasSeed ? FIXED : (Date.now() >>> 0));
+            const gauss = () => (rnd() + rnd() + rnd() - 1.5) / 0.5;
+
+            const COL = { white: [246, 243, 236], violet: [198, 188, 228], blue: [168, 194, 228] };
+
+            /* the six atmospheres  (dur: seconds it lasts on Auto)
+               dens   how much is visible at once        line   share of lines among points
+               size   size of points and thickness       alpha  brightness
+               speed  how fast things drift              others how often the others answer
+               fall   how often things sink rather than rise                                   */
+            const ATMS = [
+                { id: 'breath',  dur: [40, 60], p: { dens: 2.2, line: .20, size: .62, alpha: .50, speed: .70, others: 0,   fall: .85 } },
+                { id: 'a voice', dur: [45, 65], p: { dens: 3.4, line: .45, size: 1.0, alpha: .85, speed: .90, others: 0,   fall: .75 } },
+                { id: 'answers', dur: [55, 80], p: { dens: 4.6, line: .50, size: 1.0, alpha: .88, speed: 1.0, others: .85, fall: .70 } },
+                { id: 'weight',  dur: [55, 75], p: { dens: 5.4, line: .55, size: 1.3, alpha: 1.0, speed: 1.15, others: .90, fall: .55 } },
+                { id: 'fading',  dur: [45, 65], p: { dens: 2.4, line: .35, size: .70, alpha: .56, speed: .70, others: .45, fall: .85 } },
+                { id: 'white',   dur: [42, 42], p: { dens: 0,   line: 0,   size: .50, alpha: .40, speed: .50, others: 0,   fall: .90 } }
+            ];
+            const WHITE = ATMS.length - 1;
+
+            const cv = $('#cv'), ctx = cv.getContext('2d');
+            const stage = $('#stage');
+            const playBtn = $('#playBtn'), restartBtn = $('#restartBtn'), autoBtn = $('#autoBtn');
+            const keyBtn = $('#keyBtn'), fsBtn = $('#fsBtn'), chipsBox = $('#chips');
+            const hint = $('#hint'), keyPanel = $('#keyPanel');
+
+            const chips = ATMS.map((a, i) => {
+                const b = document.createElement('button');
+                b.type = 'button'; b.textContent = a.id; b.setAttribute('aria-pressed', 'false');
+                b.addEventListener('click', () => { chooseAtmosphere(i); b.blur(); });
+                chipsBox.appendChild(b);
+                return b;
+            });
+
+            /* ---------- state ---------- */
+            let W = 0, H = 0, dpr = 1, sc = 1, fieldTop = 0, fieldBot = 0;
+            let playing = false, started = false, ended = false, auto = true;
+            let atm = 0, atmT = 0, atmDur = 40, simT = 0, spawnT = 1.2, firstDone = false, gatherDone = false, gatherUntil = -1;
+            let P = { ...ATMS[0].p };
+            let els = [], pending = [];
+            const sp = { x: 0, y: 0 }, glow = { x: 0, y: 0 };
+            let w = 0;
+            let running = false, raf = 0, last = 0, tt = 0;
+            let wordTxt = '', wordNext = '', wordA = 0;
+            let e_g = null;                       // where the three colors gather
+
+            /* ---------- the field ---------- */
+            function layout() {
+                const r = cv.getBoundingClientRect();
+                if (!r.width || !r.height) return;
+                W = r.width; H = r.height;
+                dpr = Math.min(window.devicePixelRatio || 1, 2);
+                cv.width = Math.round(W * dpr); cv.height = Math.round(H * dpr);
+                ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+                sc = clamp(Math.min(W, H) / 760, 0.55, 1.4);
+                fieldTop = H * 0.11;
+                fieldBot = H - (W < 640 ? 150 : 84);
+                if (!sp.x) { sp.x = W * 0.45; sp.y = fieldTop + (fieldBot - fieldTop) * 0.15; glow.x = sp.x; glow.y = sp.y; }
+                draw(0);
+            }
+
+            function moveSpirit() {
+                const fh = fieldBot - fieldTop;
+                sp.x = rnd() < 0.25 ? W * (0.1 + 0.8 * rnd()) : clamp(sp.x + gauss() * W * 0.2, W * 0.08, W * 0.92);   // it wanders across the whole page
+                sp.y += (P.fall * 0.075 + (rnd() - 0.5) * 0.10) * fh;
+                if (sp.y > fieldBot - fh * 0.06) sp.y = fieldTop + fh * (0.08 + rnd() * 0.2);   // the spirit rises again
+                sp.y = clamp(sp.y, fieldTop, fieldBot);
+            }
+
+            function makeEl(voice, x, y, kind, tpl) {
+                const k = kind || (rnd() < P.line ? 'l' : 'p');
+                const fallDir = tpl ? tpl.fallDir : (rnd() < P.fall ? 1 : -1);
+                const spd = (5 + rnd() * 9) * P.speed * sc;
+                const el = {
+                    k, voice, x, y, age: 0, seed: rnd() * 100, told: false, fallDir,
+                    a: clamp(P.alpha * (voice === 'white' ? 1 : 0.82) * (0.85 + 0.3 * rnd()), 0.12, 1),
+                    vx: (rnd() - 0.5) * 2 * spd * 0.6, vy: fallDir * spd
+                };
+                if (k === 'p') {
+                    el.r = tpl ? tpl.r * (0.85 + 0.1 * rnd()) : (3 + rnd() * 7) * P.size * sc;
+                    el.tIn = 1.8 + rnd() * 1.6; el.hold = 1.5 + rnd() * 4; el.tOut = 3 + rnd() * 3;
+                } else {
+                    el.L = tpl ? tpl.L * (0.8 + 0.1 * rnd()) : (130 + rnd() * 260) * sc * (0.7 + 0.5 * P.size);
+                    el.w = tpl ? tpl.w * 0.9 : (1.3 + rnd() * 1.6) * (0.6 + 0.6 * P.size) * Math.max(0.8, sc);
+                    const deg = (10 + rnd() * 50) * Math.PI / 180;
+                    let th = fallDir > 0 ? deg : -deg;
+                    if (rnd() < 0.5) th = Math.PI - th;
+                    el.ang = tpl ? tpl.ang : th;
+                    el.curv = tpl ? tpl.curv : (rnd() - 0.5) * 0.5;
+                    el.shape = tpl ? tpl.shape : (rnd() < 0.5 ? 0 : 1);
+                    el.grow = clamp(el.L / (55 + rnd() * 35), 2.5, 7.5); el.hold = 0.5 + rnd() * 2; el.tOut = 3 + rnd() * 3;
+                    const hx = Math.abs(Math.cos(el.ang)) * el.L / 2 + el.L * 0.15, hy = Math.abs(Math.sin(el.ang)) * el.L / 2 + el.L * 0.15;
+                    el.x = W > 2 * (hx + 24) ? clamp(el.x, hx + 24, W - hx - 24) : W / 2;
+                    el.y = clamp(el.y, fieldTop + Math.min(hy, (fieldBot - fieldTop) / 2), fieldBot - Math.min(hy, (fieldBot - fieldTop) / 2));
+                }
+                return el;
+            }
+
+            function pickOther() {
+                let wv = 1, wb = 1;
+                if (atm === 4) { const pr = atmT / atmDur; wv = clamp(1 - pr * 1.8, 0, 1); wb = clamp(1 - (pr - 0.4) * 1.7, 0, 1); }
+                if (atm >= WHITE || wv + wb < 0.02) return null;
+                return rnd() < wv / (wv + wb) ? 'violet' : 'blue';
+            }
+            function scheduleAnswer(src) {
+                if (rnd() > P.others) return;
+                const voice = pickOther(); if (!voice) return;
+                pending.push({ at: simT + 0.8 + rnd() * 2.2, voice, src });
+            }
+            function makeAnswer(p) {
+                const s0 = p.src;
+                const side = rnd() < 0.5 ? -1 : 1;
+                let x = clamp(s0.x + side * (70 + rnd() * 110) * sc, W * 0.06, W * 0.94);
+                let y = clamp(s0.y + (rnd() - 0.5) * 160 * sc, fieldTop, fieldBot);
+                const tpl = { fallDir: rnd() < 0.8 ? s0.fallDir : -s0.fallDir, r: s0.r, L: s0.L, w: s0.w, ang: s0.ang, curv: s0.curv, shape: s0.shape };
+                if (s0.k === 'l' && tpl.fallDir !== s0.fallDir) tpl.ang = -s0.ang;
+                const e = makeEl(p.voice, x, y, s0.k, tpl);
+                e.a = clamp(s0.a * 0.8, 0.12, 1);
+                return e;
+            }
+
+            /* the three colors come together and rest side by side */
+            function gather() {
+                const fh = fieldBot - fieldTop;
+                const gx = W * (0.4 + rnd() * 0.2), gy = fieldTop + fh * 0.5, dy = fh * 0.17;
+                [['violet', gy - dy], ['white', gy], ['blue', gy + dy]].forEach(([voice, y], i) => {
+                    const e = makeEl(voice, gx + (rnd() - 0.5) * 40 * sc, y, 'p');
+                    e.r = 15 * sc; e.a = voice === 'white' ? 0.95 : 0.82; e.vx = e.vy = 0; e.chord = true;
+                    e.tIn = 4 + i * 0.4; e.hold = 8 + rnd() * 3; e.tOut = 6.5;
+                    els.push(e);
+                });
+                gatherUntil = simT + 20; e_g = { x: gx, y: gy };
+            }
+
+            /* ---------- the atmosphere ---------- */
+            function setAtm(i) {
+                atm = clamp(i, 0, WHITE); atmT = 0;
+                const d = ATMS[atm].dur; atmDur = d[0] + rnd() * (d[1] - d[0]);
+                gatherDone = false; wordNext = ATMS[atm].id;
+                if (atm >= WHITE) pending = [];
+                chips.forEach((c, k) => c.setAttribute('aria-pressed', String(k === atm)));
+            }
+            function chooseAtmosphere(i) { ended = false; setAtm(i); updateHud(); }
+            function nextAtmosphere() { if (atm < WHITE) chooseAtmosphere(atm + 1); }
+
+            function reset(play) {
+                if (!hasSeed) rnd = mulberry32((Date.now() ^ (Math.random() * 1e9)) >>> 0);
+                els = []; pending = []; simT = 0; spawnT = 1.2; firstDone = false; w = 0; ended = false; gatherUntil = -1; e_g = null;
+                P = { ...ATMS[0].p };
+                sp.x = 0; if (W) { sp.x = W * 0.45; sp.y = fieldTop + (fieldBot - fieldTop) * 0.15; glow.x = sp.x; glow.y = sp.y; }
+                wordTxt = ''; wordA = 0;
+                setAtm(0);
+                playing = !!play; started = !!play;
+                updateHud();
+            }
+
+            function update(dt) {
+                simT += dt; atmT += dt;
+                const T = ATMS[atm].p, k = 1 - Math.exp(-dt / 3.5);
+                for (const key in T) P[key] += (T[key] - P[key]) * k;
+
+                if (atm < WHITE && auto && atmT >= atmDur) setAtm(atm + 1);
+                if (atm === WHITE) { w = Math.min(1, w + dt / 24); if (atmT >= 42) { ended = true; playing = false; } }
+                else w = Math.max(0, w - dt / 5);
+
+                if (atm < WHITE) {
+                    // the spirit speaks
+                    const live = els.filter(e => e.voice === 'white' && !e.chord).length;
+                    const calm = simT < gatherUntil ? 0.3 : 1;
+                    const due = simT >= spawnT && live < Math.ceil(P.dens * 0.6) + 1;
+                    if (due && (!firstDone || rnd() < P.dens * 0.075 * calm * dt)) {
+                        firstDone = true;
+                        moveSpirit();
+                        els.push(makeEl('white', sp.x, sp.y));
+                        spawnT = simT + 1.6 + rnd() * 1.4;
+                    }
+                    // once, the three colors rest together
+                    if (atm === 3 && !gatherDone && atmT > atmDur * 0.45) { gatherDone = true; gather(); }
+                }
+                glow.x += (sp.x - glow.x) * (1 - Math.exp(-dt / 2)); glow.y += (sp.y - glow.y) * (1 - Math.exp(-dt / 2));
+
+                // the others answer
+                for (let i = pending.length - 1; i >= 0; i--) if (pending[i].at <= simT) { els.push(makeAnswer(pending[i])); pending.splice(i, 1); }
+
+                // everything drifts, fades, and goes
+                for (let i = els.length - 1; i >= 0; i--) {
+                    const e = els[i];
+                    e.age += dt; e.x += e.vx * dt; e.y += e.vy * dt;
+                    if (e_g && simT < gatherUntil && !e.chord) { e.vx += (e_g.x - e.x) * 0.0035 * dt; e.vy += (e_g.y - e.y) * 0.0035 * dt; }
+                    const fadeAt = e.k === 'p' ? e.tIn + e.hold : e.grow + e.hold;
+                    if (e.age >= fadeAt + e.tOut) { els.splice(i, 1); continue; }
+                    if (!e.told && e.voice === 'white' && !e.chord && e.age >= fadeAt) { e.told = true; scheduleAnswer(e); }
+                }
+            }
+
+            /* ---------- drawing ---------- */
+            const rgba = (c, a) => `rgba(${c[0]},${c[1]},${c[2]},${clamp(a, 0, 1)})`;
+
+            function drawPoint(e, vis) {
+                const env = ss(e.age / e.tIn, 0, 1) * (1 - ss(e.age - e.tIn - e.hold, 0, e.tOut));
+                const a = e.a * env * vis; if (a < 0.004) return;
+                const c = COL[e.voice], r = e.r * (1 + 0.05 * Math.sin(tt * 0.9 + e.seed));
+                const g = ctx.createRadialGradient(e.x, e.y, 0, e.x, e.y, r * 4);
+                g.addColorStop(0, rgba(c, a * 0.34)); g.addColorStop(1, rgba(c, 0));
+                ctx.fillStyle = g; ctx.beginPath(); ctx.arc(e.x, e.y, r * 4, 0, TAU); ctx.fill();
+                ctx.fillStyle = rgba(c, a); ctx.beginPath(); ctx.arc(e.x, e.y, r, 0, TAU); ctx.fill();
+            }
+
+            function linePt(e, u) {
+                const dx = Math.cos(e.ang), dy = Math.sin(e.ang), nx = -dy, ny = dx;
+                const off = e.shape === 0 ? Math.sin(Math.PI * u) * e.curv * e.L : Math.sin(TAU * u) * e.curv * e.L * 0.6;
+                const t = (u - 0.5) * e.L;
+                return [e.x + dx * t + nx * off, e.y + dy * t + ny * off];
+            }
+
+            function drawLine(e, vis) {
+                const out0 = e.grow + e.hold;
+                const uh = ss(e.age / e.grow, 0, 1);
+                const ut = ss(e.age - out0, 0, e.tOut);
+                const env = ss(e.age / 1.2, 0, 1) * (1 - ss(e.age - (out0 + 0.75 * e.tOut), 0, 0.25 * e.tOut));
+                const a = e.a * env * vis;
+                if (a < 0.004 || uh - ut < 0.004) return;
+                const c = COL[e.voice];
+                const M = Math.max(5, Math.ceil((uh - ut) * e.L / 6));
+                const pts = [];
+                for (let i = 0; i <= M; i++) pts.push(linePt(e, ut + (uh - ut) * i / M));
+                const tail = pts[0], head = pts[M];
+                const g = ctx.createLinearGradient(tail[0], tail[1], head[0], head[1]);
+                g.addColorStop(0, rgba(c, 0)); g.addColorStop(0.6, rgba(c, a * 0.55)); g.addColorStop(1, rgba(c, a));
+                ctx.strokeStyle = g; ctx.lineWidth = e.w; ctx.lineCap = 'round'; ctx.lineJoin = 'round';
+                ctx.beginPath(); ctx.moveTo(pts[0][0], pts[0][1]);
+                for (let i = 1; i <= M; i++) ctx.lineTo(pts[i][0], pts[i][1]);
+                ctx.stroke();
+                // the bright head: the sounding moment
+                const hr = e.w * 1.15, hg = ctx.createRadialGradient(head[0], head[1], 0, head[0], head[1], hr * 5);
+                hg.addColorStop(0, rgba(c, a * 0.42)); hg.addColorStop(1, rgba(c, 0));
+                ctx.fillStyle = hg; ctx.beginPath(); ctx.arc(head[0], head[1], hr * 5, 0, TAU); ctx.fill();
+                ctx.fillStyle = rgba(c, a); ctx.beginPath(); ctx.arc(head[0], head[1], hr, 0, TAU); ctx.fill();
+            }
+
+            function draw(dt) {
+                if (!W) return;
+                tt += dt;
+                const ws = ss(w, 0, 1), vis = 1 - ws;
+
+                // the word at the top follows the atmosphere
+                if (wordNext !== wordTxt) { wordA -= dt / 0.9; if (wordA <= 0) { wordA = 0; wordTxt = wordNext; } }
+                else wordA += (0.5 - wordA) * (1 - Math.exp(-dt / 1.4));
+
+                // ground
+                const bg = ctx.createLinearGradient(0, 0, 0, H);
+                bg.addColorStop(0, '#111621'); bg.addColorStop(1, '#080a0f');
+                ctx.fillStyle = bg; ctx.fillRect(0, 0, W, H);
+
+                // a very soft presence around the spirit
+                const amb = 0.035 + 0.05 * P.alpha * vis, rr = Math.min(W, H) * 0.55;
+                const ag = ctx.createRadialGradient(glow.x, glow.y, 0, glow.x, glow.y, rr);
+                ag.addColorStop(0, `rgba(190,205,235,${amb})`); ag.addColorStop(1, 'rgba(190,205,235,0)');
+                ctx.fillStyle = ag; ctx.fillRect(0, 0, W, H);
+
+                // the white spreads out of the spirit
+                if (ws > 0.001) {
+                    const Rw = ws * Math.hypot(W, H) * 1.5;
+                    const wg = ctx.createRadialGradient(glow.x, glow.y, 0, glow.x, glow.y, Rw);
+                    wg.addColorStop(0, 'rgba(241,239,233,1)'); wg.addColorStop(0.65, 'rgba(241,239,233,1)'); wg.addColorStop(1, 'rgba(241,239,233,0)');
+                    ctx.fillStyle = wg; ctx.fillRect(0, 0, W, H);
+                }
+
+                // points and lines
+                for (const e of els) { if (e.k === 'p') drawPoint(e, vis); else drawLine(e, vis); }
+
+                // the atmosphere word
+                if (wordTxt && wordA > 0.01) {
+                    ctx.font = `italic 300 ${Math.round(clamp(W * 0.022, 17, 28))}px ${SERIF}`;
+                    ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+                    ctx.fillStyle = `rgba(236,232,223,${wordA * vis})`;
+                    ctx.fillText(wordTxt, W / 2, Math.max(22, H * 0.055));
+                }
+
+                // the final words, on the white
+                if (atm === WHITE) {
+                    const ta = ss(atmT, 22, 26) * (1 - ss(atmT, 38, 42));
+                    if (ta > 0.01) {
+                        ctx.font = `italic 300 ${Math.round(clamp(W * 0.03, 22, 40))}px ${SERIF}`;
+                        ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+                        ctx.fillStyle = `rgba(58,62,72,${ta})`;
+                        ctx.fillText('remain in the quiet', W / 2, (fieldTop + fieldBot) / 2);
+                    }
+                }
+
+                // controls follow the white
+                const m = clamp(ws * 1.4, 0, 1), mix = (a, c) => Math.round(a + (c - a) * m);
+                const r = mix(236, 52), g = mix(232, 56), bl = mix(223, 66);
+                stage.style.setProperty('--hud', `rgb(${r},${g},${bl})`);
+                stage.style.setProperty('--hudline', `rgba(${r},${g},${bl},.38)`);
+            }
+
+            /* ---------- controls ---------- */
+            function updateHud() {
+                playBtn.textContent = ended ? 'Replay' : playing ? 'Pause' : 'Play';
+                hint.classList.toggle('gone', started);
+                autoBtn.textContent = 'Auto: ' + (auto ? 'on' : 'off'); autoBtn.setAttribute('aria-pressed', String(auto));
+                chips.forEach((c, k) => c.setAttribute('aria-pressed', String(k === atm)));
+            }
+            function toggle() {
+                if (ended) { reset(true); return; }
+                playing = !playing; if (playing) started = true;
+                updateHud();
+            }
+            function pause() { playing = false; updateHud(); }
+
+            playBtn.addEventListener('click', () => { toggle(); playBtn.blur(); });
+            restartBtn.addEventListener('click', () => { reset(false); restartBtn.blur(); });
+            autoBtn.addEventListener('click', () => { auto = !auto; updateHud(); autoBtn.blur(); });
+            function closeKey() { keyPanel.classList.remove('open'); keyBtn.setAttribute('aria-pressed', 'false'); }
+            keyBtn.addEventListener('click', () => {
+                const open = keyPanel.classList.toggle('open'); keyBtn.setAttribute('aria-pressed', String(open)); keyBtn.blur();
+            });
+            function fullscreen() {
+                try {
+                    if (document.fullscreenElement) document.exitFullscreen();
+                    else if (document.documentElement.requestFullscreen) document.documentElement.requestFullscreen();
+                } catch (e) {}
+            }
+            fsBtn.addEventListener('click', () => { fullscreen(); fsBtn.blur(); });
+
+            /* ---------- run loop (only while page 4 is on screen) ---------- */
+            function frame(now) {
+                if (!running) return;
+                const dt = Math.min(0.1, (now - last) / 1000); last = now;
+                if (playing) update(dt * SIM);
+                draw(dt);
+                if (playing || ended) updateHud();
+                raf = requestAnimationFrame(frame);
+            }
+            function start() { if (running) return; running = true; last = performance.now(); raf = requestAnimationFrame(frame); }
+            function stop() { running = false; cancelAnimationFrame(raf); }
+
+            if (window.ResizeObserver) new ResizeObserver(() => layout()).observe(cv);
+            addEventListener('resize', layout);
+            document.addEventListener('visibilitychange', () => { if (document.hidden) pause(); });
+
+            setAtm(0); updateHud();
+            return { layout, start, stop, pause, toggle, fullscreen, closeKey, nextAtmosphere };
+        })();
+
+        /* start on the page named in the address, if any */
+        const h = parseInt((location.hash || '').replace('#', ''), 10);
+        go(h >= 1 && h <= 4 ? h - 1 : 0);
+
+    })();
+</script>
+</body>
+</html>
