@@ -1,12 +1,12 @@
 (function () {
-  async function loadUpcoming() {
-    var container = document.getElementById('upcoming-events');
-    var listEl = document.getElementById('upcoming-events-list');
+  async function loadUpcoming(sourceFile, containerId, listId) {
+    var container = document.getElementById(containerId);
+    var listEl = document.getElementById(listId);
     if (!container || !listEl) return;
 
     var html;
     try {
-      var res = await fetch('performance.html', { cache: 'no-store' });
+      var res = await fetch(sourceFile, { cache: 'no-store' });
       html = await res.text();
     } catch (e) {
       return;
@@ -66,9 +66,14 @@
     container.hidden = false;
   }
 
+  function loadAll() {
+    loadUpcoming('performance.html', 'upcoming-events', 'upcoming-events-list');
+    loadUpcoming('conferences.html', 'upcoming-conference', 'upcoming-conference-list');
+  }
+
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', loadUpcoming);
+    document.addEventListener('DOMContentLoaded', loadAll);
   } else {
-    loadUpcoming();
+    loadAll();
   }
 })();
