@@ -459,6 +459,11 @@ body.music-page .music-container .section-title + .year-title {
   list-style: circle;
 }
 
+body.conferences-page .performance-list {
+  padding-left: 0;
+  list-style: none;
+}
+
 .performance-list li {
   margin-bottom: 8px;
 }
