@@ -276,13 +276,13 @@
                 [svg(defs + `<path d="M10 11 C30 12 48 17 70 21" fill="none" stroke="url(#${p}tg)" stroke-width="2" stroke-linecap="round"/>` + pt(72, 21, 5, INK, 1)),
                     'Drift', 'Points and lines drift slowly across the page. Let the sound follow: drifting up may rise a little, drifting down may sink.'],
                 [svg(defs + pt(20, 18, 6, INK, 1) + pt(48, 18, 6, VIOLET, 1) + pt(76, 18, 6, BLUE, 1)),
-                    'Three colors', 'White is the spirit. Pale violet is the high other, and pale blue is the low other. A solo performer follows the white only.'],
+                    'Three colors', 'White is the spirit. Pale violet is the high other, and pale blue is the low other.'],
                 [svg(`<rect x="6" y="5" width="84" height="26" rx="8" fill="none" stroke="${INK}" stroke-opacity=".3"/>`),
                     'Empty page', 'When nothing of your color is on the page, be silent and listen.'],
                 [svg(`<text x="48" y="23" text-anchor="middle" font-family="${SERIF}" font-style="italic" font-weight="400" font-size="15" fill="${INK}">breath · weight</text>`),
                     'Atmosphere', 'The word at the top names the atmosphere: breath, a voice, answers, weight, fading, white. It changes slowly by itself, or when you choose it.'],
                 [svg(defs + `<rect x="4" y="6" width="88" height="24" rx="7" fill="url(#${p}wg)" stroke="${INK}" stroke-opacity=".3"/>`),
-                    'White', 'At the end the screen turns white. Stay in the quiet.']
+                    'White', 'At the end the screen turns white.']
             ];
             return items.map(([icon, title, text]) =>
                 `<div class="item">${icon}<div class="txt"><b>${title}.</b> ${text}</div></div>`).join('');
