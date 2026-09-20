@@ -37,17 +37,42 @@
     </label>
         <nav class="menu" aria-label="Primary navigation">
             <a href="index.html" class="highlight">HOME</a>
-            <a href="about.html" class="highlight">ABOUT</a>
-            <a href="music.html" class="highlight">MUSIC</a>
-            <a href="albums.html" class="highlight">ALBUMS</a>
-            <a href="performance.html" class="highlight">PERFORMANCES</a>
-            <a href="scores.html" class="highlight">SCORES</a>
-            <a href="articles.html" class="highlight">ARTICLES</a>
-            <a href="conferences.html" class="highlight">CONFERENCES</a>
-            <a href="books.html" class="highlight">BOOKS</a>
-            <a href="courses.html" class="highlight">COURSES</a>
+
+            <div class="nav-group">
+                <input type="checkbox" id="nav-music-toggle" class="nav-group-toggle">
+                <span class="nav-group-head">
+                    <a href="music.html" class="highlight nav-group-link">MUSIC</a>
+                    <label for="nav-music-toggle" class="nav-group-caret" aria-label="Toggle Music menu">&#9662;</label>
+                </span>
+                <div class="nav-dropdown">
+                    <a href="music.html" class="highlight">Works</a>
+                    <a href="albums.html" class="highlight">Albums</a>
+                    <a href="performance.html" class="highlight">Performances</a>
+                    <a href="scores.html" class="highlight">Scores</a>
+                </div>
+            </div>
+
+            <div class="nav-group">
+                <input type="checkbox" id="nav-research-toggle" class="nav-group-toggle">
+                <label for="nav-research-toggle" class="highlight nav-group-link">Research &amp; Teaching &#9662;</label>
+                <div class="nav-dropdown">
+                    <a href="articles.html" class="highlight">Articles</a>
+                    <a href="conferences.html" class="highlight">Conferences</a>
+                    <a href="courses.html" class="highlight">Courses</a>
+                </div>
+            </div>
+
+            <div class="nav-group">
+                <input type="checkbox" id="nav-writing-toggle" class="nav-group-toggle">
+                <label for="nav-writing-toggle" class="highlight nav-group-link">Writing &#9662;</label>
+                <div class="nav-dropdown">
+                    <a href="books.html" class="highlight">Poetry</a>
+                    <a href="https://blog.alibalighi.com/" class="highlight">Blog</a>
+                </div>
+            </div>
+
             <a href="news.html" class="highlight" aria-current="page">NEWS</a>
-            <a href="https://blog.alibalighi.com/" class="highlight">BLOG</a>
+            <a href="about.html" class="highlight">ABOUT</a>
             <a href="contact.html" class="highlight">CONTACT</a>
         </nav>
     </header>
