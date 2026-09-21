@@ -860,6 +860,7 @@ body.conferences-page .performance-list {
     width: 100%;
     max-height: 0;
     flex-direction: column;
+    align-items: center;
     gap: 2px;
     overflow: hidden;
     opacity: 0;
@@ -869,6 +870,23 @@ body.conferences-page .performance-list {
   .nav-toggle-checkbox:checked ~ .menu {
     max-height: 700px;
     opacity: 1;
+  }
+
+  body:not(.home-page) .nav-group {
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+  }
+
+  body:not(.home-page) .nav-group-head {
+    justify-content: center;
+    width: 100%;
+  }
+
+  body:not(.home-page) .nav-dropdown {
+    width: 100%;
+    align-items: center;
+    padding-left: 0;
   }
 
   .home-page .site-header {
