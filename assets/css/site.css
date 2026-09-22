@@ -268,18 +268,6 @@ a {
   }
 }
 
-body.home-page .nav-dropdown {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  z-index: 20;
-  min-width: 190px;
-  padding: 6px;
-  gap: 2px;
-  background: var(--bg-color);
-  border: 1px solid var(--border-color);
-}
-
 .content-wrapper {
   display: flex;
   justify-content: center;
@@ -872,18 +860,18 @@ body.conferences-page .performance-list {
     opacity: 1;
   }
 
-  body:not(.home-page) .nav-group {
+  .nav-group {
     flex-direction: column;
     align-items: center;
     width: 100%;
   }
 
-  body:not(.home-page) .nav-group-head {
+  .nav-group-head {
     justify-content: center;
     width: 100%;
   }
 
-  body:not(.home-page) .nav-dropdown {
+  .nav-dropdown {
     width: 100%;
     align-items: center;
     padding-left: 0;
@@ -892,10 +880,6 @@ body.conferences-page .performance-list {
   .home-page .site-header {
     gap: 18px;
     padding: 38px 20px 24px;
-  }
-
-  .home-page .nav-toggle-label {
-    display: none;
   }
 
   .home-page .name-text {
@@ -909,24 +893,6 @@ body.conferences-page .performance-list {
     padding: 0;
     font-size: 14px;
     letter-spacing: 2px;
-  }
-
-  .home-page .menu {
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: center;
-    width: auto;
-    max-width: 1000px;
-    gap: 6px;
-    max-height: none;
-    opacity: 1;
-  }
-
-  .home-page .highlight {
-    min-height: 36px;
-    padding: 8px 11px;
-    font-size: 15px;
-    letter-spacing: 1.5px;
   }
 
   .home-page .home-shell {
