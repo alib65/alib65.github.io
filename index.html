@@ -32,110 +32,97 @@
     ]
   }
   </script>
-  
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500&amp;family=Space+Mono&amp;display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;700&amp;family=Space+Mono&amp;display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/css/site.css?v=202609131030">
   <script defer src="assets/js/nav-dropdown.js?v=202609200001"></script>
-  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" crossorigin="anonymous"></script>
-  <script defer src="assets/js/home-animation.js"></script>
   <script defer src="assets/js/upcoming-events.js?v=202609220001"></script>
 </head>
-<body class="home-page">
-  <a class="skip-link" href="#main-content">Skip to main content</a>
+<body class="index-page">
+    <a class="skip-link" href="#main-content">Skip to main content</a>
 
-  <main id="main-content" class="home-shell">
-    <div class="identity">
-      <h1 class="name-text">Ali Balighi</h1>
-      <p class="subtitle-text">Composer &amp; scholar — electroacoustic, contemporary, and cross-cultural music</p>
-    </div>
-
-    <input type="checkbox" id="nav-toggle" class="nav-toggle-checkbox">
-    <label for="nav-toggle" class="nav-toggle-label" aria-label="Toggle menu">
+    <header class="site-header">
+        <div class="identity">
+            <h1 class="site-name">Ali Balighi</h1>
+            <p class="subtitle-text">Composer &amp; scholar — electroacoustic, contemporary, and cross-cultural music</p>
+        </div>
+        <input type="checkbox" id="nav-toggle" class="nav-toggle-checkbox">
+        <label for="nav-toggle" class="nav-toggle-label" aria-label="Toggle menu">
       <span class="nav-toggle-bar"></span>
       <span class="nav-toggle-bar"></span>
       <span class="nav-toggle-bar"></span>
     </label>
-    <nav class="menu" aria-label="Primary navigation">
-        <a href="index.html" class="highlight" aria-current="page">HOME</a>
+        <nav class="menu" aria-label="Primary navigation">
+            <a href="index.html" class="highlight" aria-current="page">HOME</a>
 
-        <div class="nav-group">
-            <input type="checkbox" id="nav-music-toggle" class="nav-group-toggle">
-            <span class="nav-group-head">
-                <a href="music.html" class="highlight nav-group-link">MUSIC</a>
-                <label for="nav-music-toggle" class="nav-group-caret" aria-label="Toggle Music menu">&#9662;</label>
-            </span>
-            <div class="nav-dropdown">
-                <a href="music.html" class="highlight">Works</a>
-                <a href="albums.html" class="highlight">Albums</a>
-                <a href="performance.html" class="highlight">Performances</a>
-                <a href="scores.html" class="highlight">Scores</a>
+            <div class="nav-group">
+                <input type="checkbox" id="nav-music-toggle" class="nav-group-toggle">
+                <span class="nav-group-head">
+                    <a href="music.html" class="highlight nav-group-link">MUSIC</a>
+                    <label for="nav-music-toggle" class="nav-group-caret" aria-label="Toggle Music menu">&#9662;</label>
+                </span>
+                <div class="nav-dropdown">
+                    <a href="music.html" class="highlight">Works</a>
+                    <a href="albums.html" class="highlight">Albums</a>
+                    <a href="performance.html" class="highlight">Performances</a>
+                    <a href="scores.html" class="highlight">Scores</a>
+                </div>
             </div>
-        </div>
 
-        <div class="nav-group">
-            <input type="checkbox" id="nav-research-toggle" class="nav-group-toggle">
-            <label for="nav-research-toggle" class="highlight nav-group-link">Research &amp; Teaching &#9662;</label>
-            <div class="nav-dropdown">
-                <a href="articles.html" class="highlight">Articles</a>
-                <a href="conferences.html" class="highlight">Conferences</a>
-                <a href="courses.html" class="highlight">Courses</a>
+            <div class="nav-group">
+                <input type="checkbox" id="nav-research-toggle" class="nav-group-toggle">
+                <label for="nav-research-toggle" class="highlight nav-group-link">Research &amp; Teaching &#9662;</label>
+                <div class="nav-dropdown">
+                    <a href="articles.html" class="highlight">Articles</a>
+                    <a href="conferences.html" class="highlight">Conferences</a>
+                    <a href="courses.html" class="highlight">Courses</a>
+                </div>
             </div>
-        </div>
 
-        <div class="nav-group">
-            <input type="checkbox" id="nav-writing-toggle" class="nav-group-toggle">
-            <label for="nav-writing-toggle" class="highlight nav-group-link">Writing &#9662;</label>
-            <div class="nav-dropdown">
-                <a href="books.html" class="highlight">Poetry</a>
-                <a href="https://blog.alibalighi.com/" class="highlight">Blog</a>
+            <div class="nav-group">
+                <input type="checkbox" id="nav-writing-toggle" class="nav-group-toggle">
+                <label for="nav-writing-toggle" class="highlight nav-group-link">Writing &#9662;</label>
+                <div class="nav-dropdown">
+                    <a href="books.html" class="highlight">Poetry</a>
+                    <a href="https://blog.alibalighi.com/" class="highlight">Blog</a>
+                </div>
             </div>
+
+            <a href="news.html" class="highlight">NEWS</a>
+            <a href="about.html" class="highlight">ABOUT</a>
+            <a href="contact.html" class="highlight">CONTACT</a>
+        </nav>
+    </header>
+
+    <main id="main-content" class="content-wrapper">
+        <div class="home-updates">
+
+            <section id="upcoming-events" class="upcoming-events" aria-label="Upcoming performances" hidden>
+                <h2 class="section-title">Upcoming Performances</h2>
+                <ol id="upcoming-events-list" class="upcoming-list"></ol>
+            </section>
+
+            <section id="upcoming-article" class="upcoming-events" aria-label="Forthcoming journal article" hidden>
+                <h2 class="section-title">Forthcoming Journal Article</h2>
+                <ol id="upcoming-article-list" class="upcoming-list"></ol>
+            </section>
+
+            <section id="upcoming-conference" class="upcoming-events" aria-label="Upcoming conference" hidden>
+                <h2 class="section-title">Upcoming Conference</h2>
+                <ol id="upcoming-conference-list" class="upcoming-list"></ol>
+            </section>
+
         </div>
+    </main>
 
-        <a href="news.html" class="highlight">NEWS</a>
-        <a href="about.html" class="highlight">ABOUT</a>
-        <a href="contact.html" class="highlight">CONTACT</a>
-    </nav>
-
-    <section id="upcoming-events" class="upcoming-events" aria-label="Upcoming performances" hidden>
-      <h2 class="section-title">Upcoming Performances</h2>
-      <ol id="upcoming-events-list" class="upcoming-list"></ol>
-    </section>
-
-    <section id="upcoming-article" class="upcoming-events" aria-label="Forthcoming journal article" hidden>
-      <h2 class="section-title">Forthcoming Journal Article</h2>
-      <ol id="upcoming-article-list" class="upcoming-list"></ol>
-    </section>
-
-    <section id="upcoming-conference" class="upcoming-events" aria-label="Upcoming conference" hidden>
-      <h2 class="section-title">Upcoming Conference</h2>
-      <ol id="upcoming-conference-list" class="upcoming-list"></ol>
-    </section>
-  </main>
-
-  <div class="animation-controls">
-    <button id="pause-btn" class="highlight animation-toggle" type="button" aria-pressed="false">Pause animation</button>
-  </div>
-
-  <noscript><p class="noscript-note">The background animation requires JavaScript; site navigation remains available.</p></noscript>
-
-  <footer class="site-footer">
-    <nav class="social-menu" aria-label="External links">
-        <a href="https://github.com/alib65" target="_blank" rel="noopener noreferrer" class="highlight icon-link" aria-label="Code (GitHub)"><img src="icons/code.png" alt="" class="icon-img" loading="lazy"></a>
-        <a href="https://alibalighi.bandcamp.com/" target="_blank" rel="noopener noreferrer" class="highlight icon-link" aria-label="Bandcamp"><img src="icons/bandcamp.png" alt="" class="icon-img" loading="lazy"></a>
-        <a href="https://www.youtube.com/@AliBalighi" target="_blank" rel="noopener noreferrer" class="highlight icon-link" aria-label="YouTube"><img src="icons/youtube.png" alt="" class="icon-img" loading="lazy"></a>
-        <a href="https://electronicnights.github.io" target="_blank" rel="noopener noreferrer" class="highlight icon-link" aria-label="Electronic Nights"><img src="icons/electronicnights.png" alt="" class="icon-img" loading="lazy"></a>
-        <a href="https://scholar.google.com/citations?user=76Qqc6AAAAAJ&hl=en" target="_blank" rel="noopener noreferrer" class="highlight icon-link" aria-label="Google Scholar"><img src="icons/googlescholar.png" alt="" class="icon-img" loading="lazy"></a>
-        <a href="https://www.researchgate.net/profile/Ali-Balighi/publications" target="_blank" rel="noopener noreferrer" class="highlight icon-link" aria-label="ResearchGate"><img src="icons/researchgate.png" alt="" class="icon-img" loading="lazy"></a>
-        <a href="https://www.linkedin.com/in/alibalighi/" target="_blank" rel="noopener noreferrer" class="highlight icon-link" aria-label="LinkedIn"><img src="icons/linkedin.png" alt="" class="icon-img" loading="lazy"></a>
-        <a href="https://www.instagram.com/ali_balighi/" target="_blank" rel="noopener noreferrer" class="highlight icon-link" aria-label="Instagram"><img src="icons/instagram.png" alt="" class="icon-img" loading="lazy"></a>
-    </nav>
-    <div class="site-footer-bottom">
-      <p>&copy; 2026 Ali Balighi</p>
-      <p><a href="feed.xml">RSS news feed</a></p>
-    </div>
-  </footer>
+    <footer class="site-footer">
+        <div class="site-footer-bottom">
+            <p>&copy; 2026 Ali Balighi</p>
+            <p><a href="feed.xml">RSS news feed</a></p>
+        </div>
+    </footer>
 
 </body>
 </html>
