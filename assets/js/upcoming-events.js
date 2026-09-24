@@ -1,5 +1,11 @@
 (function () {
-  async function loadUpcoming(sourceFile, containerId, listId) {
+  function setSectionTitle(container, count, singular, plural) {
+    var titleEl = container.querySelector('.section-title');
+    if (!titleEl) return;
+    titleEl.textContent = count === 1 ? singular : plural;
+  }
+
+  async function loadUpcoming(sourceFile, containerId, listId, singular, plural) {
     var container = document.getElementById(containerId);
     var listEl = document.getElementById(listId);
     if (!container || !listEl) return;
@@ -63,10 +69,11 @@
       listEl.appendChild(li);
     });
 
+    setSectionTitle(container, events.length, singular, plural);
     container.hidden = false;
   }
 
-  async function loadUpcomingArticles(sourceFile, containerId, listId) {
+  async function loadUpcomingArticles(sourceFile, containerId, listId, singular, plural) {
     var container = document.getElementById(containerId);
     var listEl = document.getElementById(listId);
     if (!container || !listEl) return;
@@ -124,13 +131,14 @@
       listEl.appendChild(li);
     });
 
+    setSectionTitle(container, events.length, singular, plural);
     container.hidden = false;
   }
 
   function loadAll() {
-    loadUpcoming('performance.html', 'upcoming-events', 'upcoming-events-list');
-    loadUpcomingArticles('articles.html', 'upcoming-article', 'upcoming-article-list');
-    loadUpcoming('conferences.html', 'upcoming-conference', 'upcoming-conference-list');
+    loadUpcoming('performance.html', 'upcoming-events', 'upcoming-events-list', 'Upcoming Performance', 'Upcoming Performances');
+    loadUpcomingArticles('articles.html', 'upcoming-article', 'upcoming-article-list', 'Forthcoming Journal Article', 'Forthcoming Journal Articles');
+    loadUpcoming('conferences.html', 'upcoming-conference', 'upcoming-conference-list', 'Upcoming Conference Presentation', 'Upcoming Conference Presentations');
   }
 
   if (document.readyState === 'loading') {
