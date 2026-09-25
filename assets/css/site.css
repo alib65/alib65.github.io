@@ -462,6 +462,25 @@ body.music-page .music-container .section-title + .year-title {
   padding-left: 24px;
 }
 
+.articles-container {
+  counter-reset: article-counter;
+}
+
+.article-list {
+  list-style: none;
+}
+
+.article-list > li {
+  counter-increment: article-counter;
+  position: relative;
+}
+
+.article-list > li::before {
+  content: counter(article-counter) ".";
+  position: absolute;
+  left: -24px;
+}
+
 .music-item,
 .score-item,
 .article-item,
