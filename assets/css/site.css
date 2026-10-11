@@ -451,7 +451,8 @@ body.music-page .music-container .section-title + .year-title {
 .books-container,
 .news-container,
 .albums-container,
-.courses-container {
+.courses-container,
+.code-container {
   width: min(var(--content-width), 90%);
 }
 
@@ -486,7 +487,8 @@ body.music-page .music-container .section-title + .year-title {
 .article-item,
 .book-item,
 .news-item,
-.album-item {
+.album-item,
+.code-item {
   margin-bottom: 40px;
   border-bottom: 1px dashed var(--border-color);
   padding-bottom: 26px;
@@ -497,7 +499,8 @@ body.music-page .music-container .section-title + .year-title {
 .article-item:last-child,
 .book-item:last-child,
 .news-item:last-child,
-.album-item:last-child {
+.album-item:last-child,
+.code-item:last-child {
   margin-bottom: 0;
 }
 
@@ -506,7 +509,8 @@ body.music-page .music-container .section-title + .year-title {
 .article-title,
 .book-title,
 .news-title,
-.album-title {
+.album-title,
+.code-title {
   margin: 0 0 10px;
   color: var(--text-main);
   font-size: 24px;
@@ -525,6 +529,7 @@ body.music-page .music-container .section-title + .year-title {
 .article-links a,
 .book-links a,
 .album-links a,
+.code-links a,
 .performance-list a {
   border-bottom: 1px dashed var(--accent-color);
   color: var(--accent-color);
@@ -537,6 +542,7 @@ body.music-page .music-container .section-title + .year-title {
 .article-links a:hover,
 .book-links a:hover,
 .album-links a:hover,
+.code-links a:hover,
 .performance-list a:hover {
   border-bottom-style: solid;
   color: var(--accent-dark);
@@ -563,7 +569,8 @@ body.conferences-page .performance-list {
 .score-location,
 .article-meta,
 .book-meta,
-.album-meta {
+.album-meta,
+.code-meta {
   margin-bottom: 16px;
   color: var(--text-dim);
   font-size: 14px;
@@ -572,7 +579,8 @@ body.conferences-page .performance-list {
 
 .article-meta,
 .book-meta,
-.album-meta {
+.album-meta,
+.code-meta {
   border-left: 2px solid var(--accent-color);
   padding-left: 12px;
 }
@@ -580,7 +588,8 @@ body.conferences-page .performance-list {
 .score-link,
 .article-links,
 .book-links,
-.album-links {
+.album-links,
+.code-links {
   margin-top: 15px;
   font: 12px/1.9 "Space Mono", monospace;
   overflow-wrap: anywhere;
@@ -588,13 +597,15 @@ body.conferences-page .performance-list {
 
 .article-item,
 .book-item,
-.album-item {
+.album-item,
+.code-item {
   margin-bottom: 50px;
   padding-bottom: 30px;
 }
 
 .article-description,
-.book-description {
+.book-description,
+.code-description {
   margin-bottom: 18px;
   color: var(--text-main);
   font-size: 20px;
