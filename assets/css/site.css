@@ -784,6 +784,10 @@ body.conferences-page .performance-list {
   text-underline-offset: 3px;
 }
 
+.upcoming-links {
+  margin-top: 4px;
+}
+
 .upcoming-detail a:hover {
   border-bottom-style: solid;
   color: var(--accent-dark);

@@ -157,12 +157,15 @@
     items.forEach(function (item) {
       var titleEl = item.querySelector('.album-title');
       var metaEl = item.querySelector('.album-meta[data-date]');
+      var linksEl = item.querySelector('.album-links');
       if (!titleEl || !metaEl) return;
 
       var start = new Date(metaEl.getAttribute('data-date'));
       if (isNaN(start.getTime())) return;
       if (start >= today) {
-        events.push({ title: titleEl.textContent.trim(), html: metaEl.innerHTML.trim(), sortKey: start });
+        var html = metaEl.innerHTML.trim();
+        if (linksEl) html += '<div class="upcoming-links">' + linksEl.innerHTML.trim() + '</div>';
+        events.push({ title: titleEl.textContent.trim(), html: html, sortKey: start });
       }
     });
 
