@@ -31,10 +31,10 @@
       var title = titleNode ? titleNode.textContent.trim() : titleEl.textContent.trim();
 
       var dated = item.querySelectorAll('.performance-list li[data-date]');
-      var extras = item.querySelectorAll('.performance-list li:not([data-date])');
+      var extras = item.querySelectorAll('.performance-list li:not([data-date]) .media-links');
       var extraHtml = '';
-      extras.forEach(function (li) {
-        extraHtml += '<div class="upcoming-links">' + li.innerHTML.trim() + '</div>';
+      extras.forEach(function (mediaLinks) {
+        extraHtml += '<div class="upcoming-links">' + mediaLinks.parentElement.innerHTML.trim() + '</div>';
       });
 
       dated.forEach(function (li) {
