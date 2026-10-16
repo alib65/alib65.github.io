@@ -31,13 +31,19 @@
       var title = titleNode ? titleNode.textContent.trim() : titleEl.textContent.trim();
 
       var dated = item.querySelectorAll('.performance-list li[data-date]');
+      var extras = item.querySelectorAll('.performance-list li:not([data-date])');
+      var extraHtml = '';
+      extras.forEach(function (li) {
+        extraHtml += '<div class="upcoming-links">' + li.innerHTML.trim() + '</div>';
+      });
+
       dated.forEach(function (li) {
         var start = new Date(li.getAttribute('data-date'));
         var endAttr = li.getAttribute('data-end');
         var end = endAttr ? new Date(endAttr) : start;
         if (isNaN(start.getTime())) return;
         if (end >= today) {
-          events.push({ title: title, html: li.innerHTML.trim(), sortKey: start });
+          events.push({ title: title, html: li.innerHTML.trim() + extraHtml, sortKey: start });
         }
       });
     });
